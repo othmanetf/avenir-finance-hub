@@ -6,9 +6,7 @@ import {
   BarChart3, 
   Brain, 
   Wallet, 
-  CreditCard, 
-  TrendingUp, 
-  MoreHorizontal 
+  Plus 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -31,7 +29,7 @@ export const Navigation = ({ currentRoute, onRouteChange }: NavigationProps) => 
       {/* Desktop Navigation */}
       <div className="fixed left-0 top-0 z-30 hidden h-full w-16 flex-col border-r border-gray-100 bg-white dark:border-gray-800 dark:bg-gray-900 md:flex">
         <div className="flex h-16 items-center justify-center">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full card-gradient-primary">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
             <span className="text-lg font-bold text-white">M+</span>
           </div>
         </div>
@@ -41,17 +39,14 @@ export const Navigation = ({ currentRoute, onRouteChange }: NavigationProps) => 
               key={item.name}
               onClick={() => onRouteChange(item.route)}
               className={cn(
-                "group flex w-full flex-col items-center p-2 transition-colors",
+                "group flex w-full flex-col items-center p-2 transition-colors rounded-xl",
                 currentRoute === item.route
-                  ? "text-primary"
-                  : "text-gray-500 hover:text-primary"
+                  ? "text-primary bg-accent"
+                  : "text-gray-500 hover:text-primary hover:bg-accent/50"
               )}
             >
               <item.icon className="h-5 w-5" />
               <span className="mt-1 text-[10px]">{item.name}</span>
-              {currentRoute === item.route && (
-                <div className="absolute left-0 h-10 w-1 rounded-r-md bg-primary" />
-              )}
             </button>
           ))}
         </div>

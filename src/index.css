@@ -7,14 +7,14 @@
 
 @layer base {
   :root {
-    --background: 252 100% 99%;
-    --foreground: 240 10% 3.9%;
+    --background: 260 100% 99%;
+    --foreground: 262 45% 25%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 262 45% 25%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 262 45% 25%;
 
     --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
@@ -25,7 +25,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 262 83% 94%;
+    --accent: 260 100% 96%;
     --accent-foreground: 262 83% 58%;
 
     --destructive: 0 84.2% 60.2%;
@@ -35,7 +35,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 262 83% 58%;
 
-    --radius: 1rem;
+    --radius: 1.5rem;
   }
 
   .dark {
@@ -102,5 +102,38 @@
   
   .stat-card {
     @apply flex flex-col justify-center rounded-2xl p-4 text-white h-24 w-full;
+  }
+
+  /* New utility classes based on the inspiration design */
+  .wallet-card {
+    @apply relative rounded-2xl shadow-lg overflow-hidden h-44 flex flex-col justify-between p-4;
+  }
+
+  .visa-card {
+    @apply bg-gradient-to-r from-purple-600 to-purple-500;
+  }
+
+  .mastercard {
+    @apply bg-gradient-to-r from-orange-400 to-pink-500;
+  }
+
+  .stat-block {
+    @apply flex items-center justify-center space-x-2 rounded-2xl px-4 py-3;
+  }
+
+  .income-block {
+    @apply bg-violet-100 text-violet-600;
+  }
+
+  .spend-block {
+    @apply bg-red-100 text-red-500;
+  }
+  
+  .transaction-row {
+    @apply flex items-center justify-between px-4 py-3 rounded-xl hover:bg-accent/30 transition-all duration-200;
+  }
+  
+  .category-icon {
+    @apply flex items-center justify-center h-10 w-10 rounded-xl;
   }
 }

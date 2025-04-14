@@ -32,7 +32,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#f9f5ff]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -44,13 +44,13 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="absolute inset-0 rounded-full card-gradient-primary shadow-lg"
+            className="absolute inset-0 rounded-full bg-primary shadow-lg"
           />
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="absolute inset-3 rounded-full bg-white dark:bg-gray-900"
+            className="absolute inset-3 rounded-full bg-white"
           />
           <motion.div
             initial={{ scale: 0 }}
@@ -66,9 +66,9 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-3xl font-bold sm:text-4xl md:text-5xl text-gradient"
+          className="text-3xl font-bold sm:text-4xl md:text-5xl text-foreground"
         >
-          MonAvenir+
+          MonAvenir<span className="text-primary">+</span>
         </motion.h1>
 
         <div className="h-8 overflow-hidden">
@@ -76,7 +76,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
             <p
               key={slogan}
               className={cn(
-                "text-center text-lg font-medium text-gray-600 dark:text-gray-300 transition-all duration-500",
+                "text-center text-lg font-medium text-gray-600 transition-all duration-500",
                 currentSlogan === index ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
               )}
             >
