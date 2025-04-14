@@ -10,7 +10,7 @@ const Index = () => {
   const [currentRoute, setCurrentRoute] = useState("/");
 
   useEffect(() => {
-    // You could check local storage here to skip splash screen for returning users
+    // Skip splash screen for returning users
     const hasSeenSplash = localStorage.getItem("hasSeenSplash");
     if (hasSeenSplash) {
       setShowSplash(false);
@@ -40,7 +40,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       {showSplash ? (
         <SplashScreen onComplete={handleSplashComplete} />
       ) : (

@@ -39,24 +39,24 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         transition={{ duration: 0.8 }}
         className="flex flex-col items-center space-y-8"
       >
-        <div className="relative h-24 w-24 sm:h-32 sm:w-32">
+        <div className="relative h-28 w-28">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="absolute inset-0 rounded-full bg-gradient-primary shadow-lg"
+            className="absolute inset-0 rounded-full card-gradient-primary shadow-lg"
           />
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="absolute inset-2 rounded-full bg-white dark:bg-gray-900"
+            className="absolute inset-3 rounded-full bg-white dark:bg-gray-900"
           />
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-monavenir-blue dark:text-monavenir-skyblue"
+            className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-primary"
           >
             M+
           </motion.div>
