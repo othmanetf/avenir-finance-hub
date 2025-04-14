@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { name: "Home", icon: Home, route: "/" },
   { name: "Education", icon: BookOpen, route: "/education" },
-  { name: "Budget", icon: BarChart3, route: "/budget" },
   { name: "Analysis", icon: Brain, route: "/analysis" },
   { name: "Investments", icon: Wallet, route: "/investments" },
 ];
@@ -52,7 +51,30 @@ export const Navigation = ({ currentRoute, onRouteChange }: NavigationProps) => 
         </div>
       </div>
 
-      {/* Mobile Navigation rendered in Dashboard component */}
+      {/* Mobile Navigation */}
+      <div className="fixed bottom-0 left-0 z-20 w-full border-t border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-900 md:hidden">
+        <div className="mx-auto flex h-16 max-w-md items-center justify-around px-6">
+          {navItems.map((item) => (
+            <button 
+              key={item.name}
+              onClick={() => onRouteChange(item.route)}
+              className={cn(
+                "flex flex-col items-center justify-center rounded-md p-2",
+                currentRoute === item.route
+                  ? "text-primary"
+                  : "text-gray-500"
+              )}
+            >
+              <item.icon className="h-5 w-5" />
+              <span className="text-xs mt-1">{item.name}</span>
+            </button>
+          ))}
+          
+          <button className="flex items-center justify-center h-12 w-12 rounded-full bg-primary shadow-lg -mt-6">
+            <Plus className="h-6 w-6 text-white" />
+          </button>
+        </div>
+      </div>
     </>
   );
 };
