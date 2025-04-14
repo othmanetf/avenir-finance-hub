@@ -5,16 +5,15 @@ import {
   BookOpen, 
   BarChart3, 
   Brain, 
-  Wallet, 
-  Plus 
+  Wallet 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { name: "Home", icon: Home, route: "/" },
-  { name: "Education", icon: BookOpen, route: "/education" },
-  { name: "Analysis", icon: Brain, route: "/analysis" },
-  { name: "Investments", icon: Wallet, route: "/investments" },
+  { name: "Accueil", icon: Home, route: "/" },
+  { name: "Éducation", icon: BookOpen, route: "/education" },
+  { name: "Analyse", icon: Brain, route: "/analysis" },
+  { name: "Investissements", icon: Wallet, route: "/investments" },
 ];
 
 type NavigationProps = {
@@ -69,10 +68,6 @@ export const Navigation = ({ currentRoute, onRouteChange }: NavigationProps) => 
               <span className="text-xs mt-1">{item.name}</span>
             </button>
           ))}
-          
-          <button className="flex items-center justify-center h-12 w-12 rounded-full bg-primary shadow-lg -mt-6">
-            <Plus className="h-6 w-6 text-white" />
-          </button>
         </div>
       </div>
     </>

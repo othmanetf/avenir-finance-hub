@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   Wallet, 
@@ -10,7 +9,8 @@ import {
   BarChart,
   Tag,
   Info,
-  ExternalLink
+  ExternalLink,
+  Plus
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -287,6 +287,13 @@ export const Investments = () => {
           </Card>
         </TabsContent>
       </Tabs>
+      
+      {/* Action Button */}
+      <div className="fixed bottom-20 right-6 z-10 md:bottom-6">
+        <Button className="h-14 w-14 rounded-full bg-primary shadow-lg" size="icon">
+          <Plus className="h-6 w-6" />
+        </Button>
+      </div>
     </div>
   );
 };
