@@ -1,7 +1,7 @@
 
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { EducationCategories, educationCategories } from "@/components/education/EducationCategories";
-import { EducationCard } from "@/components/education/EducationCard";
+import { EducationCard, EducationItemType } from "@/components/education/EducationCard";
 import { QuizSection } from "@/components/education/QuizSection";
 import { educationItems } from "@/components/education/educationData";
 
@@ -21,7 +21,7 @@ export const Education = () => {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {educationItems
                 .filter((item) => category.id === "all" || item.category === category.id)
-                .map((item) => (
+                .map((item: EducationItemType) => (
                   <EducationCard key={item.id} item={item} />
                 ))}
             </div>
