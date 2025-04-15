@@ -12,7 +12,7 @@ const Index = () => {
   const [currentRoute, setCurrentRoute] = useState("/");
 
   useEffect(() => {
-    // Skip splash screen for returning users
+    // Ignorer l'écran de démarrage pour les utilisateurs qui reviennent
     const hasSeenSplash = localStorage.getItem("hasSeenSplash");
     if (hasSeenSplash) {
       setShowSplash(false);

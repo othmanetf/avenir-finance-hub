@@ -15,11 +15,21 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { 
+  LineChart, 
+  Line, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  Legend, 
+  ResponsiveContainer 
+} from 'recharts';
 
 export const Dashboard = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  // Sample data - in a real app, this would be dynamic
+  // Données d'exemple - dans une application réelle, ces données seraient dynamiques
   const budgetData = {
     totalBudget: 7500,
     spent: 4825,
@@ -27,18 +37,29 @@ export const Dashboard = () => {
     expenses: 4825
   };
 
+  // Données pour le graphique d'évolution mensuelle
+  const monthlyEvolutionData = [
+    { jour: '1', dépenses: 150, revenus: 0, budget: 250 },
+    { jour: '5', dépenses: 410, revenus: 8000, budget: 1000 },
+    { jour: '10', dépenses: 1200, revenus: 8000, budget: 2500 },
+    { jour: '15', dépenses: 2500, revenus: 8200, budget: 3750 },
+    { jour: '20', dépenses: 3800, revenus: 8350, budget: 5000 },
+    { jour: '25', dépenses: 4500, revenus: 8500, budget: 6250 },
+    { jour: '30', dépenses: 4825, revenus: 8500, budget: 7500 },
+  ];
+
   const categories = [
     { 
       id: "food", 
-      name: "Food & Drinks", 
+      name: "Alimentation", 
       icon: Coffee, 
       amount: 1250, 
       color: "bg-orange-100 text-orange-500",
       transactions: [
-        { name: "Supermarket", date: "Today, 10:42 AM", amount: 320 },
-        { name: "Restaurant", date: "Yesterday, 8:30 PM", amount: 450 },
-        { name: "Coffee Shop", date: "Jun 18, 3:15 PM", amount: 120 },
-        { name: "Grocery Store", date: "Jun 16, 11:20 AM", amount: 360 }
+        { name: "Supermarché", date: "Aujourd'hui, 10:42", amount: 320 },
+        { name: "Restaurant", date: "Hier, 20:30", amount: 450 },
+        { name: "Café", date: "18 juin, 15:15", amount: 120 },
+        { name: "Épicerie", date: "16 juin, 11:20", amount: 360 }
       ]
     },
     { 
@@ -48,31 +69,31 @@ export const Dashboard = () => {
       amount: 875, 
       color: "bg-blue-100 text-blue-500",
       transactions: [
-        { name: "Clothing Store", date: "Jun 15, 2:30 PM", amount: 475 },
-        { name: "Electronics", date: "Jun 10, 5:45 PM", amount: 400 }
+        { name: "Magasin de vêtements", date: "15 juin, 14:30", amount: 475 },
+        { name: "Électronique", date: "10 juin, 17:45", amount: 400 }
       ]
     },
     { 
       id: "housing", 
-      name: "Housing", 
+      name: "Logement", 
       icon: HomeIcon, 
       amount: 1800, 
       color: "bg-violet-100 text-violet-500",
       transactions: [
-        { name: "Rent", date: "Jun 5, 9:00 AM", amount: 1800 }
+        { name: "Loyer", date: "5 juin, 09:00", amount: 1800 }
       ]
     },
     { 
       id: "transport", 
-      name: "Transportation", 
+      name: "Transport", 
       icon: Car, 
       amount: 900, 
       color: "bg-green-100 text-green-500",
       transactions: [
-        { name: "Fuel", date: "Jun 12, 11:15 AM", amount: 350 },
-        { name: "Taxi", date: "Jun 8, 6:40 PM", amount: 120 },
-        { name: "Public Transport", date: "Jun 3, 8:20 AM", amount: 160 },
-        { name: "Car Maintenance", date: "Jun 1, 3:10 PM", amount: 270 }
+        { name: "Carburant", date: "12 juin, 11:15", amount: 350 },
+        { name: "Taxi", date: "8 juin, 18:40", amount: 120 },
+        { name: "Transport public", date: "3 juin, 08:20", amount: 160 },
+        { name: "Entretien voiture", date: "1 juin, 15:10", amount: 270 }
       ]
     }
   ];
@@ -80,32 +101,32 @@ export const Dashboard = () => {
   const incomeCategories = [
     { 
       id: "salary", 
-      name: "Salary", 
+      name: "Salaire", 
       icon: Building, 
       amount: 8000, 
       color: "bg-emerald-100 text-emerald-500",
       transactions: [
-        { name: "Main Job", date: "Jun 5, 10:00 AM", amount: 8000 }
+        { name: "Emploi principal", date: "5 juin, 10:00", amount: 8000 }
       ]
     },
     { 
       id: "gifts", 
-      name: "Gifts", 
+      name: "Cadeaux", 
       icon: Gift, 
       amount: 500, 
       color: "bg-pink-100 text-pink-500",
       transactions: [
-        { name: "Birthday Gift", date: "Jun 8, 9:20 AM", amount: 500 }
+        { name: "Cadeau d'anniversaire", date: "8 juin, 09:20", amount: 500 }
       ]
     }
   ];
 
   return (
     <div className="flex flex-col p-4 md:p-6 gap-6 md:pl-24">
-      {/* Header with Welcome and Avatar */}
+      {/* En-tête avec Bienvenue et Avatar */}
       <div className="flex justify-between items-center mb-2">
         <div className="flex flex-col">
-          <p className="text-sm text-muted-foreground">Welcome back</p>
+          <p className="text-sm text-muted-foreground">Bienvenue</p>
           <h2 className="text-xl font-bold text-foreground">Mohamed</h2>
         </div>
         
@@ -115,14 +136,14 @@ export const Dashboard = () => {
         </Avatar>
       </div>
 
-      {/* Budget Overview */}
+      {/* Aperçu du budget */}
       <Card className="bg-white shadow-md border-0 rounded-3xl">
         <CardContent className="p-6">
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="font-medium text-foreground">Monthly Budget</span>
+              <span className="font-medium text-foreground">Budget Mensuel</span>
               <Button variant="outline" size="sm" className="rounded-full text-xs border-accent bg-accent/30 text-primary hover:bg-accent/50 hover:text-primary">
-                Adjust
+                Ajuster
               </Button>
             </div>
             
@@ -146,20 +167,20 @@ export const Dashboard = () => {
               </div>
               
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-foreground">DH {budgetData.spent.toLocaleString()}</h3>
-                <p className="text-sm text-muted-foreground">of DH {budgetData.totalBudget.toLocaleString()} budget</p>
+                <h3 className="text-2xl font-bold text-foreground">{budgetData.spent.toLocaleString()} DH</h3>
+                <p className="text-sm text-muted-foreground">sur {budgetData.totalBudget.toLocaleString()} DH de budget</p>
               </div>
             </div>
             
-            {/* Income and Spend Stats */}
+            {/* Statistiques de revenus et dépenses */}
             <div className="grid grid-cols-2 gap-3 pt-2">
               <div className="stat-block income-block">
                 <div className="flex items-center justify-center rounded-xl bg-violet-200 h-8 w-8">
                   <ArrowUp className="h-4 w-4 text-violet-600" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs">Income</span>
-                  <span className="font-medium">DH {budgetData.income.toLocaleString()}</span>
+                  <span className="text-xs">Revenus</span>
+                  <span className="font-medium">{budgetData.income.toLocaleString()} DH</span>
                 </div>
               </div>
               
@@ -168,8 +189,8 @@ export const Dashboard = () => {
                   <ArrowDown className="h-4 w-4 text-red-500" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs">Expenses</span>
-                  <span className="font-medium">DH {budgetData.expenses.toLocaleString()}</span>
+                  <span className="text-xs">Dépenses</span>
+                  <span className="font-medium">{budgetData.expenses.toLocaleString()} DH</span>
                 </div>
               </div>
             </div>
@@ -177,31 +198,61 @@ export const Dashboard = () => {
         </CardContent>
       </Card>
 
-      {/* Monthly Evolution Graph */}
+      {/* Graphique d'évolution mensuelle */}
       <Card className="bg-white shadow-md border-0 rounded-3xl">
         <CardContent className="p-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium text-foreground">Monthly Evolution</h3>
+            <h3 className="font-medium text-foreground">Évolution Mensuelle</h3>
             <select className="text-xs border rounded-lg p-1">
-              <option>Last 30 days</option>
-              <option>Last 90 days</option>
-              <option>Last 6 months</option>
+              <option>Derniers 30 jours</option>
+              <option>Derniers 90 jours</option>
+              <option>Derniers 6 mois</option>
             </select>
           </div>
           
-          {/* Placeholder for chart - in a real implementation, you'd use a chart library like recharts */}
-          <div className="h-40 bg-gray-50 rounded-xl flex items-center justify-center">
-            <p className="text-muted-foreground text-sm">Chart visualization would go here</p>
+          <div className="h-60">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                data={monthlyEvolutionData}
+                margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="jour" />
+                <YAxis />
+                <Tooltip formatter={(value) => `${value} DH`} />
+                <Legend />
+                <Line 
+                  type="monotone" 
+                  dataKey="dépenses" 
+                  stroke="#EF4444" 
+                  strokeWidth={2} 
+                  activeDot={{ r: 8 }} 
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="revenus" 
+                  stroke="#8B5CF6" 
+                  strokeWidth={2} 
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="budget" 
+                  stroke="#10B981" 
+                  strokeWidth={2} 
+                  strokeDasharray="5 5" 
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         </CardContent>
       </Card>
 
-      {/* Expenses Categories */}
+      {/* Catégories de dépenses */}
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <h3 className="font-medium text-foreground">Expenses by Category</h3>
+          <h3 className="font-medium text-foreground">Dépenses par catégorie</h3>
           <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
-            View all
+            Voir tout
           </Button>
         </div>
         
@@ -222,11 +273,11 @@ export const Dashboard = () => {
                   </div>
                 </div>
                 <span className="font-semibold text-red-500">
-                  -DH {category.amount.toLocaleString()}
+                  -{category.amount.toLocaleString()} DH
                 </span>
               </div>
               
-              {/* Transactions breakdown */}
+              {/* Détail des transactions */}
               {activeCategory === category.id && (
                 <div className="pl-12 pr-4 py-2 space-y-2 bg-gray-50 rounded-xl mt-1 mb-2">
                   {category.transactions.map((transaction, idx) => (
@@ -235,7 +286,7 @@ export const Dashboard = () => {
                         <span className="text-sm">{transaction.name}</span>
                         <span className="text-xs text-muted-foreground">{transaction.date}</span>
                       </div>
-                      <span className="text-sm font-medium text-red-500">-DH {transaction.amount}</span>
+                      <span className="text-sm font-medium text-red-500">-{transaction.amount} DH</span>
                     </div>
                   ))}
                 </div>
@@ -245,12 +296,12 @@ export const Dashboard = () => {
         </div>
       </div>
       
-      {/* Income Categories */}
+      {/* Catégories de revenus */}
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <h3 className="font-medium text-foreground">Income by Category</h3>
+          <h3 className="font-medium text-foreground">Revenus par catégorie</h3>
           <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
-            View all
+            Voir tout
           </Button>
         </div>
         
@@ -271,11 +322,11 @@ export const Dashboard = () => {
                   </div>
                 </div>
                 <span className="font-semibold text-green-500">
-                  +DH {category.amount.toLocaleString()}
+                  +{category.amount.toLocaleString()} DH
                 </span>
               </div>
               
-              {/* Transactions breakdown */}
+              {/* Détail des transactions */}
               {activeCategory === category.id && (
                 <div className="pl-12 pr-4 py-2 space-y-2 bg-gray-50 rounded-xl mt-1 mb-2">
                   {category.transactions.map((transaction, idx) => (
@@ -284,7 +335,7 @@ export const Dashboard = () => {
                         <span className="text-sm">{transaction.name}</span>
                         <span className="text-xs text-muted-foreground">{transaction.date}</span>
                       </div>
-                      <span className="text-sm font-medium text-green-500">+DH {transaction.amount}</span>
+                      <span className="text-sm font-medium text-green-500">+{transaction.amount} DH</span>
                     </div>
                   ))}
                 </div>
@@ -294,7 +345,7 @@ export const Dashboard = () => {
         </div>
       </div>
 
-      {/* Action Button */}
+      {/* Bouton d'action */}
       <div className="fixed bottom-20 right-6 z-10 md:bottom-6">
         <Button className="h-14 w-14 rounded-full bg-primary shadow-lg" size="icon">
           <Plus className="h-6 w-6" />

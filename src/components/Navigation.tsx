@@ -3,7 +3,6 @@ import { useState } from "react";
 import { 
   Home, 
   BookOpen, 
-  BarChart3, 
   Brain, 
   Wallet 
 } from "lucide-react";
