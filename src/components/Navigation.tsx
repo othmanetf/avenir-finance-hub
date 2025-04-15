@@ -12,7 +12,7 @@ const navItems = [
   { name: "Accueil", icon: Home, route: "/" },
   { name: "Éducation", icon: BookOpen, route: "/education" },
   { name: "Analyse", icon: Brain, route: "/analysis" },
-  { name: "Investissements", icon: Wallet, route: "/investments" },
+  { name: "Avenir+", icon: Wallet, route: "/investments" },
 ];
 
 type NavigationProps = {

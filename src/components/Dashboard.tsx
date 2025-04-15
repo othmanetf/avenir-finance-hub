@@ -1,4 +1,3 @@
-
 import { 
   ArrowUp, 
   ArrowDown, 
@@ -25,9 +24,16 @@ import {
   Legend, 
   ResponsiveContainer 
 } from 'recharts';
+import { useIsMobile } from "@/hooks/use-mobile";
+import TransactionModal from "@/components/TransactionModal";
+import { useProfile } from "@/hooks/use-profile";
 
 export const Dashboard = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [selectedPeriod, setSelectedPeriod] = useState<"30" | "90" | "180">("30");
+  const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
+  const isMobile = useIsMobile();
+  const { openProfile } = useProfile();
 
   // Données d'exemple - dans une application réelle, ces données seraient dynamiques
   const budgetData = {
@@ -37,16 +43,35 @@ export const Dashboard = () => {
     expenses: 4825
   };
 
-  // Données pour le graphique d'évolution mensuelle
-  const monthlyEvolutionData = [
-    { jour: '1', dépenses: 150, revenus: 0, budget: 250 },
-    { jour: '5', dépenses: 410, revenus: 8000, budget: 1000 },
-    { jour: '10', dépenses: 1200, revenus: 8000, budget: 2500 },
-    { jour: '15', dépenses: 2500, revenus: 8200, budget: 3750 },
-    { jour: '20', dépenses: 3800, revenus: 8350, budget: 5000 },
-    { jour: '25', dépenses: 4500, revenus: 8500, budget: 6250 },
-    { jour: '30', dépenses: 4825, revenus: 8500, budget: 7500 },
-  ];
+  // Données pour le graphique d'évolution mensuelle selon la période
+  const getChartData = () => {
+    if (selectedPeriod === "30") {
+      return [
+        { jour: '1', dépenses: 150, revenus: 0, budget: 250 },
+        { jour: '5', dépenses: 410, revenus: 8000, budget: 1000 },
+        { jour: '10', dépenses: 1200, revenus: 8000, budget: 2500 },
+        { jour: '15', dépenses: 2500, revenus: 8200, budget: 3750 },
+        { jour: '20', dépenses: 3800, revenus: 8350, budget: 5000 },
+        { jour: '25', dépenses: 4500, revenus: 8500, budget: 6250 },
+        { jour: '30', dépenses: 4825, revenus: 8500, budget: 7500 },
+      ];
+    } else if (selectedPeriod === "90") {
+      return [
+        { jour: 'Jan', dépenses: 4200, revenus: 8000, budget: 7000 },
+        { jour: 'Fév', dépenses: 4500, revenus: 8200, budget: 7200 },
+        { jour: 'Mars', dépenses: 4825, revenus: 8500, budget: 7500 },
+      ];
+    } else {
+      return [
+        { jour: 'Jan', dépenses: 4000, revenus: 7800, budget: 7000 },
+        { jour: 'Fév', dépenses: 4100, revenus: 7900, budget: 7100 },
+        { jour: 'Mars', dépenses: 4300, revenus: 8100, budget: 7200 },
+        { jour: 'Avr', dépenses: 4400, revenus: 8200, budget: 7300 },
+        { jour: 'Mai', dépenses: 4600, revenus: 8300, budget: 7400 },
+        { jour: 'Juin', dépenses: 4825, revenus: 8500, budget: 7500 },
+      ];
+    }
+  };
 
   const categories = [
     { 
@@ -127,10 +152,13 @@ export const Dashboard = () => {
       <div className="flex justify-between items-center mb-2">
         <div className="flex flex-col">
           <p className="text-sm text-muted-foreground">Bienvenue</p>
-          <h2 className="text-xl font-bold text-foreground">Mohamed</h2>
+          <h2 className="text-2xl font-bold text-foreground">Mohamed</h2>
         </div>
         
-        <Avatar className="h-10 w-10 border-2 border-white shadow-sm">
+        <Avatar 
+          className="h-12 w-12 border-2 border-white shadow-sm cursor-pointer hover:opacity-90 transition-opacity" 
+          onClick={openProfile}
+        >
           <AvatarImage src="https://github.com/shadcn.png" alt="Mohamed" />
           <AvatarFallback>M</AvatarFallback>
         </Avatar>
@@ -141,33 +169,31 @@ export const Dashboard = () => {
         <CardContent className="p-6">
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="font-medium text-foreground">Budget Mensuel</span>
-              <Button variant="outline" size="sm" className="rounded-full text-xs border-accent bg-accent/30 text-primary hover:bg-accent/50 hover:text-primary">
-                Ajuster
-              </Button>
+              <span className="font-medium text-foreground text-base sm:text-lg">Budget Mensuel</span>
             </div>
             
             <div className="flex items-center gap-4">
-              <div className="relative h-16 w-16">
-                <svg className="h-16 w-16 -rotate-90" viewBox="0 0 36 36">
-                  <circle cx="18" cy="18" r="16" fill="none" stroke="#f3f4f6" strokeWidth="2"></circle>
+              <div className="relative h-16 w-16 sm:h-20 sm:w-20">
+                <svg className="h-16 w-16 sm:h-20 sm:w-20 -rotate-90" viewBox="0 0 36 36">
+                  <circle cx="18" cy="18" r="16" fill="none" stroke="#f3f4f6" strokeWidth="2.5"></circle>
                   <circle 
                     cx="18" 
                     cy="18" 
                     r="16" 
                     fill="none" 
                     stroke="hsl(var(--primary))" 
-                    strokeWidth="2"
+                    strokeWidth="2.5"
                     strokeDasharray={`${(budgetData.spent / budgetData.totalBudget) * 100} 100`}
+                    strokeLinecap="round"
                   ></circle>
                 </svg>
-                <div className="absolute inset-0 flex items-center justify-center text-xs font-medium">
+                <div className="absolute inset-0 flex items-center justify-center text-sm font-medium">
                   {Math.round((budgetData.spent / budgetData.totalBudget) * 100)}%
                 </div>
               </div>
               
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-foreground">{budgetData.spent.toLocaleString()} DH</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold text-foreground">{budgetData.spent.toLocaleString()} DH</h3>
                 <p className="text-sm text-muted-foreground">sur {budgetData.totalBudget.toLocaleString()} DH de budget</p>
               </div>
             </div>
@@ -175,22 +201,22 @@ export const Dashboard = () => {
             {/* Statistiques de revenus et dépenses */}
             <div className="grid grid-cols-2 gap-3 pt-2">
               <div className="stat-block income-block">
-                <div className="flex items-center justify-center rounded-xl bg-violet-200 h-8 w-8">
-                  <ArrowUp className="h-4 w-4 text-violet-600" />
+                <div className="flex items-center justify-center rounded-xl bg-violet-200 h-8 w-8 sm:h-10 sm:w-10">
+                  <ArrowUp className="h-4 w-4 sm:h-5 sm:w-5 text-violet-600" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs">Revenus</span>
-                  <span className="font-medium">{budgetData.income.toLocaleString()} DH</span>
+                  <span className="text-xs sm:text-sm">Revenus</span>
+                  <span className="font-medium text-sm sm:text-base">{budgetData.income.toLocaleString()} DH</span>
                 </div>
               </div>
               
               <div className="stat-block spend-block">
-                <div className="flex items-center justify-center rounded-xl bg-red-200 h-8 w-8">
-                  <ArrowDown className="h-4 w-4 text-red-500" />
+                <div className="flex items-center justify-center rounded-xl bg-red-200 h-8 w-8 sm:h-10 sm:w-10">
+                  <ArrowDown className="h-4 w-4 sm:h-5 sm:w-5 text-red-500" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs">Dépenses</span>
-                  <span className="font-medium">{budgetData.expenses.toLocaleString()} DH</span>
+                  <span className="text-xs sm:text-sm">Dépenses</span>
+                  <span className="font-medium text-sm sm:text-base">{budgetData.expenses.toLocaleString()} DH</span>
                 </div>
               </div>
             </div>
@@ -202,44 +228,80 @@ export const Dashboard = () => {
       <Card className="bg-white shadow-md border-0 rounded-3xl">
         <CardContent className="p-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium text-foreground">Évolution Mensuelle</h3>
-            <select className="text-xs border rounded-lg p-1">
-              <option>Derniers 30 jours</option>
-              <option>Derniers 90 jours</option>
-              <option>Derniers 6 mois</option>
+            <h3 className="font-medium text-foreground text-base sm:text-lg">Évolution Mensuelle</h3>
+            <select 
+              className="text-xs border rounded-lg p-1.5"
+              value={selectedPeriod}
+              onChange={(e) => setSelectedPeriod(e.target.value as "30" | "90" | "180")}
+            >
+              <option value="30">Derniers 30 jours</option>
+              <option value="90">Derniers 90 jours</option>
+              <option value="180">Derniers 6 mois</option>
             </select>
           </div>
           
-          <div className="h-60">
+          <div className="h-60 sm:h-72">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
-                data={monthlyEvolutionData}
+                data={getChartData()}
                 margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="jour" />
-                <YAxis />
-                <Tooltip formatter={(value) => `${value} DH`} />
-                <Legend />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis 
+                  dataKey="jour" 
+                  tick={{ fontSize: 12 }}
+                  tickMargin={10}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => `${value / 1000}k`}
+                />
+                <Tooltip 
+                  formatter={(value) => `${value} DH`} 
+                  contentStyle={{ 
+                    borderRadius: '8px', 
+                    border: 'none', 
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                    fontSize: '12px'
+                  }}
+                />
+                <Legend 
+                  verticalAlign="top" 
+                  height={36}
+                  iconSize={10}
+                  iconType="circle"
+                  wrapperStyle={{ fontSize: '12px' }}
+                />
                 <Line 
                   type="monotone" 
                   dataKey="dépenses" 
+                  name="Dépenses"
                   stroke="#EF4444" 
                   strokeWidth={2} 
-                  activeDot={{ r: 8 }} 
+                  dot={{ r: 4 }}
+                  activeDot={{ r: 6, strokeWidth: 0 }} 
+                  animationDuration={1000}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="revenus" 
+                  name="Revenus"
                   stroke="#8B5CF6" 
                   strokeWidth={2} 
+                  dot={{ r: 4 }}
+                  activeDot={{ r: 6, strokeWidth: 0 }}
+                  animationDuration={1000}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="budget" 
+                  name="Budget"
                   stroke="#10B981" 
                   strokeWidth={2} 
                   strokeDasharray="5 5" 
+                  dot={{ r: 4 }}
+                  activeDot={{ r: 6, strokeWidth: 0 }}
+                  animationDuration={1000}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -250,7 +312,7 @@ export const Dashboard = () => {
       {/* Catégories de dépenses */}
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <h3 className="font-medium text-foreground">Dépenses par catégorie</h3>
+          <h3 className="font-medium text-foreground text-base sm:text-lg">Dépenses par catégorie</h3>
           <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
             Voir tout
           </Button>
@@ -273,7 +335,7 @@ export const Dashboard = () => {
                   </div>
                 </div>
                 <span className="font-semibold text-red-500">
-                  -{category.amount.toLocaleString()} DH
+                  {category.amount.toLocaleString()} DH-
                 </span>
               </div>
               
@@ -286,7 +348,7 @@ export const Dashboard = () => {
                         <span className="text-sm">{transaction.name}</span>
                         <span className="text-xs text-muted-foreground">{transaction.date}</span>
                       </div>
-                      <span className="text-sm font-medium text-red-500">-{transaction.amount} DH</span>
+                      <span className="text-sm font-medium text-red-500">{transaction.amount} DH-</span>
                     </div>
                   ))}
                 </div>
@@ -299,7 +361,7 @@ export const Dashboard = () => {
       {/* Catégories de revenus */}
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <h3 className="font-medium text-foreground">Revenus par catégorie</h3>
+          <h3 className="font-medium text-foreground text-base sm:text-lg">Revenus par catégorie</h3>
           <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
             Voir tout
           </Button>
@@ -322,7 +384,7 @@ export const Dashboard = () => {
                   </div>
                 </div>
                 <span className="font-semibold text-green-500">
-                  +{category.amount.toLocaleString()} DH
+                  {category.amount.toLocaleString()} DH+
                 </span>
               </div>
               
@@ -335,7 +397,7 @@ export const Dashboard = () => {
                         <span className="text-sm">{transaction.name}</span>
                         <span className="text-xs text-muted-foreground">{transaction.date}</span>
                       </div>
-                      <span className="text-sm font-medium text-green-500">+{transaction.amount} DH</span>
+                      <span className="text-sm font-medium text-green-500">{transaction.amount} DH+</span>
                     </div>
                   ))}
                 </div>
@@ -347,10 +409,20 @@ export const Dashboard = () => {
 
       {/* Bouton d'action */}
       <div className="fixed bottom-20 right-6 z-10 md:bottom-6">
-        <Button className="h-14 w-14 rounded-full bg-primary shadow-lg" size="icon">
-          <Plus className="h-6 w-6" />
+        <Button 
+          className="h-16 w-16 rounded-full bg-primary/90 shadow-lg backdrop-blur-sm hover:bg-primary transition-all border border-white/20" 
+          size="icon"
+          onClick={() => setIsTransactionModalOpen(true)}
+        >
+          <Plus className="h-7 w-7" />
         </Button>
       </div>
+
+      {/* Modal d'ajout de transaction */}
+      <TransactionModal 
+        isOpen={isTransactionModalOpen} 
+        onClose={() => setIsTransactionModalOpen(false)} 
+      />
     </div>
   );
 };

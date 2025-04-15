@@ -17,124 +17,129 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useProfile } from "@/hooks/use-profile";
 
 export const Investments = () => {
   const [activeTab, setActiveTab] = useState<"save" | "invest">("save");
+  const { openProfile } = useProfile();
   
-  // Sample data
+  // Données d'exemple
   const savingOptions = [
     {
       id: 1,
       bank: "Bank Al-Maghrib",
       logo: "🏦",
-      name: "Premium Savings",
+      name: "Épargne Premium",
       interest: 2.8,
       minDeposit: 1000,
-      term: "1 year",
-      features: ["No withdrawal fees", "Monthly interest payments"]
+      term: "1 an",
+      features: ["Pas de frais de retrait", "Versements d'intérêts mensuels"]
     },
     {
       id: 2,
       bank: "Attijariwafa Bank",
       logo: "🏦",
-      name: "Flexible Savings",
+      name: "Épargne Flexible",
       interest: 2.1,
       minDeposit: 500,
-      term: "No fixed term",
-      features: ["Unlimited withdrawals", "Quarterly interest"]
+      term: "Sans durée fixe",
+      features: ["Retraits illimités", "Intérêts trimestriels"]
     },
     {
       id: 3,
       bank: "BMCE Bank",
       logo: "🏦",
-      name: "High Yield Account",
+      name: "Compte à haut rendement",
       interest: 3.2,
       minDeposit: 5000,
-      term: "2 years",
-      features: ["Early withdrawal penalty", "Highest interest rate"]
+      term: "2 ans",
+      features: ["Pénalité de retrait anticipé", "Taux d'intérêt le plus élevé"]
     }
   ];
   
   const investmentOptions = [
     {
       id: 1,
-      type: "Stock",
-      name: "MASI Index Fund",
+      type: "Action",
+      name: "Fonds d'indice MASI",
       ticker: "MASI",
       price: 12500,
       change: 2.4,
       graph: "📈",
-      level: "Beginner",
+      level: "Débutant",
       levelColor: "bg-green-100 text-green-600"
     },
     {
       id: 2,
       type: "ETF",
-      name: "Moroccan Real Estate",
+      name: "Immobilier Marocain",
       ticker: "REIT",
       price: 856,
       change: -0.8,
       graph: "📉",
-      level: "Intermediate",
+      level: "Intermédiaire",
       levelColor: "bg-amber-100 text-amber-600"
     },
     {
       id: 3,
-      type: "Bond",
-      name: "Government Treasury",
+      type: "Obligation",
+      name: "Trésor Public",
       ticker: "TBOND",
       price: 10000,
       change: 0.5,
       graph: "📈",
-      level: "Beginner",
+      level: "Débutant",
       levelColor: "bg-green-100 text-green-600"
     },
     {
       id: 4,
-      type: "Stock",
-      name: "Tech Innovation Fund",
+      type: "Action",
+      name: "Fonds Innovation Tech",
       ticker: "TECH",
       price: 2350,
       change: 5.7,
       graph: "📈",
-      level: "Advanced",
+      level: "Avancé",
       levelColor: "bg-red-100 text-red-600"
     }
   ];
   
   return (
     <div className="flex flex-col p-4 md:p-6 gap-6 md:pl-24">
-      {/* Header with Welcome and Avatar */}
+      {/* En-tête avec Bienvenue et Avatar */}
       <div className="flex justify-between items-center mb-2">
         <div className="flex flex-col">
-          <p className="text-sm text-muted-foreground">Investments & Savings</p>
-          <h2 className="text-xl font-bold text-foreground">Grow Your Wealth</h2>
+          <p className="text-sm text-muted-foreground">Épargne & Investissements</p>
+          <h2 className="text-xl font-bold text-foreground">Développez votre patrimoine</h2>
         </div>
         
-        <Avatar className="h-10 w-10 border-2 border-white shadow-sm">
+        <Avatar 
+          className="h-12 w-12 border-2 border-white shadow-sm cursor-pointer hover:opacity-90 transition-opacity" 
+          onClick={openProfile}
+        >
           <AvatarImage src="https://github.com/shadcn.png" alt="Mohamed" />
           <AvatarFallback>M</AvatarFallback>
         </Avatar>
       </div>
 
-      {/* Main Tabs */}
+      {/* Onglets principaux */}
       <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "save" | "invest")} className="w-full">
         <TabsList className="grid grid-cols-2 mb-6">
           <TabsTrigger value="save" className="flex items-center gap-2 py-3">
             <PiggyBank className="h-4 w-4" />
-            <span>Save</span>
+            <span>Épargner</span>
           </TabsTrigger>
           <TabsTrigger value="invest" className="flex items-center gap-2 py-3">
             <TrendingUp className="h-4 w-4" />
-            <span>Invest</span>
+            <span>Investir</span>
           </TabsTrigger>
         </TabsList>
         
         <TabsContent value="save" className="space-y-6">
           <Card className="bg-white shadow-md border-0 rounded-3xl">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg">Savings Accounts</CardTitle>
-              <CardDescription>Compare savings options from Moroccan banks</CardDescription>
+              <CardTitle className="text-lg">Comptes d'épargne</CardTitle>
+              <CardDescription>Comparez les options d'épargne des banques marocaines</CardDescription>
             </CardHeader>
             
             <CardContent>
@@ -151,17 +156,17 @@ export const Investments = () => {
                       </div>
                       <div className="text-right">
                         <span className="text-lg font-bold text-primary">{option.interest}%</span>
-                        <p className="text-xs text-muted-foreground">Interest p.a.</p>
+                        <p className="text-xs text-muted-foreground">Intérêt annuel</p>
                       </div>
                     </div>
                     
                     <CardContent className="p-4 pt-3 space-y-3">
                       <div className="flex flex-wrap gap-2 text-xs">
                         <Badge variant="outline" className="bg-gray-50">
-                          Min: DH {option.minDeposit}
+                          Min: {option.minDeposit} DH
                         </Badge>
                         <Badge variant="outline" className="bg-gray-50">
-                          Term: {option.term}
+                          Durée: {option.term}
                         </Badge>
                       </div>
                       
@@ -177,7 +182,7 @@ export const Investments = () => {
                     
                     <CardFooter className="p-3 pt-0 flex justify-end">
                       <Button variant="outline" size="sm" className="text-xs">
-                        View Details
+                        Voir détails
                         <ChevronRight className="ml-1 h-3 w-3" />
                       </Button>
                     </CardFooter>
@@ -194,13 +199,13 @@ export const Investments = () => {
                   <Info className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="font-medium">Need guidance on savings?</h3>
-                  <p className="text-sm text-white/80 mt-1">Our financial advisors can help you choose the best savings account for your needs.</p>
+                  <h3 className="font-medium">Besoin de conseils sur l'épargne?</h3>
+                  <p className="text-sm text-white/80 mt-1">Nos conseillers financiers peuvent vous aider à choisir le meilleur compte d'épargne pour vos besoins.</p>
                 </div>
               </div>
               
               <Button className="mt-4 w-full bg-white text-primary hover:bg-white/90 hover:text-primary">
-                Schedule a Consultation
+                Planifier une consultation
               </Button>
             </CardContent>
           </Card>
@@ -209,8 +214,8 @@ export const Investments = () => {
         <TabsContent value="invest" className="space-y-6">
           <Card className="bg-white shadow-md border-0 rounded-3xl">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg">Investment Opportunities</CardTitle>
-              <CardDescription>Explore investment options in the Moroccan market</CardDescription>
+              <CardTitle className="text-lg">Opportunités d'investissement</CardTitle>
+              <CardDescription>Explorez les options d'investissement sur le marché marocain</CardDescription>
             </CardHeader>
             
             <CardContent>
@@ -220,7 +225,7 @@ export const Investments = () => {
                     <CardContent className="p-4">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-gray-100 flex items-center justify-center text-lg">
-                          {option.type === "Stock" ? (
+                          {option.type === "Action" ? (
                             <BarChart className="h-6 w-6 text-primary" />
                           ) : option.type === "ETF" ? (
                             <LineChart className="h-6 w-6 text-primary" />
@@ -243,7 +248,7 @@ export const Investments = () => {
                         </div>
                         
                         <div className="text-right">
-                          <span className="font-bold">DH {option.price.toLocaleString()}</span>
+                          <span className="font-bold">{option.price.toLocaleString()} DH</span>
                           <p className={`text-xs ${option.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                             {option.change >= 0 ? '+' : ''}{option.change}%
                           </p>
@@ -253,11 +258,11 @@ export const Investments = () => {
                       <div className="mt-3 pt-3 border-t flex justify-between items-center">
                         <div className="flex items-center gap-1.5">
                           <Tag className="h-4 w-4 text-primary" />
-                          <span className="text-xs text-muted-foreground">Risk Level: {option.level}</span>
+                          <span className="text-xs text-muted-foreground">Niveau de risque: {option.level}</span>
                         </div>
                         
                         <Button variant="outline" size="sm" className="text-xs">
-                          Learn More
+                          En savoir plus
                           <ExternalLink className="ml-1 h-3 w-3" />
                         </Button>
                       </div>
@@ -275,23 +280,23 @@ export const Investments = () => {
                   <Wallet className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="font-medium">New to investing?</h3>
-                  <p className="text-sm text-white/80 mt-1">Start with our beginner-friendly investment guides and educational resources.</p>
+                  <h3 className="font-medium">Nouveau dans l'investissement?</h3>
+                  <p className="text-sm text-white/80 mt-1">Commencez avec nos guides d'investissement adaptés aux débutants et nos ressources éducatives.</p>
                 </div>
               </div>
               
               <Button className="mt-4 w-full bg-white text-secondary hover:bg-white/90 hover:text-secondary">
-                Explore Investment Guides
+                Explorer les guides d'investissement
               </Button>
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
       
-      {/* Action Button */}
+      {/* Bouton d'action */}
       <div className="fixed bottom-20 right-6 z-10 md:bottom-6">
-        <Button className="h-14 w-14 rounded-full bg-primary shadow-lg" size="icon">
-          <Plus className="h-6 w-6" />
+        <Button className="h-16 w-16 rounded-full bg-primary/90 shadow-lg backdrop-blur-sm hover:bg-primary transition-all border border-white/20" size="icon">
+          <Plus className="h-7 w-7" />
         </Button>
       </div>
     </div>

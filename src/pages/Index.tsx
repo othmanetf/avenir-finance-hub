@@ -6,10 +6,13 @@ import Dashboard from "@/components/Dashboard";
 import Education from "@/components/Education";
 import Analysis from "@/components/Analysis";
 import Investments from "@/components/Investments";
+import ProfilePage from "@/components/ProfilePage";
+import { useProfile } from "@/hooks/use-profile";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [currentRoute, setCurrentRoute] = useState("/");
+  const { isProfileOpen, closeProfile } = useProfile();
 
   useEffect(() => {
     // Ignorer l'écran de démarrage pour les utilisateurs qui reviennent
@@ -46,7 +49,13 @@ const Index = () => {
       ) : (
         <>
           <Navigation currentRoute={currentRoute} onRouteChange={setCurrentRoute} />
-          <main className="pb-20 md:pb-6">{renderCurrentView()}</main>
+          <main className="pb-20 md:pb-6">
+            {renderCurrentView()}
+          </main>
+          <ProfilePage 
+            isOpen={isProfileOpen} 
+            onClose={closeProfile} 
+          />
         </>
       )}
     </div>
