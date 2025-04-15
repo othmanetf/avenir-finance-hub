@@ -1,5 +1,7 @@
 
-export const educationItems = [
+import { EducationItemType } from "./EducationCard";
+
+export const educationItems: EducationItemType[] = [
   {
     id: 1,
     title: "Comprendre les fonds d'urgence",
