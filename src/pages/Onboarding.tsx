@@ -4,12 +4,26 @@ import { OnboardingProvider } from "@/context/OnboardingContext";
 import AccountCreation from "@/components/onboarding/AccountCreation";
 import FinancialProfiling from "@/components/onboarding/FinancialProfiling";
 import BankConnection from "@/components/onboarding/BankConnection";
+import { Icon } from "@/components/ui/icon-provider";
 
 const OnboardingPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const handleStepChange = (step: number) => {
     setCurrentStep(step);
+  };
+
+  const getStepIcon = (step: number) => {
+    switch (step) {
+      case 1:
+        return "profile";
+      case 2:
+        return "analysis";
+      case 3:
+        return "transactions";
+      default:
+        return "profile";
+    }
   };
 
   return (
@@ -25,6 +39,23 @@ const OnboardingPage = () => {
                   currentStep >= step ? "bg-gradient-primary" : "bg-gray-200 dark:bg-gray-700"
                 }`}
               />
+            ))}
+          </div>
+          <div className="flex justify-between max-w-md mx-auto px-1">
+            {[1, 2, 3].map((step) => (
+              <div 
+                key={step}
+                className={`flex flex-col items-center ${
+                  currentStep >= step ? "text-monavenir-blue" : "text-gray-400"
+                }`}
+              >
+                <Icon 
+                  name={getStepIcon(step)}
+                  size={16}
+                  strokeWidth={currentStep >= step ? 2 : 1.5}
+                  className={currentStep >= step ? "text-monavenir-blue" : "text-gray-400"}
+                />
+              </div>
             ))}
           </div>
         </div>

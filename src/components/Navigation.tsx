@@ -1,18 +1,13 @@
 
 import { useState } from "react";
-import { 
-  Home, 
-  BookOpen, 
-  Brain, 
-  Wallet 
-} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Icon, IconName } from "@/components/ui/icon-provider";
 
 const navItems = [
-  { name: "Accueil", icon: Home, route: "/" },
-  { name: "Éducation", icon: BookOpen, route: "/education" },
-  { name: "Analyse", icon: Brain, route: "/analysis" },
-  { name: "Avenir+", icon: Wallet, route: "/investments" },
+  { name: "Accueil", icon: "home" as IconName, route: "/" },
+  { name: "Éducation", icon: "education" as IconName, route: "/education" },
+  { name: "Analyse", icon: "analysis" as IconName, route: "/analysis" },
+  { name: "Avenir+", icon: "investments" as IconName, route: "/investments" },
 ];
 
 type NavigationProps = {
@@ -42,7 +37,11 @@ export const Navigation = ({ currentRoute, onRouteChange }: NavigationProps) => 
                   : "text-gray-500 hover:text-monavenir-blue hover:bg-accent/50"
               )}
             >
-              <item.icon className="h-5 w-5" />
+              <Icon 
+                name={item.icon} 
+                className="h-5 w-5" 
+                strokeWidth={currentRoute === item.route ? 2.5 : 1.5}
+              />
               <span className="mt-1 text-[10px]">{item.name}</span>
             </button>
           ))}
@@ -63,7 +62,26 @@ export const Navigation = ({ currentRoute, onRouteChange }: NavigationProps) => 
                   : "text-gray-500 hover:text-monavenir-blue"
               )}
             >
-              <item.icon className="h-5 w-5" />
+              {currentRoute === item.route ? (
+                <div className="relative">
+                  <Icon 
+                    name={item.icon} 
+                    className="h-5 w-5" 
+                    strokeWidth={2}
+                    style={{
+                      stroke: "url(#nav-gradient)"
+                    }}
+                  />
+                  <svg width="0" height="0">
+                    <linearGradient id="nav-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#1F6FEB" />
+                      <stop offset="100%" stopColor="#8E44AD" />
+                    </linearGradient>
+                  </svg>
+                </div>
+              ) : (
+                <Icon name={item.icon} className="h-5 w-5" strokeWidth={1.5} />
+              )}
               <span className="text-xs mt-1">{item.name}</span>
             </button>
           ))}
