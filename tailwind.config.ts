@@ -65,11 +65,11 @@ export default {
 				},
 				// MonAvenir+ custom colors
 				monavenir: {
-					blue: '#1F6FEB',
-					purple: '#8E44AD',
-					skyblue: '#00CFFF',
-					midnight: '#003153',
-					lightgrey: '#F7F9FA',
+					blue: '#1F6FEB',      // Primary blue 
+					purple: '#8E44AD',    // Primary violet
+					skyblue: '#00CFFF',   // Secondary sky blue
+					midnight: '#003153',  // Secondary midnight blue
+					lightgrey: '#F7F9FA', // Secondary light gray
 				}
 			},
 			borderRadius: {
@@ -117,19 +117,48 @@ export default {
 						opacity: '0',
 						transform: 'translateY(-10px)'
 					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0)'
+					},
+					'50%': {
+						transform: 'translateY(-5px)'
+					}
+				},
+				'pulse-soft': {
+					'0%, 100%': {
+						opacity: '1'
+					},
+					'50%': {
+						opacity: '0.8'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out forwards',
-				'rotate-text': 'rotate-text 8s infinite'
+				'rotate-text': 'rotate-text 8s infinite',
+				'float': 'float 3s ease-in-out infinite',
+				'pulse-soft': 'pulse-soft 2s ease-in-out infinite'
 			},
 			fontFamily: {
-				sans: ['Inter', 'sans-serif'],
+				sans: ['Inter', 'Manrope', 'SF Pro', 'sans-serif'],
 			},
 			backgroundImage: {
 				'gradient-primary': 'linear-gradient(135deg, #1F6FEB 0%, #8E44AD 100%)',
+				'gradient-secondary': 'linear-gradient(135deg, #00CFFF 0%, #003153 100%)',
+				'gradient-success': 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+				'gradient-warning': 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+				'gradient-danger': 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
+				'gradient-info': 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+			},
+			boxShadow: {
+				'neuro': '10px 10px 20px rgba(0, 0, 0, 0.05), -10px -10px 20px rgba(255, 255, 255, 0.7)',
+				'neuro-dark': '10px 10px 20px rgba(0, 0, 0, 0.3), -10px -10px 20px rgba(255, 255, 255, 0.05)',
+				'neuro-sm': '5px 5px 10px rgba(0, 0, 0, 0.05), -5px -5px 10px rgba(255, 255, 255, 0.7)',
+				'neuro-sm-dark': '5px 5px 10px rgba(0, 0, 0, 0.3), -5px -5px 10px rgba(255, 255, 255, 0.05)',
 			}
 		}
 	},

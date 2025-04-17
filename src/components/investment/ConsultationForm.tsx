@@ -13,7 +13,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
-import { Calendar as CalendarIcon, Clock } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, Check } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 
@@ -48,6 +48,7 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
     setTimeout(() => {
       toast.success("Consultation planifiée avec succès", {
         description: `Rendez-vous le ${format(date, 'P', { locale: fr })} à ${timeSlot}`,
+        icon: <Check className="h-4 w-4 text-green-500" />,
       });
       setIsSubmitting(false);
       onClose();
@@ -55,20 +56,21 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 neuro-card p-6 dark:bg-gray-800">
       <div className="space-y-2">
-        <Label htmlFor="name">Nom complet</Label>
+        <Label htmlFor="name" className="text-foreground/90">Nom complet</Label>
         <Input 
           id="name" 
           placeholder="Mohamed El Fassi" 
           value={name} 
           onChange={(e) => setName(e.target.value)}
           required
+          className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark focus:shadow-none transition-all duration-300"
         />
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email" className="text-foreground/90">Email</Label>
         <Input 
           id="email" 
           type="email" 
@@ -76,27 +78,29 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
           value={email} 
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark focus:shadow-none transition-all duration-300"
         />
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="phone">Téléphone</Label>
+        <Label htmlFor="phone" className="text-foreground/90">Téléphone</Label>
         <Input 
           id="phone" 
           placeholder="06 XX XX XX XX" 
           value={phone} 
           onChange={(e) => setPhone(e.target.value)}
           required
+          className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark focus:shadow-none transition-all duration-300"
         />
       </div>
       
       <div className="space-y-2">
-        <Label>Type de consultation</Label>
+        <Label className="text-foreground/90">Type de consultation</Label>
         <Select value={consultationType} onValueChange={setConsultationType}>
-          <SelectTrigger>
+          <SelectTrigger className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark focus:shadow-none transition-all duration-300">
             <SelectValue placeholder="Sélectionnez le type de consultation" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="rounded-xl shadow-md">
             <SelectItem value="epargne">Épargne</SelectItem>
             <SelectItem value="investissement">Investissement</SelectItem>
             <SelectItem value="retraite">Planification de retraite</SelectItem>
@@ -107,18 +111,18 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
       
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label>Date du rendez-vous</Label>
+          <Label className="text-foreground/90">Date du rendez-vous</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
-                className="w-full justify-start text-left font-normal"
+                className="w-full justify-start text-left font-normal rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark hover:shadow-none transition-all duration-300"
               >
-                <CalendarIcon className="mr-2 h-4 w-4" />
+                <CalendarIcon className="mr-2 h-4 w-4 text-monavenir-blue" />
                 {date ? format(date, 'P', { locale: fr }) : <span>Choisir une date</span>}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
+            <PopoverContent className="w-auto p-0 rounded-xl shadow-md">
               <Calendar
                 mode="single"
                 selected={date}
@@ -129,19 +133,20 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
                   date.getDay() === 6
                 }
                 initialFocus
+                className="rounded-xl"
               />
             </PopoverContent>
           </Popover>
         </div>
         
         <div className="space-y-2">
-          <Label>Heure</Label>
+          <Label className="text-foreground/90">Heure</Label>
           <Select value={timeSlot} onValueChange={setTimeSlot}>
-            <SelectTrigger>
+            <SelectTrigger className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark focus:shadow-none transition-all duration-300">
               <SelectValue placeholder="Choisir l'heure">
                 {timeSlot ? (
                   <div className="flex items-center">
-                    <Clock className="mr-2 h-4 w-4" />
+                    <Clock className="mr-2 h-4 w-4 text-monavenir-blue" />
                     {timeSlot}
                   </div>
                 ) : (
@@ -149,7 +154,7 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
                 )}
               </SelectValue>
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="rounded-xl shadow-md">
               {timeSlots.map((time) => (
                 <SelectItem key={time} value={time}>
                   {time}
@@ -161,10 +166,19 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
       </div>
       
       <div className="flex justify-end gap-2 pt-4">
-        <Button type="button" variant="outline" onClick={onClose}>
+        <Button 
+          type="button" 
+          variant="outline" 
+          onClick={onClose}
+          className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark hover:shadow-none transition-all duration-300"
+        >
           Annuler
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
+        <Button 
+          type="submit" 
+          disabled={isSubmitting}
+          className="rounded-xl bg-gradient-primary hover:opacity-90 transition-opacity"
+        >
           {isSubmitting ? "Confirmation en cours..." : "Confirmer le rendez-vous"}
         </Button>
       </div>

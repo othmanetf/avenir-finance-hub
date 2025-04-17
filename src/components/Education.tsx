@@ -9,7 +9,7 @@ export const Education = () => {
   return (
     <div className="p-4 md:p-6 md:pl-24">
       <div className="mb-5 md:mb-6 flex flex-col space-y-1">
-        <h1 className="text-2xl font-bold md:text-3xl">Éducation Financière</h1>
+        <h1 className="text-2xl font-bold md:text-3xl text-transparent bg-gradient-primary bg-clip-text">Éducation Financière</h1>
         <p className="text-sm md:text-base text-muted-foreground">Apprenez et développez vos connaissances financières</p>
       </div>
 
