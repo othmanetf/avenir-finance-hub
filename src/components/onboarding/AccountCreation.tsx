@@ -13,6 +13,10 @@ import { Mail, Lock, User, Phone, Camera, Check, ArrowRight } from "lucide-react
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 
+interface AccountCreationProps {
+  onComplete?: () => void;
+}
+
 // Step 1: Basic Info Schema
 const basicInfoSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
@@ -34,7 +38,7 @@ const profileSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters")
 });
 
-export const AccountCreation = () => {
+export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
   const { step, setStep, setFullName, setEmail, setPassword, setPhoneNumber, 
           setVerificationCode, profilePicture, setProfilePicture, setUsername } = useOnboarding();
   const [subStep, setSubStep] = useState(1);
@@ -77,7 +81,6 @@ export const AccountCreation = () => {
   const onPhoneSubmit = (data: z.infer<typeof phoneSchema>) => {
     setPhoneNumber(data.phoneNumber);
     setIsVerifying(true);
-    // In a real app, this would call an API to send an SMS
     toast.success("Code de vérification envoyé à votre téléphone");
   };
 
@@ -97,7 +100,11 @@ export const AccountCreation = () => {
   };
 
   const handleContinue = () => {
-    setStep(3); // Go to financial profiling
+    if (onComplete) {
+      onComplete();
+    } else {
+      setStep(3);
+    }
   };
 
   const handleUploadPicture = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useOnboarding } from "@/context/OnboardingContext";
@@ -26,6 +25,10 @@ import {
   ArrowRight,
   ArrowLeft
 } from "lucide-react";
+
+interface FinancialProfilingProps {
+  onComplete?: () => void;
+}
 
 const incomeRanges = [
   "< 5,000 MAD",
@@ -85,7 +88,7 @@ const financialConcerns = [
   "Objectifs financiers flous"
 ];
 
-export const FinancialProfiling = () => {
+export const FinancialProfiling = ({ onComplete }: FinancialProfilingProps) => {
   const { updateFinancialProfile, financialProfile, setStep } = useOnboarding();
   const [subStep, setSubStep] = useState(1);
   const totalSubSteps = 7;
@@ -94,8 +97,11 @@ export const FinancialProfiling = () => {
     if (subStep < totalSubSteps) {
       setSubStep(subStep + 1);
     } else {
-      // Move to the bank connection step
-      setStep(4);
+      if (onComplete) {
+        onComplete();
+      } else {
+        setStep(4);
+      }
     }
   };
 
@@ -103,12 +109,10 @@ export const FinancialProfiling = () => {
     if (subStep > 1) {
       setSubStep(subStep - 1);
     } else {
-      // Go back to account creation
       setStep(2);
     }
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -147,7 +151,6 @@ export const FinancialProfiling = () => {
   return (
     <div className="container max-w-md mx-auto px-4 py-8">
       <div className="w-full max-w-md mx-auto">
-        {/* Progress indicator */}
         <div className="flex justify-between mb-8">
           {Array.from({ length: totalSubSteps }).map((_, i) => (
             <div 
@@ -159,7 +162,6 @@ export const FinancialProfiling = () => {
           ))}
         </div>
 
-        {/* Step 1: Monthly Income */}
         {subStep === 1 && (
           <motion.div
             variants={containerVariants}
@@ -206,7 +208,6 @@ export const FinancialProfiling = () => {
           </motion.div>
         )}
 
-        {/* Step 2: Fixed Expenses */}
         {subStep === 2 && (
           <motion.div
             variants={containerVariants}
@@ -262,7 +263,6 @@ export const FinancialProfiling = () => {
           </motion.div>
         )}
 
-        {/* Step 3: Debt */}
         {subStep === 3 && (
           <motion.div
             variants={containerVariants}
@@ -341,7 +341,6 @@ export const FinancialProfiling = () => {
           </motion.div>
         )}
 
-        {/* Step 4: Savings */}
         {subStep === 4 && (
           <motion.div
             variants={containerVariants}
@@ -417,7 +416,6 @@ export const FinancialProfiling = () => {
           </motion.div>
         )}
 
-        {/* Step 5: Investments */}
         {subStep === 5 && (
           <motion.div
             variants={containerVariants}
@@ -473,7 +471,6 @@ export const FinancialProfiling = () => {
           </motion.div>
         )}
 
-        {/* Step 6: Financial Goals & Concerns */}
         {subStep === 6 && (
           <motion.div
             variants={containerVariants}
@@ -555,7 +552,6 @@ export const FinancialProfiling = () => {
           </motion.div>
         )}
 
-        {/* Step 7: Language Preference */}
         {subStep === 7 && (
           <motion.div
             variants={containerVariants}
