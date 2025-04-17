@@ -19,7 +19,7 @@ const ProtectedRoutes = () => {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    // Only show splash for 8 seconds the first time the app is opened
+    // Only show splash for 3 seconds the first time the app is opened
     const hasSeenSplash = sessionStorage.getItem("hasSeenSplash");
     
     if (hasSeenSplash) {
@@ -28,7 +28,7 @@ const ProtectedRoutes = () => {
       const timer = setTimeout(() => {
         setShowSplash(false);
         sessionStorage.setItem("hasSeenSplash", "true");
-      }, 8000);
+      }, 3000);
       
       return () => clearTimeout(timer);
     }
@@ -39,7 +39,11 @@ const ProtectedRoutes = () => {
   }
 
   if (isLoading) {
-    return <div className="h-screen w-full flex items-center justify-center">Chargement...</div>;
+    return (
+      <div className="h-screen w-full flex items-center justify-center">
+        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
+      </div>
+    );
   }
 
   return isOnboarded ? <Index /> : <Navigate to="/onboarding" />;
@@ -52,7 +56,11 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Suspense fallback={<div className="h-screen w-full flex items-center justify-center">Chargement...</div>}>
+          <Suspense fallback={
+            <div className="h-screen w-full flex items-center justify-center">
+              <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
+            </div>
+          }>
             <Routes>
               <Route path="/" element={<ProtectedRoutes />} />
               <Route path="/splash" element={<SplashScreen />} />

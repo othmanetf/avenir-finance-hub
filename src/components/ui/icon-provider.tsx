@@ -7,12 +7,18 @@ import {
   BookOpen,
   Brain,
   TrendingUp,
-  UserRound,
+  UserCircle2,
   Settings,
   Bell,
   ArrowRightLeft,
   PiggyBank,
-  BarChart3
+  BarChart3,
+  Building,
+  Target,
+  Briefcase,
+  CreditCard,
+  DollarSign,
+  Landmark
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +32,13 @@ export type IconName =
   | "notifications"
   | "transactions"
   | "savings"
-  | "investChart";
+  | "investChart"
+  | "bank"
+  | "goals"
+  | "portfolio"
+  | "creditCard"
+  | "finances"
+  | "stocks";
 
 type IconProviderProps = {
   name: IconName;
@@ -40,12 +52,18 @@ const iconMap: Record<IconName, LucideIcon> = {
   education: BookOpen,
   analysis: Brain,
   investments: TrendingUp,
-  profile: UserRound,
+  profile: UserCircle2,
   settings: Settings,
   notifications: Bell,
   transactions: ArrowRightLeft,
   savings: PiggyBank,
-  investChart: BarChart3
+  investChart: BarChart3,
+  bank: Building,
+  goals: Target,
+  portfolio: Briefcase,
+  creditCard: CreditCard,
+  finances: DollarSign,
+  stocks: Landmark
 };
 
 export const Icon = ({ 
@@ -120,7 +138,7 @@ export const PrimaryIcon = ({
     <Icon
       name={name}
       className={cn(
-        "text-monavenir-blue",
+        "text-[#1F6FEB]",
         className
       )}
       size={size}
@@ -142,7 +160,7 @@ export const SecondaryIcon = ({
     <Icon
       name={name}
       className={cn(
-        "text-monavenir-skyblue",
+        "text-[#00CFFF]",
         className
       )}
       size={size}

@@ -10,9 +10,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Mail, Lock, User, Phone, Camera, Check, ArrowRight } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Mail, Lock, User, Phone, Check, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import AvatarSelector from "./AvatarSelector";
 
 interface AccountCreationProps {
   onComplete?: () => void;
@@ -40,7 +40,7 @@ const profileSchema = z.object({
 });
 
 export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
-  const { step, setStep, setFullName, setEmail, setPassword, setPhoneNumber, 
+  const { setFullName, setEmail, setPassword, setPhoneNumber, 
           setVerificationCode, profilePicture, setProfilePicture, setUsername } = useOnboarding();
   const [subStep, setSubStep] = useState(1);
   const [verificationCode, setVerificationCodeLocal] = useState("");
@@ -103,21 +103,6 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
   const handleContinue = () => {
     if (onComplete) {
       onComplete();
-    } else {
-      setStep(3);
-    }
-  };
-
-  const handleUploadPicture = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          setProfilePicture(event.target.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
     }
   };
 
@@ -168,7 +153,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
   };
 
   return (
-    <div className="container max-w-md mx-auto px-4 py-8">
+    <div className="container max-w-md mx-auto px-4 py-8 pt-24">
       <div className="w-full max-w-md mx-auto">
         {/* Progress indicator */}
         <div className="flex justify-between mb-8">
@@ -176,7 +161,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
             <div 
               key={s} 
               className={`h-2 rounded-full flex-1 mx-1 ${
-                subStep >= s ? "bg-gradient-primary" : "bg-gray-200 dark:bg-gray-700"
+                subStep >= s ? "bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD]" : "bg-gray-200 dark:bg-gray-700"
               }`}
             />
           ))}
@@ -203,6 +188,9 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
             className="space-y-6"
           >
             <motion.div variants={itemVariants}>
+              <div className="flex items-center justify-center mb-6">
+                <img src="/logo-ma-plus.png" alt="MonAvenir+" className="h-16 w-16" />
+              </div>
               <h1 className="text-2xl font-bold text-center mb-2">Créer votre compte</h1>
               <p className="text-gray-500 dark:text-gray-400 text-center mb-6">
                 Commençons par quelques informations de base
@@ -284,7 +272,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                  <Button type="submit" className="w-full bg-gradient-primary">
+                  <Button type="submit" className="w-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white">
                     Continuer <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </motion.div>
@@ -330,7 +318,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                   />
 
                   <motion.div variants={itemVariants}>
-                    <Button type="submit" className="w-full bg-gradient-primary">
+                    <Button type="submit" className="w-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white">
                       Envoyer le code
                     </Button>
                   </motion.div>
@@ -366,7 +354,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                  <Button onClick={onVerifyCode} className="w-full bg-gradient-primary">
+                  <Button onClick={onVerifyCode} className="w-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white">
                     Vérifier le code
                   </Button>
                 </motion.div>
@@ -375,7 +363,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                   <button 
                     type="button"
                     onClick={() => setIsVerifying(false)}
-                    className="text-sm text-blue-500 hover:underline"
+                    className="text-sm text-[#1F6FEB] hover:underline"
                   >
                     Modifier le numéro
                   </button>
@@ -402,31 +390,10 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
             </motion.div>
 
             <motion.div variants={itemVariants} className="flex justify-center mb-6">
-              <div className="relative">
-                <Avatar className="h-24 w-24">
-                  {profilePicture ? (
-                    <AvatarImage src={profilePicture} />
-                  ) : (
-                    <AvatarFallback className="bg-gradient-primary text-white text-xl">
-                      {/* Show initials if available */}
-                      M+
-                    </AvatarFallback>
-                  )}
-                </Avatar>
-                <label 
-                  htmlFor="avatar-upload" 
-                  className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full bg-primary flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
-                >
-                  <Camera className="h-4 w-4 text-white" />
-                </label>
-                <input 
-                  id="avatar-upload"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleUploadPicture}
-                />
-              </div>
+              <AvatarSelector 
+                profilePicture={profilePicture} 
+                onSelectPicture={setProfilePicture} 
+              />
             </motion.div>
 
             <Form {...profileForm}>
@@ -449,7 +416,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                 />
 
                 <motion.div variants={itemVariants}>
-                  <Button type="submit" className="w-full bg-gradient-primary">
+                  <Button type="submit" className="w-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white">
                     Finaliser le profil
                   </Button>
                 </motion.div>
@@ -471,9 +438,9 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: "spring", damping: 12 }}
-              className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mx-auto"
+              className="w-24 h-24 rounded-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] flex items-center justify-center mx-auto"
             >
-              <Check className="h-12 w-12 text-green-600" />
+              <Check className="h-12 w-12 text-white" />
             </motion.div>
             
             <motion.h1 
@@ -493,7 +460,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
             <motion.div variants={itemVariants}>
               <Button 
                 onClick={handleContinue}
-                className="w-full bg-gradient-primary"
+                className="w-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white"
               >
                 Continuer <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

@@ -16,10 +16,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 20%;
 
-    --primary: 217 91% 52%;
+    --primary: 217 91% 52%; /* #1F6FEB */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 283 39% 47%;
+    --secondary: 283 39% 47%; /* #8E44AD */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 210 40% 96.1%;
@@ -36,6 +36,13 @@
     --ring: 217 91% 52%;
 
     --radius: 1.5rem;
+    
+    /* Custom colors */
+    --monavenir-blue: 217 91% 52%; /* #1F6FEB */
+    --monavenir-purple: 283 39% 47%; /* #8E44AD */
+    --monavenir-skyblue: 196 100% 50%; /* #00CFFF */
+    --monavenir-darkblue: 202 100% 16.3%; /* #003153 */
+    --monavenir-lightgray: 200 33% 98%; /* #F7F9FA */
   }
 
   .dark {
@@ -81,19 +88,19 @@
 
 @layer components {
   .card-gradient-primary {
-    @apply bg-gradient-primary text-white;
+    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white;
   }
   
   .card-gradient-secondary {
-    @apply bg-gradient-secondary text-white;
+    @apply bg-gradient-to-r from-[#00CFFF] to-[#003153] text-white;
   }
   
   .card-gradient-tertiary {
-    @apply bg-gradient-to-r from-monavenir-skyblue to-monavenir-blue text-white;
+    @apply bg-gradient-to-r from-[#00CFFF] to-[#1F6FEB] text-white;
   }
   
   .text-gradient {
-    @apply bg-gradient-primary bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] bg-clip-text text-transparent;
   }
   
   .transaction-item {
@@ -104,25 +111,25 @@
     @apply flex flex-col justify-center rounded-2xl p-4 text-white h-24 w-full shadow-neuro-sm dark:shadow-neuro-sm-dark;
   }
 
-  /* New utility classes based on the inspiration design */
+  /* Utility classes */
   .wallet-card {
-    @apply relative rounded-2xl shadow-lg overflow-hidden h-44 flex flex-col justify-between p-4 transition-all duration-300 hover:shadow-xl;
+    @apply relative rounded-2xl shadow-lg overflow-hidden h-44 flex flex-col justify-between p-4 transition-all duration-300;
   }
 
   .visa-card {
-    @apply bg-gradient-primary;
+    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD];
   }
 
   .mastercard {
-    @apply bg-gradient-secondary;
+    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD];
   }
 
   .stat-block {
-    @apply flex items-center justify-center space-x-2 rounded-2xl px-4 py-3 shadow-neuro-sm dark:shadow-neuro-sm-dark;
+    @apply flex items-center justify-center space-x-2 rounded-2xl px-4 py-3 shadow-md;
   }
 
   .income-block {
-    @apply bg-violet-100 text-violet-600 dark:bg-violet-900 dark:text-violet-200;
+    @apply bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-200;
   }
 
   .spend-block {
@@ -134,43 +141,15 @@
   }
   
   .category-icon {
-    @apply flex items-center justify-center h-10 w-10 rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark;
+    @apply flex items-center justify-center h-10 w-10 rounded-xl shadow-md;
   }
 
-  /* Neumorphic elements */
-  .neuro-card {
-    @apply bg-white rounded-2xl shadow-neuro dark:bg-gray-800 dark:shadow-neuro-dark;
+  /* Gradient backgrounds */
+  .bg-gradient-primary {
+    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD];
   }
   
-  .neuro-button {
-    @apply rounded-xl shadow-neuro-sm hover:shadow-none transition-shadow dark:shadow-neuro-sm-dark;
-  }
-  
-  /* Gradient text and backgrounds */
-  .gradient-text-primary {
-    @apply bg-gradient-primary bg-clip-text text-transparent;
-  }
-  
-  .gradient-bg-primary {
-    @apply bg-gradient-primary;
-  }
-  
-  .gradient-bg-secondary {
-    @apply bg-gradient-secondary;
-  }
-  
-  /* Floating animation for elements */
-  .float {
-    @apply animate-float;
-  }
-  
-  /* Cards with soft shadows */
-  .soft-shadow {
-    @apply shadow-md hover:shadow-lg transition-shadow duration-300;
-  }
-  
-  /* Progress elements */
-  .progress-gradient {
-    @apply bg-gradient-to-r from-red-500 via-yellow-400 to-green-500;
+  .bg-gradient-secondary {
+    @apply bg-gradient-to-r from-[#00CFFF] to-[#003153];
   }
 }

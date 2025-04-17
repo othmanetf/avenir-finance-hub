@@ -83,17 +83,17 @@ const OnboardingPage = () => {
               <div 
                 key={step} 
                 className={`h-1 rounded-full flex-1 mx-1 ${
-                  currentStep >= step ? "bg-gradient-primary" : "bg-gray-200 dark:bg-gray-700"
+                  currentStep >= step ? "bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD]" : "bg-gray-200 dark:bg-gray-700"
                 }`}
               />
             ))}
           </div>
           <div className="flex justify-between max-w-md mx-auto px-1">
             {[1, 2, 3].map((step) => (
-              <div 
+              <button 
                 key={step}
                 onClick={() => skipToStep(step)}
-                className={`flex flex-col items-center cursor-pointer ${
+                className={`flex flex-col items-center cursor-pointer transition-colors duration-200 ${
                   currentStep >= step ? "text-monavenir-blue" : "text-gray-400"
                 }`}
               >
@@ -104,7 +104,7 @@ const OnboardingPage = () => {
                   className={currentStep >= step ? "text-monavenir-blue" : "text-gray-400"}
                 />
                 <span className="text-xs mt-1">{getStepName(step)}</span>
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -126,7 +126,7 @@ const OnboardingPage = () => {
               key="step1"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
+              exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
               <AccountCreation onComplete={() => handleStepChange(2)} />
@@ -136,7 +136,7 @@ const OnboardingPage = () => {
               key="step2"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
+              exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
               <FinancialProfiling onComplete={() => handleStepChange(3)} />
@@ -146,7 +146,7 @@ const OnboardingPage = () => {
               key="step3"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
+              exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
               <BankConnection />
