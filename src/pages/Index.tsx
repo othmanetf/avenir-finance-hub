@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import SplashScreen from "@/components/SplashScreen";
 import Navigation from "@/components/Navigation";
 import Dashboard from "@/components/Dashboard";
@@ -8,24 +9,38 @@ import Analysis from "@/components/Analysis";
 import Investments from "@/components/Investments";
 import ProfilePage from "@/components/ProfilePage";
 import { useProfile } from "@/hooks/use-profile";
+import { useOnboarded } from "@/hooks/use-onboarded";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [currentRoute, setCurrentRoute] = useState("/");
   const { isProfileOpen, closeProfile } = useProfile();
+  const { isOnboarded, isLoading } = useOnboarded();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // Check if user has completed onboarding
+    if (!isLoading && !isOnboarded) {
+      navigate('/onboarding');
+      return;
+    }
+
     // Ignorer l'écran de démarrage pour les utilisateurs qui reviennent
     const hasSeenSplash = localStorage.getItem("hasSeenSplash");
     if (hasSeenSplash) {
       setShowSplash(false);
     }
-  }, []);
+  }, [isLoading, isOnboarded, navigate]);
 
   const handleSplashComplete = () => {
     setShowSplash(false);
     localStorage.setItem("hasSeenSplash", "true");
   };
+
+  // Show a loading state while checking onboarding status
+  if (isLoading) {
+    return <div className="h-screen w-full flex items-center justify-center">Chargement...</div>
+  }
 
   const renderCurrentView = () => {
     switch (currentRoute) {
