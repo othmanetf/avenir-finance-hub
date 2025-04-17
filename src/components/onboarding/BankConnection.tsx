@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Bank, Check, X, ArrowRight } from "lucide-react";
+import { Building, Check, X, ArrowRight } from "lucide-react";
 
 const bankOptions = [
   {
@@ -96,7 +96,7 @@ export const BankConnection = () => {
         >
           <motion.div variants={itemVariants} className="flex items-center justify-center">
             <div className="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center">
-              <Bank className="h-8 w-8 text-blue-600" />
+              <Building className="h-8 w-8 text-blue-600" />
             </div>
           </motion.div>
 

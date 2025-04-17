@@ -8,6 +8,10 @@ import BankConnection from "@/components/onboarding/BankConnection";
 const OnboardingPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
+  const handleStepChange = (step: number) => {
+    setCurrentStep(step);
+  };
+
   return (
     <OnboardingProvider>
       <div className="min-h-screen bg-background overflow-x-hidden">

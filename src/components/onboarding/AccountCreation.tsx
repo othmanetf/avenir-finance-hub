@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useOnboarding } from "@/context/OnboardingContext";
@@ -316,8 +315,8 @@ export const AccountCreation = () => {
                     onChange={setVerificationCodeLocal}
                     render={({ slots }) => (
                       <InputOTPGroup>
-                        {slots.map((slot, index) => (
-                          <InputOTPSlot key={index} {...slot} />
+                        {slots.map((slot, idx) => (
+                          <InputOTPSlot key={idx} {...slot} index={idx} />
                         ))}
                       </InputOTPGroup>
                     )}
