@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useOnboarding } from "@/context/OnboardingContext";
@@ -120,6 +121,29 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
     }
   };
 
+  // Skip the current step (for prototype testing)
+  const skipStep = () => {
+    if (subStep === 1) {
+      // Set default values for basic info
+      setFullName("Utilisateur Test");
+      setEmail("test@monavenir.com");
+      setPassword("password123");
+      setSubStep(2);
+    } else if (subStep === 2) {
+      // Set default values for phone verification
+      setPhoneNumber("+212612345678");
+      setVerificationCode("123456");
+      setSubStep(3);
+    } else if (subStep === 3) {
+      // Set default values for profile
+      setUsername("utilisateur_test");
+      setSubStep(4);
+    } else if (subStep === 4) {
+      // Continue to next step
+      handleContinue();
+    }
+  };
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -156,6 +180,17 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
               }`}
             />
           ))}
+        </div>
+
+        <div className="text-right mb-2">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="text-xs text-gray-500"
+            onClick={skipStep}
+          >
+            {subStep < 4 ? "Ignorer cette étape" : "Terminer"}
+          </Button>
         </div>
 
         {/* Step 1: Basic Information */}

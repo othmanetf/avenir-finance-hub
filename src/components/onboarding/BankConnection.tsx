@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/ui/icon-provider";
 import { Building, Check, X, ArrowRight } from "lucide-react";
+import { useOnboarded } from "@/hooks/use-onboarded";
 
 const bankOptions = [
   {
@@ -40,7 +41,9 @@ const bankOptions = [
 export const BankConnection = () => {
   const { setBankConnected, completeOnboarding } = useOnboarding();
   const [selectedBanks, setSelectedBanks] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { completeOnboarding: finishOnboarding } = useOnboarded();
 
   const toggleBank = (bankId: string) => {
     setSelectedBanks(prev => 
@@ -51,15 +54,27 @@ export const BankConnection = () => {
   };
 
   const handleConnect = () => {
+    setIsLoading(true);
     setBankConnected(selectedBanks.length > 0);
     completeOnboarding();
-    navigate('/');
+    
+    // Show loading state for a short duration before redirecting
+    setTimeout(() => {
+      finishOnboarding();
+      navigate('/');
+    }, 1500);
   };
 
   const handleSkip = () => {
+    setIsLoading(true);
     setBankConnected(false);
     completeOnboarding();
-    navigate('/');
+    
+    // Show loading state for a short duration before redirecting
+    setTimeout(() => {
+      finishOnboarding();
+      navigate('/');
+    }, 1500);
   };
 
   // Animation variants
@@ -150,16 +165,31 @@ export const BankConnection = () => {
             <Button 
               onClick={handleConnect}
               className="w-full bg-gradient-primary"
-              disabled={selectedBanks.length === 0}
+              disabled={selectedBanks.length === 0 || isLoading}
             >
-              Connecter les comptes <ArrowRight className="ml-2 h-4 w-4" />
+              {isLoading ? (
+                <>
+                  <span className="mr-2">Connexion en cours</span>
+                  <span className="animate-spin">
+                    <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  </span>
+                </>
+              ) : (
+                <>
+                  Connecter les comptes <ArrowRight className="ml-2 h-4 w-4" />
+                </>
+              )}
             </Button>
             <Button 
               onClick={handleSkip}
               variant="outline"
               className="w-full"
+              disabled={isLoading}
             >
-              Ignorer pour l'instant
+              {isLoading ? "Finalisation..." : "Ignorer pour l'instant"}
             </Button>
           </motion.div>
         </motion.div>
