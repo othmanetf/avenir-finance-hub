@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -7,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
+    --background: 220 33% 98%;
     --foreground: 222 47% 20%;
 
     --card: 0 0% 100%;
@@ -16,16 +15,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 20%;
 
-    --primary: 217 91% 52%; /* #1F6FEB */
+    --primary: 225 100% 38%;  /* Deep blue from logo */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 283 39% 47%; /* #8E44AD */
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 192 100% 50%;  /* Bright cyan from logo */
+    --secondary-foreground: 222 47% 20%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 100% 50%;
+    --accent: 192 100% 50%;
     --accent-foreground: 222 47% 20%;
 
     --destructive: 0 84.2% 60.2%;
@@ -33,38 +32,31 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 217 91% 52%;
+    --ring: 225 100% 38%;
 
     --radius: 1rem;
-    
-    /* Custom colors */
-    --monavenir-blue: 217 91% 52%; /* #1F6FEB */
-    --monavenir-purple: 283 39% 47%; /* #8E44AD */
-    --monavenir-skyblue: 196 100% 50%; /* #00CFFF */
-    --monavenir-darkblue: 202 100% 16.3%; /* #003153 */
-    --monavenir-lightgrey: 200 33% 98%; /* #F7F9FA */
   }
 
   .dark {
-    --background: 220 40% 8%;
+    --background: 225 100% 10%;
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 10%;
+    --card: 225 100% 12%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 10%;
+    --popover: 225 100% 12%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217 91% 52%;
+    --primary: 225 100% 38%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 283 39% 47%;
+    --secondary: 192 100% 50%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 210 100% 50%;
+    --accent: 192 100% 50%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -72,7 +64,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 217 91% 52%;
+    --ring: 225 100% 38%;
   }
 }
 
@@ -82,34 +74,17 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight;
-  }
-  
-  /* Improve overall text legibility */
-  p, span, button, input, textarea, select, option {
-    @apply antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
   }
 }
 
 @layer components {
   .card-gradient-primary {
-    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white;
-  }
-  
-  .card-gradient-secondary {
-    @apply bg-gradient-to-r from-[#00CFFF] to-[#003153] text-white;
-  }
-  
-  .card-gradient-tertiary {
-    @apply bg-gradient-to-r from-[#00CFFF] to-[#1F6FEB] text-white;
+    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan text-white;
   }
   
   .text-gradient {
-    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan bg-clip-text text-transparent;
   }
   
   .transaction-item {
@@ -126,11 +101,11 @@
   }
 
   .visa-card {
-    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD];
+    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan;
   }
 
   .mastercard {
-    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD];
+    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan;
   }
 
   .stat-block {
@@ -155,11 +130,11 @@
 
   /* Gradient backgrounds */
   .bg-gradient-primary {
-    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD];
+    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan;
   }
   
   .bg-gradient-secondary {
-    @apply bg-gradient-to-r from-[#00CFFF] to-[#003153];
+    @apply bg-gradient-to-r from-monavenir-cyan to-monavenir-blue;
   }
   
   /* Mobile-optimized classes */
@@ -197,7 +172,7 @@
   
   /* Consistent button styling */
   .btn-primary-gradient {
-    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white rounded-full shadow-md hover:shadow-lg transition-all;
+    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan text-white rounded-full shadow-md hover:shadow-lg transition-all;
   }
   
   /* Onboarding specific styles */
@@ -206,7 +181,7 @@
   }
   
   .onboarding-step-active {
-    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white;
+    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan text-white;
   }
   
   .onboarding-step-inactive {

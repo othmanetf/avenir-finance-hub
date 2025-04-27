@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { OnboardingProvider } from "@/context/OnboardingContext";
 import AccountCreation from "@/components/onboarding/AccountCreation";
@@ -63,7 +62,6 @@ const OnboardingPage = () => {
   return (
     <OnboardingProvider>
       <div className="min-h-screen bg-background overflow-hidden">
-        {/* Progress indicator - Revised for better alignment and no overlapping */}
         <div className="fixed top-0 left-0 w-full z-10 bg-background/95 backdrop-blur-sm shadow-sm pt-4 pb-2">
           <div className="max-w-md mx-auto flex items-center justify-between mb-1 px-4">
             <Button 
@@ -83,7 +81,7 @@ const OnboardingPage = () => {
               <div 
                 key={step} 
                 className={`h-1 rounded-full flex-1 mx-1 ${
-                  currentStep >= step ? "bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD]" : "bg-gray-200 dark:bg-gray-700"
+                  currentStep >= step ? "bg-gradient-to-r from-monavenir-blue to-monavenir-cyan" : "bg-gray-200 dark:bg-gray-700"
                 }`}
               />
             ))}
@@ -97,7 +95,7 @@ const OnboardingPage = () => {
               >
                 <div className={`flex items-center justify-center w-8 h-8 rounded-full mb-1 ${
                   currentStep >= step 
-                    ? "bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white" 
+                    ? "bg-gradient-to-r from-monavenir-blue to-monavenir-cyan text-white" 
                     : "bg-gray-100 text-gray-400"
                 }`}>
                   <Icon 
@@ -107,7 +105,7 @@ const OnboardingPage = () => {
                   />
                 </div>
                 <span className={`text-xs ${
-                  currentStep >= step ? "text-primary font-medium" : "text-gray-400"
+                  currentStep >= step ? "text-monavenir-blue font-medium" : "text-gray-400"
                 }`}>
                   {getStepName(step)}
                 </span>
