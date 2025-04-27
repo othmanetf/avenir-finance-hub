@@ -40,7 +40,7 @@ const bankOptions = [
   }
 ];
 
-export const BankConnection = () => {
+const BankConnection = () => {
   const { setBankConnected, completeOnboarding } = useOnboarding();
   const [selectedBanks, setSelectedBanks] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);

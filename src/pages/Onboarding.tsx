@@ -160,7 +160,7 @@ const OnboardingPage = () => {
                 transition={{ duration: 0.3 }}
                 className="h-full"
               >
-                <BankConnection onComplete={finishOnboarding} />
+                <BankConnection />
               </motion.div>
             )}
           </AnimatePresence>
