@@ -53,12 +53,12 @@ export default {
           foreground: 'hsl(var(--card-foreground))'
         },
         monavenir: {
-          blue: '#0039C2',      // Deep blue from logo
-          cyan: '#00D1FF',      // Bright cyan from logo
-          success: '#10B981',   // Keep green for success states
-          warning: '#F59E0B',   // Keep orange for warnings
-          error: '#EF4444',     // Keep red for errors
-          lightgrey: '#F7F9FA', // Light background
+          blue: '#0039C2',      // Primary blue
+          cyan: '#00D1FF',      // Bright cyan
+          success: '#10B981',   // Keep semantic colors
+          warning: '#F59E0B',   
+          error: '#EF4444',     
+          lightgrey: '#F7F9FA', 
         }
       },
       borderRadius: {
@@ -136,8 +136,8 @@ export default {
         sans: ['Inter', 'Manrope', 'SF Pro', 'sans-serif'],
       },
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, #1F6FEB 0%, #8E44AD 100%)',
-        'gradient-secondary': 'linear-gradient(135deg, #00CFFF 0%, #003153 100%)',
+        'gradient-primary': 'linear-gradient(135deg, #0039C2 0%, #00D1FF 100%)',
+        'gradient-secondary': 'linear-gradient(135deg, #00D1FF 0%, #0039C2 100%)',
         'gradient-success': 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
         'gradient-warning': 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
         'gradient-danger': 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',

@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Icon } from "@/components/ui/icon-provider";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 
@@ -22,7 +21,6 @@ const SplashScreen = () => {
     setIsLoading(true);
     const hasCompletedOnboarding = localStorage.getItem("hasCompletedOnboarding") === "true";
     
-    // Add a slight delay for smooth transition
     setTimeout(() => {
       navigate(hasCompletedOnboarding ? "/" : "/onboarding");
     }, 800);
@@ -30,7 +28,7 @@ const SplashScreen = () => {
 
   return (
     <motion.div 
-      className="h-screen w-full bg-monavenir-blue flex flex-col items-center justify-center"
+      className="h-screen w-full bg-gradient-to-br from-monavenir-blue to-monavenir-cyan flex flex-col items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -41,11 +39,11 @@ const SplashScreen = () => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
       >
-        <div className="relative w-32 h-32 bg-white rounded-full shadow-lg flex items-center justify-center mb-8 overflow-hidden">
+        <div className="relative w-32 h-32 rounded-full flex items-center justify-center mb-8">
           <img 
-            src="/lovable-uploads/39879fd1-d014-4036-b5d0-e7ec0df981bc.png" 
+            src="/lovable-uploads/0888d02f-e2bc-44b3-99c5-b8561428658b.png" 
             alt="MonAvenir+" 
-            className="w-28 h-28 object-contain" 
+            className="w-full h-full object-contain" 
           />
         </div>
         <motion.h1 
