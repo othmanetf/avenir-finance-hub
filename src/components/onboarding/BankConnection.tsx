@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/ui/icon-provider";
-import { Check, X, ArrowRight } from "lucide-react";
+import { Check, X, ArrowRight, Loader2 } from "lucide-react";
 import { useOnboarded } from "@/hooks/use-onboarded";
+import { cn } from "@/lib/utils";
 
 // Bank logos stored locally to ensure they load properly
 const bankOptions = [
@@ -25,17 +26,17 @@ const bankOptions = [
   {
     id: "cih",
     name: "CIH Bank",
-    logo: "/lovable-uploads/451a0f05-c9c4-4985-a6a4-d0e441d1e0d2.png" // Replace with actual CIH logo
+    logo: "/lovable-uploads/69b09907-4fdb-4696-8de1-ac20da10f2bc.png"
   },
   {
     id: "sgma",
     name: "Société Générale Maroc",
-    logo: "/lovable-uploads/de74a85e-1f8f-433f-bac9-bb3e92a8087a.png" // Replace with actual SG logo
+    logo: "/lovable-uploads/ab549ad1-6498-4f4c-9b7e-632c48c3f72b.png"
   },
   {
     id: "bp",
     name: "Banque Populaire",
-    logo: "/lovable-uploads/451a0f05-c9c4-4985-a6a4-d0e441d1e0d2.png" // Replace with actual BP logo
+    logo: "/lovable-uploads/f0ec1277-c7c9-4a7f-8544-0789cdc4eb4b.png"
   }
 ];
 
@@ -113,7 +114,7 @@ export const BankConnection = () => {
         >
           <motion.div variants={itemVariants} className="flex items-center justify-center">
             <div className="h-16 w-16 rounded-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] flex items-center justify-center">
-              <Icon name="transactions" className="h-8 w-8 text-white" />
+              <Icon name="bank" className="h-8 w-8 text-white" />
             </div>
           </motion.div>
 
@@ -129,25 +130,27 @@ export const BankConnection = () => {
               {bankOptions.map((bank) => (
                 <motion.div 
                   key={bank.id}
-                  className={`flex items-center space-x-3 border rounded-xl p-4 cursor-pointer transition-all duration-200 ${
+                  className={cn(
+                    "flex items-center space-x-3 border rounded-xl p-4 cursor-pointer transition-all duration-200",
                     selectedBanks.includes(bank.id) 
                       ? "border-[#1F6FEB] bg-[#1F6FEB]/5" 
                       : "border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
-                  }`}
+                  )}
                   onClick={() => toggleBank(bank.id)}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="w-10 h-10 bg-white rounded-md flex items-center justify-center p-1">
-                    <img src={bank.logo} alt={bank.name} className="max-h-8 max-w-8 object-contain" />
+                  <div className="w-10 h-10 bg-white rounded-md flex items-center justify-center p-1 overflow-hidden">
+                    <img src={bank.logo} alt={bank.name} className="max-h-8 max-w-full object-contain" />
                   </div>
                   <div className="flex-1">
                     <p className="font-medium">{bank.name}</p>
                   </div>
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                  <div className={cn(
+                    "w-6 h-6 rounded-full flex items-center justify-center", 
                     selectedBanks.includes(bank.id) 
                       ? "bg-[#1F6FEB] text-white" 
                       : "bg-gray-100 text-gray-400 dark:bg-gray-700"
-                  }`}>
+                  )}>
                     {selectedBanks.includes(bank.id) ? (
                       <Check className="h-4 w-4" />
                     ) : (
@@ -170,19 +173,15 @@ export const BankConnection = () => {
               disabled={selectedBanks.length === 0 || isLoading}
             >
               {isLoading ? (
-                <>
-                  <span className="mr-2">Connexion en cours</span>
-                  <span className="animate-spin">
-                    <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                  </span>
-                </>
+                <div className="flex items-center justify-center">
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <span>Connexion en cours</span>
+                </div>
               ) : (
-                <>
-                  Connecter les comptes <ArrowRight className="ml-2 h-4 w-4" />
-                </>
+                <div className="flex items-center justify-center">
+                  <span>Connecter les comptes</span>
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </div>
               )}
             </Button>
             <Button 

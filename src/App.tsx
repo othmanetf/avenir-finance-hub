@@ -10,8 +10,26 @@ import SplashScreen from "./components/onboarding/SplashScreen";
 import Onboarding from "./pages/Onboarding";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { useOnboarded } from "./hooks/use-onboarded";
+import { Loader2 } from "lucide-react";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+// Loading component
+const LoadingSpinner = () => (
+  <div className="h-screen w-full flex items-center justify-center">
+    <div className="flex flex-col items-center gap-4">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <p className="text-sm text-gray-500">Chargement...</p>
+    </div>
+  </div>
+);
 
 // Component to handle routes based on authentication
 const ProtectedRoutes = () => {
@@ -39,11 +57,7 @@ const ProtectedRoutes = () => {
   }
 
   if (isLoading) {
-    return (
-      <div className="h-screen w-full flex items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   return isOnboarded ? <Index /> : <Navigate to="/onboarding" />;
@@ -56,11 +70,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Suspense fallback={
-            <div className="h-screen w-full flex items-center justify-center">
-              <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
-            </div>
-          }>
+          <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<ProtectedRoutes />} />
               <Route path="/splash" element={<SplashScreen />} />

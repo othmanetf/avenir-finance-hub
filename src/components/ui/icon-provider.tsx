@@ -18,7 +18,10 @@ import {
   Briefcase,
   CreditCard,
   DollarSign,
-  Landmark
+  Landmark,
+  Loader2,
+  Check,
+  X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -38,7 +41,10 @@ export type IconName =
   | "portfolio"
   | "creditCard"
   | "finances"
-  | "stocks";
+  | "stocks"
+  | "loader"
+  | "check"
+  | "x";
 
 type IconProviderProps = {
   name: IconName;
@@ -63,7 +69,10 @@ const iconMap: Record<IconName, LucideIcon> = {
   portfolio: Briefcase,
   creditCard: CreditCard,
   finances: DollarSign,
-  stocks: Landmark
+  stocks: Landmark,
+  loader: Loader2,
+  check: Check,
+  x: X
 };
 
 export const Icon = ({ 
@@ -102,27 +111,30 @@ export const GradientIcon = ({
   ...props
 }: IconProviderProps) => {
   return (
-    <Icon
-      name={name}
-      className={cn(
-        "text-transparent",
-        className
-      )}
-      size={size}
-      strokeWidth={strokeWidth}
-      {...props}
-      style={{
-        stroke: "url(#icon-gradient)",
-        ...props.style
-      }}
-    >
-      <defs>
-        <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#1F6FEB" />
-          <stop offset="100%" stopColor="#8E44AD" />
-        </linearGradient>
-      </defs>
-    </Icon>
+    <div className="relative inline-block">
+      <svg width={size} height={size} className="absolute">
+        <defs>
+          <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1F6FEB" />
+            <stop offset="100%" stopColor="#8E44AD" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <Icon
+        name={name}
+        className={cn(
+          "text-transparent",
+          className
+        )}
+        size={size}
+        strokeWidth={strokeWidth}
+        style={{
+          stroke: "url(#icon-gradient)",
+          ...props.style
+        }}
+        {...props}
+      />
+    </div>
   );
 };
 

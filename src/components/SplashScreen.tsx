@@ -51,7 +51,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
     <AnimatePresence>
       {!isExiting ? (
         <motion.div
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-monavenir-lightgrey to-white dark:from-monavenir-midnight dark:to-gray-900"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-monavenir-lightgrey to-white dark:from-gray-900 dark:to-gray-800"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -80,9 +80,13 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.6, type: "spring", damping: 12 }}
-                className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-transparent bg-gradient-primary bg-clip-text"
+                className="absolute inset-0 flex items-center justify-center"
               >
-                M+
+                <img 
+                  src="/logo-ma-plus.png" 
+                  alt="MonAvenir+" 
+                  className="h-16 w-16 object-contain" 
+                />
               </motion.div>
             </div>
 

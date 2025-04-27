@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Icon } from "@/components/ui/icon-provider";
 import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 
 const SplashScreen = () => {
   const navigate = useNavigate();
   const [showContinue, setShowContinue] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -17,13 +19,18 @@ const SplashScreen = () => {
   }, []);
 
   const handleContinue = () => {
+    setIsLoading(true);
     const hasCompletedOnboarding = localStorage.getItem("hasCompletedOnboarding") === "true";
-    navigate(hasCompletedOnboarding ? "/" : "/onboarding");
+    
+    // Add a slight delay for smooth transition
+    setTimeout(() => {
+      navigate(hasCompletedOnboarding ? "/" : "/onboarding");
+    }, 800);
   };
 
   return (
     <motion.div 
-      className="h-screen w-full bg-gradient-to-br from-monavenir-blue to-[#8E44AD] flex flex-col items-center justify-center"
+      className="h-screen w-full bg-gradient-to-br from-monavenir-blue to-monavenir-purple flex flex-col items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -34,7 +41,7 @@ const SplashScreen = () => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
       >
-        <div className="w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center mb-6">
+        <div className="relative w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center mb-6 overflow-hidden">
           <img 
             src="/logo-ma-plus.png" 
             alt="MonAvenir+" 
@@ -68,10 +75,18 @@ const SplashScreen = () => {
         >
           <motion.button
             onClick={handleContinue}
-            className="bg-white text-monavenir-blue font-medium rounded-full px-8 py-3 shadow-lg"
+            className="bg-white text-monavenir-blue font-medium rounded-full px-8 py-3 shadow-lg flex items-center"
             whileTap={{ scale: 0.95 }}
+            disabled={isLoading}
           >
-            Commencer
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Chargement...
+              </>
+            ) : (
+              "Commencer"
+            )}
           </motion.button>
         </motion.div>
       )}
