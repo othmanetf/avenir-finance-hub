@@ -31,12 +31,21 @@ const LoadingSpinner = () => (
   </div>
 );
 
+// Preload app logo
+const preloadAppLogo = () => {
+  const img = new Image();
+  img.src = "/lovable-uploads/7fe54294-a4f9-4328-b4c5-837bc792315b.png";
+};
+
 // Component to handle routes based on authentication
 const ProtectedRoutes = () => {
   const { isOnboarded, isLoading } = useOnboarded();
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
+    // Preload the logo
+    preloadAppLogo();
+    
     // Only show splash for 3 seconds the first time the app is opened
     const hasSeenSplash = sessionStorage.getItem("hasSeenSplash");
     

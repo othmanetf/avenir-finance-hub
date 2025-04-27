@@ -30,7 +30,7 @@ const SplashScreen = () => {
 
   return (
     <motion.div 
-      className="h-screen w-full bg-gradient-to-br from-monavenir-blue to-monavenir-purple flex flex-col items-center justify-center"
+      className="h-screen w-full bg-gradient-to-br from-[#1F6FEB] to-[#8E44AD] flex flex-col items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -41,11 +41,11 @@ const SplashScreen = () => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
       >
-        <div className="relative w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center mb-6 overflow-hidden">
+        <div className="relative w-32 h-32 bg-white rounded-full shadow-lg flex items-center justify-center mb-8 overflow-hidden">
           <img 
-            src="/logo-ma-plus.png" 
+            src="/lovable-uploads/7fe54294-a4f9-4328-b4c5-837bc792315b.png" 
             alt="MonAvenir+" 
-            className="w-20 h-20 object-contain" 
+            className="w-28 h-28 object-contain" 
           />
         </div>
         <motion.h1 
@@ -75,7 +75,7 @@ const SplashScreen = () => {
         >
           <motion.button
             onClick={handleContinue}
-            className="bg-white text-monavenir-blue font-medium rounded-full px-8 py-3 shadow-lg flex items-center"
+            className="bg-white text-[#1F6FEB] font-medium rounded-full px-8 py-3 shadow-lg flex items-center"
             whileTap={{ scale: 0.95 }}
             disabled={isLoading}
           >

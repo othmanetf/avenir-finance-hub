@@ -199,4 +199,29 @@
   .btn-primary-gradient {
     @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white rounded-full shadow-md hover:shadow-lg transition-all;
   }
+  
+  /* Onboarding specific styles */
+  .onboarding-step-icon {
+    @apply flex items-center justify-center w-10 h-10 rounded-full;
+  }
+  
+  .onboarding-step-active {
+    @apply bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white;
+  }
+  
+  .onboarding-step-inactive {
+    @apply bg-gray-100 text-gray-400;
+  }
+  
+  .onboarding-container {
+    @apply pt-28 px-4 max-w-md mx-auto;
+  }
+  
+  .onboarding-title {
+    @apply text-2xl font-bold mb-2;
+  }
+  
+  .onboarding-subtitle {
+    @apply text-gray-500 dark:text-gray-400 mb-6;
+  }
 }

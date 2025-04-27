@@ -153,7 +153,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
   };
 
   return (
-    <div className="container max-w-md mx-auto px-4 py-8 pt-24">
+    <div className="px-4 py-4 max-w-md mx-auto">
       <div className="w-full max-w-md mx-auto">
         {/* Progress indicator */}
         <div className="flex justify-between mb-8">
@@ -189,7 +189,11 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
           >
             <motion.div variants={itemVariants}>
               <div className="flex items-center justify-center mb-6">
-                <img src="/logo-ma-plus.png" alt="MonAvenir+" className="h-16 w-16" />
+                <img 
+                  src="/lovable-uploads/7fe54294-a4f9-4328-b4c5-837bc792315b.png" 
+                  alt="MonAvenir+" 
+                  className="h-16 w-16" 
+                />
               </div>
               <h1 className="text-2xl font-bold text-center mb-2">Créer votre compte</h1>
               <p className="text-gray-500 dark:text-gray-400 text-center mb-6">

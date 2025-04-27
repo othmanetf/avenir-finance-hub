@@ -7,7 +7,7 @@ import {
   BookOpen,
   Brain,
   TrendingUp,
-  UserCircle2,
+  User,
   Settings,
   Bell,
   ArrowRightLeft,
@@ -21,7 +21,11 @@ import {
   Landmark,
   Loader2,
   Check,
-  X
+  X,
+  CircleUser,
+  Wallet,
+  LineChart,
+  Phone
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -44,7 +48,11 @@ export type IconName =
   | "stocks"
   | "loader"
   | "check"
-  | "x";
+  | "x"
+  | "phone"
+  | "wallet"
+  | "lineChart"
+  | "user";
 
 type IconProviderProps = {
   name: IconName;
@@ -58,7 +66,7 @@ const iconMap: Record<IconName, LucideIcon> = {
   education: BookOpen,
   analysis: Brain,
   investments: TrendingUp,
-  profile: UserCircle2,
+  profile: CircleUser,
   settings: Settings,
   notifications: Bell,
   transactions: ArrowRightLeft,
@@ -68,11 +76,15 @@ const iconMap: Record<IconName, LucideIcon> = {
   goals: Target,
   portfolio: Briefcase,
   creditCard: CreditCard,
-  finances: DollarSign,
+  finances: Brain,
   stocks: Landmark,
   loader: Loader2,
   check: Check,
-  x: X
+  x: X,
+  wallet: Wallet,
+  lineChart: LineChart,
+  user: User,
+  phone: Phone
 };
 
 export const Icon = ({ 

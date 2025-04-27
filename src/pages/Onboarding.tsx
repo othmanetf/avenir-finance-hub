@@ -62,10 +62,10 @@ const OnboardingPage = () => {
 
   return (
     <OnboardingProvider>
-      <div className="min-h-screen bg-background overflow-x-hidden">
-        {/* Progress indicator */}
-        <div className="fixed top-0 left-0 w-full z-10 px-4 pt-4">
-          <div className="max-w-md mx-auto flex items-center justify-between mb-1">
+      <div className="min-h-screen bg-background overflow-hidden">
+        {/* Progress indicator - Revised for better alignment and no overlapping */}
+        <div className="fixed top-0 left-0 w-full z-10 bg-background/95 backdrop-blur-sm shadow-sm pt-4 pb-2">
+          <div className="max-w-md mx-auto flex items-center justify-between mb-1 px-4">
             <Button 
               variant="ghost" 
               size="sm" 
@@ -78,7 +78,7 @@ const OnboardingPage = () => {
               Étape {currentStep}/3
             </div>
           </div>
-          <div className="flex justify-between mb-2 max-w-md mx-auto">
+          <div className="flex justify-between mb-2 max-w-md mx-auto px-4">
             {[1, 2, 3].map((step) => (
               <div 
                 key={step} 
@@ -88,71 +88,83 @@ const OnboardingPage = () => {
               />
             ))}
           </div>
-          <div className="flex justify-between max-w-md mx-auto px-1">
+          <div className="flex justify-between max-w-md mx-auto px-4 pb-1">
             {[1, 2, 3].map((step) => (
               <button 
                 key={step}
                 onClick={() => skipToStep(step)}
-                className={`flex flex-col items-center cursor-pointer transition-colors duration-200 ${
-                  currentStep >= step ? "text-monavenir-blue" : "text-gray-400"
-                }`}
+                className="flex flex-col items-center cursor-pointer w-20"
               >
-                <Icon 
-                  name={getStepIcon(step)}
-                  size={20}
-                  strokeWidth={currentStep >= step ? 2 : 1.5}
-                  className={currentStep >= step ? "text-monavenir-blue" : "text-gray-400"}
-                />
-                <span className="text-xs mt-1">{getStepName(step)}</span>
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full mb-1 ${
+                  currentStep >= step 
+                    ? "bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white" 
+                    : "bg-gray-100 text-gray-400"
+                }`}>
+                  <Icon 
+                    name={getStepIcon(step)}
+                    size={18}
+                    strokeWidth={currentStep >= step ? 2 : 1.5}
+                  />
+                </div>
+                <span className={`text-xs ${
+                  currentStep >= step ? "text-primary font-medium" : "text-gray-400"
+                }`}>
+                  {getStepName(step)}
+                </span>
               </button>
             ))}
           </div>
         </div>
         
-        <AnimatePresence mode="wait">
-          {isCompleting ? (
-            <motion.div 
-              key="completing"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm z-50"
-            >
-              <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-              <p className="text-lg font-medium">Finalisation...</p>
-            </motion.div>
-          ) : currentStep === 1 ? (
-            <motion.div
-              key="step1"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <AccountCreation onComplete={() => handleStepChange(2)} />
-            </motion.div>
-          ) : currentStep === 2 ? (
-            <motion.div
-              key="step2"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <FinancialProfiling onComplete={() => handleStepChange(3)} />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="step3"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <BankConnection />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="pt-28 pb-4">
+          <AnimatePresence mode="wait">
+            {isCompleting ? (
+              <motion.div 
+                key="completing"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm z-50"
+              >
+                <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
+                <p className="text-lg font-medium">Finalisation...</p>
+              </motion.div>
+            ) : currentStep === 1 ? (
+              <motion.div
+                key="step1"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="h-full"
+              >
+                <AccountCreation onComplete={() => handleStepChange(2)} />
+              </motion.div>
+            ) : currentStep === 2 ? (
+              <motion.div
+                key="step2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="h-full"
+              >
+                <FinancialProfiling onComplete={() => handleStepChange(3)} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="step3"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="h-full"
+              >
+                <BankConnection onComplete={finishOnboarding} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </OnboardingProvider>
   );
