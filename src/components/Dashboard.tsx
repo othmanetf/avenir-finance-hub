@@ -22,8 +22,10 @@ import {
   CartesianGrid, 
   Tooltip, 
   Legend, 
-  ResponsiveContainer 
+  ResponsiveContainer,
+  ReferenceLine
 } from 'recharts';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { useIsMobile } from "@/hooks/use-mobile";
 import TransactionModal from "@/components/TransactionModal";
 import { useProfile } from "@/hooks/use-profile";
@@ -71,6 +73,13 @@ export const Dashboard = () => {
         { jour: 'Juin', dépenses: 4825, revenus: 8500, budget: 7500 },
       ];
     }
+  };
+
+  // Chart config for the line chart
+  const chartConfig = {
+    revenus: { label: "Revenus", theme: { light: "#1F6FEB", dark: "#1F6FEB" } },
+    dépenses: { label: "Dépenses", theme: { light: "#00D1FF", dark: "#00D1FF" } },
+    budget: { label: "Budget", theme: { light: "#10B981", dark: "#10B981" } }
   };
 
   const categories = [
@@ -224,13 +233,16 @@ export const Dashboard = () => {
         </CardContent>
       </Card>
 
-      {/* Graphique d'évolution mensuelle */}
+      {/* Graphique d'évolution mensuelle - UPDATED DESIGN */}
       <Card className="bg-white shadow-md border-0 rounded-3xl">
         <CardContent className="p-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium text-foreground text-base sm:text-lg">Évolution Mensuelle</h3>
+            <div>
+              <h3 className="font-medium text-foreground text-base sm:text-lg">Évolution Mensuelle</h3>
+              <p className="text-xs text-muted-foreground mt-1">Visualisez vos finances sur la durée</p>
+            </div>
             <select 
-              className="text-xs border rounded-lg p-1.5"
+              className="text-xs border rounded-lg p-1.5 bg-white border-gray-200 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary"
               value={selectedPeriod}
               onChange={(e) => setSelectedPeriod(e.target.value as "30" | "90" | "180")}
             >
@@ -240,71 +252,71 @@ export const Dashboard = () => {
             </select>
           </div>
           
-          <div className="h-60 sm:h-72">
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="h-[280px] mt-4">
+            <ChartContainer config={chartConfig} className="[&_.recharts-cartesian-axis-tick]:text-xs">
               <LineChart
                 data={getChartData()}
-                margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
+                margin={{ top: 10, right: 10, left: 0, bottom: 10 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <defs>
+                  <linearGradient id="revenusGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#1F6FEB" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#1F6FEB" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="depensesGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#00D1FF" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#00D1FF" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
                 <XAxis 
                   dataKey="jour" 
-                  tick={{ fontSize: 12 }}
+                  tick={{ fontSize: 11 }}
                   tickMargin={10}
+                  axisLine={false}
+                  tickLine={false}
                 />
                 <YAxis 
-                  tick={{ fontSize: 12 }}
+                  tick={{ fontSize: 11 }}
                   tickFormatter={(value) => `${value / 1000}k`}
+                  axisLine={false}
+                  tickLine={false}
+                  width={30}
                 />
-                <Tooltip 
-                  formatter={(value) => `${value} DH`} 
-                  contentStyle={{ 
-                    borderRadius: '8px', 
-                    border: 'none', 
-                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                    fontSize: '12px'
-                  }}
-                />
-                <Legend 
-                  verticalAlign="top" 
-                  height={36}
-                  iconSize={10}
-                  iconType="circle"
-                  wrapperStyle={{ fontSize: '12px' }}
-                />
+                <ChartTooltip content={<ChartTooltipContent />} />
                 <Line 
                   type="monotone" 
-                  dataKey="dépenses" 
-                  name="Dépenses"
-                  stroke="#EF4444" 
-                  strokeWidth={2} 
-                  dot={{ r: 4 }}
-                  activeDot={{ r: 6, strokeWidth: 0 }} 
+                  dataKey="revenus" 
+                  name="revenus"
+                  stroke="#1F6FEB" 
+                  strokeWidth={3}
+                  dot={{ r: 2, strokeWidth: 2, fill: "#fff" }}
+                  activeDot={{ r: 4, strokeWidth: 0 }}
                   animationDuration={1000}
                 />
                 <Line 
                   type="monotone" 
-                  dataKey="revenus" 
-                  name="Revenus"
-                  stroke="#8B5CF6" 
-                  strokeWidth={2} 
-                  dot={{ r: 4 }}
-                  activeDot={{ r: 6, strokeWidth: 0 }}
+                  dataKey="dépenses" 
+                  name="dépenses"
+                  stroke="#00D1FF" 
+                  strokeWidth={3}
+                  dot={{ r: 2, strokeWidth: 2, fill: "#fff" }}
+                  activeDot={{ r: 4, strokeWidth: 0 }} 
                   animationDuration={1000}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="budget" 
-                  name="Budget"
+                  name="budget"
                   stroke="#10B981" 
-                  strokeWidth={2} 
+                  strokeWidth={2}
                   strokeDasharray="5 5" 
-                  dot={{ r: 4 }}
-                  activeDot={{ r: 6, strokeWidth: 0 }}
+                  dot={{ r: 0 }}
+                  activeDot={{ r: 4, strokeWidth: 0 }}
                   animationDuration={1000}
                 />
               </LineChart>
-            </ResponsiveContainer>
+            </ChartContainer>
           </div>
         </CardContent>
       </Card>
@@ -335,7 +347,7 @@ export const Dashboard = () => {
                   </div>
                 </div>
                 <span className="font-semibold text-red-500">
-                  {category.amount.toLocaleString()} DH-
+                  - {category.amount.toLocaleString()} DH
                 </span>
               </div>
               
@@ -348,7 +360,7 @@ export const Dashboard = () => {
                         <span className="text-sm">{transaction.name}</span>
                         <span className="text-xs text-muted-foreground">{transaction.date}</span>
                       </div>
-                      <span className="text-sm font-medium text-red-500">{transaction.amount} DH-</span>
+                      <span className="text-sm font-medium text-red-500">- {transaction.amount} DH</span>
                     </div>
                   ))}
                 </div>
@@ -384,7 +396,7 @@ export const Dashboard = () => {
                   </div>
                 </div>
                 <span className="font-semibold text-green-500">
-                  {category.amount.toLocaleString()} DH+
+                  + {category.amount.toLocaleString()} DH
                 </span>
               </div>
               
@@ -397,7 +409,7 @@ export const Dashboard = () => {
                         <span className="text-sm">{transaction.name}</span>
                         <span className="text-xs text-muted-foreground">{transaction.date}</span>
                       </div>
-                      <span className="text-sm font-medium text-green-500">{transaction.amount} DH+</span>
+                      <span className="text-sm font-medium text-green-500">+ {transaction.amount} DH</span>
                     </div>
                   ))}
                 </div>

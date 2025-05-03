@@ -1,4 +1,3 @@
-
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -55,6 +54,60 @@
   transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+/* Modern chart styling */
+.recharts-default-tooltip {
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
+  padding: 12px !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.recharts-tooltip-item {
+  padding: 4px 0 !important;
+}
+
+.recharts-tooltip-item-name {
+  margin-right: 8px !important;
+  font-weight: 500 !important;
+}
+
+.recharts-tooltip-item-separator {
+  margin: 0 4px !important;
+}
+
+.recharts-legend-item {
+  margin-right: 16px !important;
+}
+
+.recharts-cartesian-axis-tick-value {
+  font-size: 11px !important;
+  fill: #888 !important;
+}
+
+.category-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+}
+
+.transaction-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 12px;
+  transition: background-color 0.2s;
+}
+
+.transaction-row:hover {
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
 /* Onboarding specific styles */
