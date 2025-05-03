@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { 
-  Wallet, 
+  Banknote, 
   PiggyBank, 
   TrendingUp, 
   ChevronRight, 
@@ -17,7 +17,9 @@ import {
   Calendar,
   Phone,
   FileText,
-  BookOpen
+  BookOpen,
+  BookText,
+  BadgePercent
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -37,6 +39,7 @@ import { useProfile } from "@/hooks/use-profile";
 import { toast } from "sonner";
 import { ConsultationForm } from "./investment/ConsultationForm";
 import { InvestmentGuides } from "./investment/InvestmentGuides";
+import { Icon } from "@/components/ui/icon-provider";
 
 export const Investments = () => {
   const [activeTab, setActiveTab] = useState<"save" | "invest">("save");
@@ -207,12 +210,18 @@ export const Investments = () => {
 
       {/* Onglets principaux */}
       <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "save" | "invest")} className="w-full">
-        <TabsList className="grid grid-cols-2 mb-4 md:mb-6 w-full max-w-md mx-auto">
-          <TabsTrigger value="save" className="flex items-center gap-2 py-3 rounded-full">
+        <TabsList className="grid grid-cols-2 mb-4 md:mb-6 w-full max-w-md mx-auto bg-muted/80 p-1 rounded-full">
+          <TabsTrigger 
+            value="save" 
+            className="flex items-center gap-2 py-3 px-4 rounded-full transition-all data-[state=active]:shadow-sm"
+          >
             <PiggyBank className="h-4 w-4" />
             <span>Épargner</span>
           </TabsTrigger>
-          <TabsTrigger value="invest" className="flex items-center gap-2 py-3 rounded-full">
+          <TabsTrigger 
+            value="invest" 
+            className="flex items-center gap-2 py-3 px-4 rounded-full transition-all data-[state=active]:shadow-sm"
+          >
             <TrendingUp className="h-4 w-4" />
             <span>Investir</span>
           </TabsTrigger>
@@ -234,7 +243,7 @@ export const Investments = () => {
                         {option.logo.startsWith("/") ? (
                           <img src={option.logo} alt={option.bank} className="h-8 w-8 object-contain" />
                         ) : (
-                          option.logo
+                          <Banknote className="h-6 w-6 text-primary" />
                         )}
                       </div>
                       <div className="flex-1 ml-3 md:ml-4">
@@ -243,7 +252,10 @@ export const Investments = () => {
                       </div>
                       <div className="text-right">
                         <span className="text-base md:text-lg font-bold text-primary">{option.interest}%</span>
-                        <p className="text-xs text-muted-foreground">Intérêt annuel</p>
+                        <div className="flex items-center gap-1 justify-end">
+                          <Info className="h-3 w-3 text-muted-foreground" />
+                          <p className="text-xs text-muted-foreground">Intérêt annuel</p>
+                        </div>
                       </div>
                     </div>
                     
@@ -284,7 +296,7 @@ export const Investments = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-gradient-to-r from-primary to-purple-500 text-white shadow-md border-0 rounded-3xl">
+          <Card className="bg-gradient-to-r from-primary to-secondary text-white shadow-md border-0 rounded-3xl">
             <CardContent className="p-4 md:p-6">
               <div className="flex items-center gap-4">
                 <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
@@ -326,7 +338,7 @@ export const Investments = () => {
                           ) : option.type === "Action" ? (
                             <BarChart className="h-6 w-6 text-primary" />
                           ) : (
-                            <Building className="h-6 w-6 text-primary" />
+                            <BadgePercent className="h-6 w-6 text-primary" />
                           )}
                         </div>
                         
@@ -376,11 +388,11 @@ export const Investments = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-gradient-to-r from-secondary to-pink-500 text-white shadow-md border-0 rounded-3xl">
+          <Card className="bg-gradient-to-r from-primary to-secondary text-white shadow-md border-0 rounded-3xl">
             <CardContent className="p-4 md:p-6">
               <div className="flex items-center gap-4">
                 <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
-                  <BookOpen className="h-6 w-6" />
+                  <BookText className="h-6 w-6" />
                 </div>
                 <div>
                   <h3 className="font-medium">Nouveau dans l'investissement?</h3>
@@ -389,7 +401,7 @@ export const Investments = () => {
               </div>
               
               <Button 
-                className="mt-4 w-full bg-white text-secondary hover:bg-white/90 hover:text-secondary"
+                className="mt-4 w-full bg-white text-primary hover:bg-white/90 hover:text-primary"
                 onClick={handleExploreGuides}
               >
                 <FileText className="h-4 w-4 mr-2" />
@@ -428,7 +440,7 @@ export const Investments = () => {
       {/* Bouton d'action */}
       <div className="fixed bottom-20 right-6 z-10 md:bottom-6">
         <Button 
-          className="h-16 w-16 rounded-full bg-primary/90 shadow-lg backdrop-blur-sm hover:bg-primary transition-all border border-white/20" 
+          className="h-16 w-16 rounded-full bg-gradient-to-r from-primary to-secondary shadow-lg backdrop-blur-sm hover:opacity-90 transition-all border border-white/20" 
           size="icon"
           onClick={() => toast.info("Créez un nouvel objectif d'épargne ou d'investissement", {
             description: "Cette fonctionnalité sera bientôt disponible",

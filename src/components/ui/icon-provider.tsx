@@ -25,7 +25,13 @@ import {
   CircleUser,
   Wallet,
   LineChart,
-  Phone
+  Phone,
+  Banknote,
+  Calendar,
+  Info,
+  BookText,
+  BadgePercent,
+  GraduationCap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -52,7 +58,13 @@ export type IconName =
   | "phone"
   | "wallet"
   | "lineChart"
-  | "user";
+  | "user"
+  | "banknote"
+  | "calendar"
+  | "info"
+  | "bookText"
+  | "badgePercent"
+  | "graduationCap";
 
 type IconProviderProps = {
   name: IconName;
@@ -84,7 +96,13 @@ const iconMap: Record<IconName, LucideIcon> = {
   wallet: Wallet,
   lineChart: LineChart,
   user: User,
-  phone: Phone
+  phone: Phone,
+  banknote: Banknote,
+  calendar: Calendar,
+  info: Info,
+  bookText: BookText,
+  badgePercent: BadgePercent,
+  graduationCap: GraduationCap
 };
 
 export const Icon = ({ 
@@ -128,7 +146,7 @@ export const GradientIcon = ({
         <defs>
           <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#1F6FEB" />
-            <stop offset="100%" stopColor="#8E44AD" />
+            <stop offset="100%" stopColor="#00CFFF" />
           </linearGradient>
         </defs>
       </svg>
