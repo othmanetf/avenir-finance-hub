@@ -142,9 +142,9 @@ export const GradientIcon = ({
 }: IconProviderProps) => {
   return (
     <div className="relative inline-block">
-      <svg width={size} height={size} className="absolute">
+      <svg width={size} height={size} className="absolute top-0 left-0">
         <defs>
-          <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id={`icon-gradient-${name}`} x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#1F6FEB" />
             <stop offset="100%" stopColor="#00CFFF" />
           </linearGradient>
@@ -159,7 +159,7 @@ export const GradientIcon = ({
         size={size}
         strokeWidth={strokeWidth}
         style={{
-          stroke: "url(#icon-gradient)",
+          stroke: `url(#icon-gradient-${name})`,
           ...props.style
         }}
         {...props}
