@@ -1,3 +1,4 @@
+
 import { 
   ArrowUp, 
   ArrowDown, 
@@ -21,9 +22,7 @@ import {
   YAxis, 
   CartesianGrid, 
   Tooltip, 
-  Legend, 
-  ResponsiveContainer,
-  ReferenceLine
+  ResponsiveContainer
 } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -236,9 +235,9 @@ export const Dashboard = () => {
       {/* Graphique d'évolution mensuelle - UPDATED DESIGN */}
       <Card className="bg-white shadow-md border-0 rounded-3xl">
         <CardContent className="p-6">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-center">
             <div>
-              <h3 className="font-medium text-foreground text-base sm:text-lg">Évolution Mensuelle</h3>
+              <h3 className="font-medium text-foreground text-lg">Évolution Mensuelle</h3>
               <p className="text-xs text-muted-foreground mt-1">Visualisez vos finances sur la durée</p>
             </div>
             <select 
@@ -252,11 +251,11 @@ export const Dashboard = () => {
             </select>
           </div>
           
-          <div className="h-[280px] mt-4">
+          <div className="h-[220px] mt-4">
             <ChartContainer config={chartConfig} className="[&_.recharts-cartesian-axis-tick]:text-xs">
               <LineChart
                 data={getChartData()}
-                margin={{ top: 10, right: 10, left: 0, bottom: 10 }}
+                margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
               >
                 <defs>
                   <linearGradient id="revenusGradient" x1="0" y1="0" x2="0" y2="1">
@@ -271,17 +270,18 @@ export const Dashboard = () => {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
                 <XAxis 
                   dataKey="jour" 
-                  tick={{ fontSize: 11 }}
-                  tickMargin={10}
+                  tick={{ fontSize: 10 }}
+                  tickMargin={8}
                   axisLine={false}
                   tickLine={false}
+                  padding={{ left: 5, right: 5 }}
                 />
                 <YAxis 
-                  tick={{ fontSize: 11 }}
+                  tick={{ fontSize: 10 }}
                   tickFormatter={(value) => `${value / 1000}k`}
                   axisLine={false}
                   tickLine={false}
-                  width={30}
+                  width={25}
                 />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Line 
@@ -289,7 +289,7 @@ export const Dashboard = () => {
                   dataKey="revenus" 
                   name="revenus"
                   stroke="#1F6FEB" 
-                  strokeWidth={3}
+                  strokeWidth={2.5}
                   dot={{ r: 2, strokeWidth: 2, fill: "#fff" }}
                   activeDot={{ r: 4, strokeWidth: 0 }}
                   animationDuration={1000}
@@ -299,7 +299,7 @@ export const Dashboard = () => {
                   dataKey="dépenses" 
                   name="dépenses"
                   stroke="#00D1FF" 
-                  strokeWidth={3}
+                  strokeWidth={2.5}
                   dot={{ r: 2, strokeWidth: 2, fill: "#fff" }}
                   activeDot={{ r: 4, strokeWidth: 0 }} 
                   animationDuration={1000}

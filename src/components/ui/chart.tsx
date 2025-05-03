@@ -51,7 +51,7 @@ const ChartContainer = React.forwardRef<
         data-chart={chartId}
         ref={ref}
         className={cn(
-          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none [&_.recharts-curve]:!stroke-[3px] [&_.recharts-curve]:!stroke-linecap-round [&_.recharts-curve]:!stroke-linejoin-round",
+          "flex aspect-auto justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/30 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none [&_.recharts-curve]:!stroke-[2.5px] [&_.recharts-curve]:!stroke-linecap-round [&_.recharts-curve]:!stroke-linejoin-round",
           className
         )}
         {...props}
@@ -75,7 +75,7 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     return null
   }
 
-  // Replace purple with blue or cyan in the style configuration
+  // Use consistent blue and cyan colors in the style configuration
   return (
     <style
       dangerouslySetInnerHTML={{
@@ -88,7 +88,7 @@ ${colorConfig
     const color =
       itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
       itemConfig.color
-    // Replace any purple colors with MonAvenir blue or cyan
+    // Use consistent MonAvenir colors
     let updatedColor = color
     if (color && (color.includes('#8E44AD') || color.includes('purple'))) {
       updatedColor = '#00D1FF'
@@ -184,7 +184,7 @@ const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-background/80 backdrop-blur-sm px-3 py-2 text-xs shadow-xl",
+          "grid min-w-[8rem] items-start gap-1.5 rounded-xl border border-border/20 bg-background/95 backdrop-blur-lg px-3 py-2.5 text-xs shadow-xl",
           className
         )}
       >
