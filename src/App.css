@@ -13,10 +13,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #1F6FEBaa);
+  filter: drop-shadow(0 0 2em rgba(0, 57, 194, 0.7));
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #8E44ADaa);
+  filter: drop-shadow(0 0 2em rgba(0, 209, 255, 0.7));
 }
 
 @keyframes logo-spin {
@@ -37,12 +37,12 @@
 .card {
   padding: 2em;
   border-radius: var(--radius);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
   transition: all 0.3s ease;
 }
 
 .card:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transform: translateY(-2px);
 }
 
@@ -78,7 +78,7 @@
   font-weight: 700;
   line-height: 2rem;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #1F6FEB 0%, #8E44AD 100%);
+  background: linear-gradient(135deg, #0039C2 0%, #00D1FF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -100,7 +100,7 @@
 }
 
 .onboarding-progress-step.active {
-  background: linear-gradient(135deg, #1F6FEB 0%, #8E44AD 100%);
+  background: linear-gradient(135deg, #0039C2 0%, #00D1FF 100%);
 }
 
 .form-group {
@@ -113,7 +113,7 @@
   margin: 0 auto;
   position: relative;
   border-radius: 9999px;
-  background: linear-gradient(135deg, #1F6FEB 0%, #8E44AD 100%);
+  background: linear-gradient(135deg, #0039C2 0%, #00D1FF 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -167,13 +167,13 @@
 }
 
 .bank-option:hover {
-  border-color: var(--primary);
-  background-color: rgba(59, 130, 246, 0.05);
+  border-color: #0039C2;
+  background-color: rgba(0, 57, 194, 0.05);
 }
 
 .bank-option.selected {
-  border-color: var(--primary);
-  background-color: rgba(59, 130, 246, 0.1);
+  border-color: #0039C2;
+  background-color: rgba(0, 57, 194, 0.1);
 }
 
 .bank-option-logo {
@@ -205,7 +205,7 @@
 }
 
 .bank-option.selected .bank-option-check {
-  background-color: var(--primary);
+  background: linear-gradient(135deg, #0039C2 0%, #00D1FF 100%);
   color: white;
 }
 
@@ -225,4 +225,15 @@
   color: #10b981;
   width: 2rem;
   height: 2rem;
+}
+
+/* Better mobile styles */
+@media (max-width: 640px) {
+  .bank-option {
+    padding: 0.75rem;
+  }
+  
+  .onboarding-card {
+    padding: 1.5rem;
+  }
 }

@@ -39,9 +39,9 @@ const SplashScreen = () => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
       >
-        <div className="relative w-32 h-32 rounded-full flex items-center justify-center mb-8">
+        <div className="relative w-36 h-36 rounded-full flex items-center justify-center mb-8">
           <img 
-            src="/lovable-uploads/0888d02f-e2bc-44b3-99c5-b8561428658b.png" 
+            src="/lovable-uploads/44d3ffe5-d8e6-4397-b688-da7ec5d0d013.png" 
             alt="MonAvenir+" 
             className="w-full h-full object-contain" 
           />

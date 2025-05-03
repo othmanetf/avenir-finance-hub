@@ -51,7 +51,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
     <AnimatePresence>
       {!isExiting ? (
         <motion.div
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-monavenir-lightgrey to-white dark:from-gray-900 dark:to-gray-800"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-monavenir-blue to-monavenir-cyan dark:from-gray-900 dark:to-gray-800"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -63,29 +63,17 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
             transition={{ duration: 0.8 }}
             className="flex flex-col items-center space-y-8"
           >
-            <div className="relative h-28 w-28">
+            <div className="relative h-36 w-36">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2, type: "spring", damping: 12 }}
-                className="absolute inset-0 rounded-full bg-gradient-primary shadow-lg"
-              />
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.4, type: "spring", damping: 12 }}
-                className="absolute inset-3 rounded-full bg-white dark:bg-gray-800"
-              />
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.6, type: "spring", damping: 12 }}
                 className="absolute inset-0 flex items-center justify-center"
               >
                 <img 
-                  src="/logo-ma-plus.png" 
+                  src="/lovable-uploads/44d3ffe5-d8e6-4397-b688-da7ec5d0d013.png" 
                   alt="MonAvenir+" 
-                  className="h-16 w-16 object-contain" 
+                  className="h-full w-full object-contain" 
                 />
               </motion.div>
             </div>
@@ -94,9 +82,9 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="text-3xl font-bold sm:text-4xl md:text-5xl text-foreground"
+              className="text-3xl font-bold sm:text-4xl md:text-5xl text-white"
             >
-              MonAvenir<span className="text-transparent bg-gradient-primary bg-clip-text">+</span>
+              MonAvenir<span className="text-transparent bg-gradient-to-r from-white to-white/80 bg-clip-text">+</span>
             </motion.h1>
 
             <div className="h-8 overflow-hidden">
@@ -104,7 +92,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
                 <p
                   key={slogan}
                   className={cn(
-                    "text-center text-lg font-medium text-gray-600 dark:text-gray-300 transition-all duration-500",
+                    "text-center text-lg font-medium text-white/90 transition-all duration-500",
                     currentSlogan === index ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
                   )}
                 >
@@ -119,7 +107,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
                 animate={{ opacity: 1, scale: 1 }}
                 className="mt-8"
               >
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <Loader2 className="h-8 w-8 animate-spin text-white" />
               </motion.div>
             )}
           </motion.div>
