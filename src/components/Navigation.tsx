@@ -48,15 +48,15 @@ export const Navigation = ({ currentRoute, onRouteChange }: NavigationProps) => 
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      <div className="fixed bottom-0 left-0 z-20 w-full border-t border-gray-100 bg-white/80 backdrop-blur-md dark:border-gray-700 dark:bg-gray-900/80 md:hidden">
-        <div className="mx-auto flex h-16 max-w-md items-center justify-around px-6">
+      {/* Mobile Navigation - Improved for better touch targets and visibility */}
+      <div className="fixed bottom-0 left-0 z-20 w-full border-t border-gray-100 bg-white/90 backdrop-blur-md dark:border-gray-700 dark:bg-gray-900/90 md:hidden">
+        <div className="mx-auto flex h-16 max-w-md items-center justify-around px-2">
           {navItems.map((item) => (
             <button 
               key={item.name}
               onClick={() => onRouteChange(item.route)}
               className={cn(
-                "flex flex-col items-center justify-center rounded-md p-2 transition-all duration-200",
+                "flex flex-col items-center justify-center rounded-md p-2 transition-all duration-200 w-full mx-1",
                 currentRoute === item.route
                   ? "text-gradient font-medium"
                   : "text-gray-500 hover:text-monavenir-blue"

@@ -155,16 +155,16 @@ export const Dashboard = () => {
   ];
 
   return (
-    <div className="flex flex-col p-4 md:p-6 gap-5 md:pl-24">
+    <div className="flex flex-col p-4 md:p-6 md:pl-24">
       {/* En-tête avec Bienvenue et Avatar */}
-      <div className="flex justify-between items-center mb-1">
+      <div className="flex justify-between items-center mb-4">
         <div className="flex flex-col">
           <p className="text-sm text-muted-foreground">Bienvenue</p>
-          <h2 className="text-2xl font-bold text-foreground">Mohamed</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground">Mohamed</h2>
         </div>
         
         <Avatar 
-          className="h-12 w-12 border-2 border-white shadow-sm cursor-pointer hover:opacity-90 transition-opacity" 
+          className="h-10 w-10 sm:h-12 sm:w-12 border-2 border-white shadow-sm cursor-pointer hover:opacity-90 transition-opacity" 
           onClick={openProfile}
         >
           <AvatarImage src="https://github.com/shadcn.png" alt="Mohamed" />
@@ -174,15 +174,15 @@ export const Dashboard = () => {
 
       {/* Aperçu du budget */}
       <Card className="bg-white shadow-md border-0 rounded-3xl">
-        <CardContent className="p-5 md:p-6">
+        <CardContent className="p-4 sm:p-5 md:p-6">
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="font-medium text-foreground text-base sm:text-lg">Budget Mensuel</span>
             </div>
             
-            <div className="flex items-center gap-4">
-              <div className="relative h-16 w-16 sm:h-20 sm:w-20">
-                <svg className="h-16 w-16 sm:h-20 sm:w-20 -rotate-90" viewBox="0 0 36 36">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="relative h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20">
+                <svg className="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 -rotate-90" viewBox="0 0 36 36">
                   <circle cx="18" cy="18" r="16" fill="none" stroke="#f3f4f6" strokeWidth="2.5"></circle>
                   <circle 
                     cx="18" 
@@ -201,30 +201,30 @@ export const Dashboard = () => {
               </div>
               
               <div className="flex-1">
-                <h3 className="text-2xl sm:text-3xl font-bold text-foreground">{budgetData.spent.toLocaleString()} DH</h3>
-                <p className="text-sm text-muted-foreground">sur {budgetData.totalBudget.toLocaleString()} DH de budget</p>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">{budgetData.spent.toLocaleString()} DH</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground">sur {budgetData.totalBudget.toLocaleString()} DH de budget</p>
               </div>
             </div>
             
             {/* Statistiques de revenus et dépenses */}
-            <div className="grid grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-2">
               <div className="stat-block income-block">
-                <div className="flex items-center justify-center rounded-xl bg-blue-200 h-8 w-8 sm:h-10 sm:w-10">
-                  <ArrowUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
+                <div className="flex items-center justify-center rounded-xl bg-blue-200 h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10">
+                  <ArrowUp className="h-4 w-4 sm:h-4 sm:w-4 md:h-5 md:w-5 text-blue-600" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs sm:text-sm">Revenus</span>
-                  <span className="font-medium text-sm sm:text-base">{budgetData.income.toLocaleString()} DH</span>
+                  <span className="font-medium text-xs sm:text-sm md:text-base">{budgetData.income.toLocaleString()} DH</span>
                 </div>
               </div>
               
               <div className="stat-block spend-block">
-                <div className="flex items-center justify-center rounded-xl bg-red-200 h-8 w-8 sm:h-10 sm:w-10">
-                  <ArrowDown className="h-4 w-4 sm:h-5 sm:w-5 text-red-500" />
+                <div className="flex items-center justify-center rounded-xl bg-red-200 h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10">
+                  <ArrowDown className="h-4 w-4 sm:h-4 sm:w-4 md:h-5 md:w-5 text-red-500" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs sm:text-sm">Dépenses</span>
-                  <span className="font-medium text-sm sm:text-base">{budgetData.expenses.toLocaleString()} DH</span>
+                  <span className="font-medium text-xs sm:text-sm md:text-base">{budgetData.expenses.toLocaleString()} DH</span>
                 </div>
               </div>
             </div>
@@ -233,15 +233,15 @@ export const Dashboard = () => {
       </Card>
 
       {/* Graphique d'évolution mensuelle - MODERN DESIGN */}
-      <Card className="bg-white shadow-md border-0 rounded-3xl">
-        <CardContent className="p-5 md:p-6">
-          <div className="flex justify-between items-center">
+      <Card className="bg-white shadow-md border-0 rounded-3xl mt-4">
+        <CardContent className="p-4 sm:p-5 md:p-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
             <div>
-              <h3 className="font-medium text-foreground text-lg">Évolution Mensuelle</h3>
-              <p className="text-xs text-muted-foreground mt-1">Visualisez vos finances sur la durée</p>
+              <h3 className="font-medium text-foreground text-base sm:text-lg">Évolution Mensuelle</h3>
+              <p className="text-xs text-muted-foreground mt-0.5 sm:mt-1">Visualisez vos finances sur la durée</p>
             </div>
             <select 
-              className="text-xs border rounded-xl p-1.5 bg-white border-gray-200 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary"
+              className="text-xs border rounded-xl p-1.5 bg-white border-gray-200 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary w-full sm:w-auto mt-1 sm:mt-0"
               value={selectedPeriod}
               onChange={(e) => setSelectedPeriod(e.target.value as "30" | "90" | "180")}
             >
@@ -251,11 +251,11 @@ export const Dashboard = () => {
             </select>
           </div>
           
-          <div className="h-[200px] mt-4">
+          <div className="h-[180px] sm:h-[200px] mt-4">
             <ChartContainer config={chartConfig} className="[&_.recharts-cartesian-axis-tick]:text-xs">
               <LineChart
                 data={getChartData()}
-                margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+                margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
               >
                 <defs>
                   <linearGradient id="revenusGradient" x1="0" y1="0" x2="0" y2="1">
@@ -322,7 +322,7 @@ export const Dashboard = () => {
       </Card>
 
       {/* Catégories de dépenses */}
-      <div className="space-y-3">
+      <div className="space-y-3 mt-4">
         <div className="flex justify-between items-center">
           <h3 className="font-medium text-foreground text-base sm:text-lg">Dépenses par catégorie</h3>
           <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
@@ -337,30 +337,30 @@ export const Dashboard = () => {
                 className="transaction-row cursor-pointer"
                 onClick={() => setActiveCategory(activeCategory === category.id ? null : category.id)}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`category-icon ${category.color}`}>
-                    <category.icon className="h-5 w-5" />
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className={`category-icon ${category.color} h-9 w-9 sm:h-10 sm:w-10`}>
+                    <category.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-medium text-sm">{category.name}</span>
+                    <span className="font-medium text-xs sm:text-sm">{category.name}</span>
                     <span className="text-xs text-muted-foreground">{category.transactions.length} transactions</span>
                   </div>
                 </div>
-                <span className="font-semibold text-red-500">
+                <span className="font-semibold text-red-500 text-xs sm:text-sm">
                   - {category.amount.toLocaleString()} DH
                 </span>
               </div>
               
               {/* Détail des transactions */}
               {activeCategory === category.id && (
-                <div className="pl-12 pr-4 py-2 space-y-1 bg-gray-50 rounded-xl mt-1 mb-2">
+                <div className="pl-8 sm:pl-12 pr-2 sm:pr-4 py-2 space-y-1 bg-gray-50 rounded-xl mt-1 mb-2">
                   {category.transactions.map((transaction, idx) => (
                     <div key={idx} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
                       <div className="flex flex-col">
-                        <span className="text-sm">{transaction.name}</span>
+                        <span className="text-xs sm:text-sm">{transaction.name}</span>
                         <span className="text-xs text-muted-foreground">{transaction.date}</span>
                       </div>
-                      <span className="text-sm font-medium text-red-500">- {transaction.amount} DH</span>
+                      <span className="text-xs sm:text-sm font-medium text-red-500">- {transaction.amount} DH</span>
                     </div>
                   ))}
                 </div>
@@ -371,7 +371,7 @@ export const Dashboard = () => {
       </div>
       
       {/* Catégories de revenus */}
-      <div className="space-y-3">
+      <div className="space-y-3 mt-4">
         <div className="flex justify-between items-center">
           <h3 className="font-medium text-foreground text-base sm:text-lg">Revenus par catégorie</h3>
           <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
@@ -386,30 +386,30 @@ export const Dashboard = () => {
                 className="transaction-row cursor-pointer"
                 onClick={() => setActiveCategory(activeCategory === category.id ? null : category.id)}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`category-icon ${category.color}`}>
-                    <category.icon className="h-5 w-5" />
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className={`category-icon ${category.color} h-9 w-9 sm:h-10 sm:w-10`}>
+                    <category.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-medium text-sm">{category.name}</span>
+                    <span className="font-medium text-xs sm:text-sm">{category.name}</span>
                     <span className="text-xs text-muted-foreground">{category.transactions.length} transactions</span>
                   </div>
                 </div>
-                <span className="font-semibold text-green-500">
+                <span className="font-semibold text-green-500 text-xs sm:text-sm">
                   + {category.amount.toLocaleString()} DH
                 </span>
               </div>
               
               {/* Détail des transactions */}
               {activeCategory === category.id && (
-                <div className="pl-12 pr-4 py-2 space-y-1 bg-gray-50 rounded-xl mt-1 mb-2">
+                <div className="pl-8 sm:pl-12 pr-2 sm:pr-4 py-2 space-y-1 bg-gray-50 rounded-xl mt-1 mb-2">
                   {category.transactions.map((transaction, idx) => (
                     <div key={idx} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
                       <div className="flex flex-col">
-                        <span className="text-sm">{transaction.name}</span>
+                        <span className="text-xs sm:text-sm">{transaction.name}</span>
                         <span className="text-xs text-muted-foreground">{transaction.date}</span>
                       </div>
-                      <span className="text-sm font-medium text-green-500">+ {transaction.amount} DH</span>
+                      <span className="text-xs sm:text-sm font-medium text-green-500">+ {transaction.amount} DH</span>
                     </div>
                   ))}
                 </div>
@@ -420,13 +420,13 @@ export const Dashboard = () => {
       </div>
 
       {/* Bouton d'action */}
-      <div className="fixed bottom-20 right-6 z-10 md:bottom-6">
+      <div className="fixed bottom-20 right-4 sm:right-6 z-10 md:bottom-6">
         <Button 
-          className="h-16 w-16 rounded-full bg-gradient-to-r from-monavenir-blue to-monavenir-cyan shadow-lg backdrop-blur-sm hover:opacity-90 transition-all border border-white/20" 
+          className="h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-gradient-to-r from-monavenir-blue to-monavenir-cyan shadow-lg backdrop-blur-sm hover:opacity-90 transition-all border border-white/20" 
           size="icon"
           onClick={() => setIsTransactionModalOpen(true)}
         >
-          <Plus className="h-7 w-7 text-white" />
+          <Plus className="h-5 w-5 sm:h-7 sm:w-7 text-white" />
         </Button>
       </div>
 

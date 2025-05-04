@@ -26,7 +26,7 @@ export const Education = () => {
               }}
             />
           </div>
-          <h1 className="text-2xl font-bold md:text-3xl text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text">Éducation Financière</h1>
+          <h1 className="text-xl md:text-2xl font-bold text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text">Éducation Financière</h1>
         </div>
         <p className="text-sm md:text-base text-muted-foreground">Apprenez et développez vos connaissances financières</p>
       </div>

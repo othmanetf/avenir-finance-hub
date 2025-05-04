@@ -64,7 +64,7 @@ const Index = () => {
       ) : (
         <>
           <Navigation currentRoute={currentRoute} onRouteChange={setCurrentRoute} />
-          <main className="pb-20 md:pb-6">
+          <main className="pb-20 md:pb-6 px-0 mx-auto max-w-5xl">
             {renderCurrentView()}
           </main>
           <ProfilePage 

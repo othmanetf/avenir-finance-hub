@@ -6,7 +6,9 @@ import { ThemeProvider } from '@/components/ui/theme-provider';
 export default function DesignSystem() {
   return (
     <ThemeProvider defaultTheme="light" attribute="class">
-      <DesignSystemShowcase />
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <DesignSystemShowcase />
+      </div>
     </ThemeProvider>
   );
 }
