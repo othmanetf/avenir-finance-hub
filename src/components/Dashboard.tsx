@@ -155,9 +155,9 @@ export const Dashboard = () => {
   ];
 
   return (
-    <div className="flex flex-col p-4 md:p-6 gap-6 md:pl-24">
+    <div className="flex flex-col p-4 md:p-6 gap-5 md:pl-24">
       {/* En-tête avec Bienvenue et Avatar */}
-      <div className="flex justify-between items-center mb-2">
+      <div className="flex justify-between items-center mb-1">
         <div className="flex flex-col">
           <p className="text-sm text-muted-foreground">Bienvenue</p>
           <h2 className="text-2xl font-bold text-foreground">Mohamed</h2>
@@ -174,7 +174,7 @@ export const Dashboard = () => {
 
       {/* Aperçu du budget */}
       <Card className="bg-white shadow-md border-0 rounded-3xl">
-        <CardContent className="p-6">
+        <CardContent className="p-5 md:p-6">
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="font-medium text-foreground text-base sm:text-lg">Budget Mensuel</span>
@@ -209,8 +209,8 @@ export const Dashboard = () => {
             {/* Statistiques de revenus et dépenses */}
             <div className="grid grid-cols-2 gap-3 pt-2">
               <div className="stat-block income-block">
-                <div className="flex items-center justify-center rounded-xl bg-violet-200 h-8 w-8 sm:h-10 sm:w-10">
-                  <ArrowUp className="h-4 w-4 sm:h-5 sm:w-5 text-violet-600" />
+                <div className="flex items-center justify-center rounded-xl bg-blue-200 h-8 w-8 sm:h-10 sm:w-10">
+                  <ArrowUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs sm:text-sm">Revenus</span>
@@ -232,16 +232,16 @@ export const Dashboard = () => {
         </CardContent>
       </Card>
 
-      {/* Graphique d'évolution mensuelle - UPDATED DESIGN */}
+      {/* Graphique d'évolution mensuelle - MODERN DESIGN */}
       <Card className="bg-white shadow-md border-0 rounded-3xl">
-        <CardContent className="p-6">
+        <CardContent className="p-5 md:p-6">
           <div className="flex justify-between items-center">
             <div>
               <h3 className="font-medium text-foreground text-lg">Évolution Mensuelle</h3>
               <p className="text-xs text-muted-foreground mt-1">Visualisez vos finances sur la durée</p>
             </div>
             <select 
-              className="text-xs border rounded-lg p-1.5 bg-white border-gray-200 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary"
+              className="text-xs border rounded-xl p-1.5 bg-white border-gray-200 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary"
               value={selectedPeriod}
               onChange={(e) => setSelectedPeriod(e.target.value as "30" | "90" | "180")}
             >
@@ -251,7 +251,7 @@ export const Dashboard = () => {
             </select>
           </div>
           
-          <div className="h-[220px] mt-4">
+          <div className="h-[200px] mt-4">
             <ChartContainer config={chartConfig} className="[&_.recharts-cartesian-axis-tick]:text-xs">
               <LineChart
                 data={getChartData()}
@@ -322,7 +322,7 @@ export const Dashboard = () => {
       </Card>
 
       {/* Catégories de dépenses */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div className="flex justify-between items-center">
           <h3 className="font-medium text-foreground text-base sm:text-lg">Dépenses par catégorie</h3>
           <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
@@ -330,7 +330,7 @@ export const Dashboard = () => {
           </Button>
         </div>
         
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           {categories.map((category) => (
             <div key={category.id}>
               <div 
@@ -353,7 +353,7 @@ export const Dashboard = () => {
               
               {/* Détail des transactions */}
               {activeCategory === category.id && (
-                <div className="pl-12 pr-4 py-2 space-y-2 bg-gray-50 rounded-xl mt-1 mb-2">
+                <div className="pl-12 pr-4 py-2 space-y-1 bg-gray-50 rounded-xl mt-1 mb-2">
                   {category.transactions.map((transaction, idx) => (
                     <div key={idx} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
                       <div className="flex flex-col">
@@ -371,7 +371,7 @@ export const Dashboard = () => {
       </div>
       
       {/* Catégories de revenus */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div className="flex justify-between items-center">
           <h3 className="font-medium text-foreground text-base sm:text-lg">Revenus par catégorie</h3>
           <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
@@ -379,7 +379,7 @@ export const Dashboard = () => {
           </Button>
         </div>
         
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           {incomeCategories.map((category) => (
             <div key={category.id}>
               <div 
@@ -402,7 +402,7 @@ export const Dashboard = () => {
               
               {/* Détail des transactions */}
               {activeCategory === category.id && (
-                <div className="pl-12 pr-4 py-2 space-y-2 bg-gray-50 rounded-xl mt-1 mb-2">
+                <div className="pl-12 pr-4 py-2 space-y-1 bg-gray-50 rounded-xl mt-1 mb-2">
                   {category.transactions.map((transaction, idx) => (
                     <div key={idx} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
                       <div className="flex flex-col">
@@ -422,11 +422,11 @@ export const Dashboard = () => {
       {/* Bouton d'action */}
       <div className="fixed bottom-20 right-6 z-10 md:bottom-6">
         <Button 
-          className="h-16 w-16 rounded-full bg-primary/90 shadow-lg backdrop-blur-sm hover:bg-primary transition-all border border-white/20" 
+          className="h-16 w-16 rounded-full bg-gradient-to-r from-monavenir-blue to-monavenir-cyan shadow-lg backdrop-blur-sm hover:opacity-90 transition-all border border-white/20" 
           size="icon"
           onClick={() => setIsTransactionModalOpen(true)}
         >
-          <Plus className="h-7 w-7" />
+          <Plus className="h-7 w-7 text-white" />
         </Button>
       </div>
 

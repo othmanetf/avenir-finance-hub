@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -113,11 +114,11 @@
   }
 
   .income-block {
-    @apply bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-200;
+    @apply bg-blue-100/80 text-blue-600 dark:bg-blue-900 dark:text-blue-200;
   }
 
   .spend-block {
-    @apply bg-red-100 text-red-500 dark:bg-red-900 dark:text-red-200;
+    @apply bg-red-100/80 text-red-500 dark:bg-red-900 dark:text-red-200;
   }
   
   .transaction-row {
@@ -125,7 +126,7 @@
   }
   
   .category-icon {
-    @apply flex items-center justify-center h-10 w-10 rounded-xl shadow-md;
+    @apply flex items-center justify-center h-10 w-10 rounded-xl shadow-sm;
   }
 
   /* Gradient backgrounds */
@@ -143,7 +144,7 @@
   }
   
   .mobile-bottom-nav {
-    @apply fixed bottom-0 left-0 right-0 bg-background border-t border-border py-2 px-4 flex justify-around items-center;
+    @apply fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border py-2 px-4 flex justify-around items-center;
   }
   
   /* Fix for overlapping text */
