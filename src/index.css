@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
+@import './styles/design-system.css';
 
 @tailwind base;
 @tailwind components;
@@ -199,5 +200,70 @@
   
   .onboarding-subtitle {
     @apply text-gray-500 dark:text-gray-400 mb-6;
+  }
+
+  /* Design System Components */
+  .ds-heading-1 {
+    @apply text-4xl font-bold tracking-tight;
+  }
+
+  .ds-heading-2 {
+    @apply text-3xl font-bold;
+  }
+
+  .ds-heading-3 {
+    @apply text-2xl font-semibold;
+  }
+
+  .ds-heading-4 {
+    @apply text-xl font-semibold;
+  }
+
+  .ds-text {
+    @apply text-base leading-relaxed;
+  }
+
+  .ds-text-small {
+    @apply text-sm;
+  }
+
+  .ds-card {
+    @apply bg-card text-card-foreground rounded-xl p-5 shadow-md transition-all duration-200 hover:shadow-lg;
+  }
+
+  .ds-button {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50;
+  }
+
+  .ds-button-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+
+  .ds-button-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  }
+
+  .ds-button-outline {
+    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .ds-input {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .ds-badge {
+    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  .ds-badge-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/80;
+  }
+
+  .ds-badge-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  }
+
+  .ds-badge-outline {
+    @apply border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground;
   }
 }

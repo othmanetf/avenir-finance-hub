@@ -58,13 +58,51 @@ export default {
           success: '#10B981',   // Keep semantic colors
           warning: '#F59E0B',   
           error: '#EF4444',     
-          lightgrey: '#F7F9FA', 
+          lightgrey: '#F7F9FA',
+          black: '#1A1F2C',
+          white: '#FFFFFF',
+          
+          // Gray scale
+          gray: {
+            100: '#F7F9FA',
+            200: '#E9EDF0',
+            300: '#CDD5DC',
+            400: '#9BA6B2',
+            500: '#6B7684',
+            600: '#4D5665',
+            700: '#363E4A',
+            800: '#252A33',
+            900: '#1A1F2C',
+          }
         }
+      },
+      fontFamily: {
+        sans: ['Inter', 'Manrope', 'SF Pro', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'xs': ['0.75rem', { lineHeight: '1rem' }],
+        'sm': ['0.875rem', { lineHeight: '1.25rem' }],
+        'base': ['1rem', { lineHeight: '1.5rem' }],
+        'lg': ['1.125rem', { lineHeight: '1.75rem' }],
+        'xl': ['1.25rem', { lineHeight: '1.75rem' }],
+        '2xl': ['1.5rem', { lineHeight: '2rem' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)'
+        sm: 'calc(var(--radius) - 4px)',
+        'xl': '1rem',
+        '2xl': '1.5rem',
+      },
+      boxShadow: {
+        'neuro': '10px 10px 20px rgba(0, 0, 0, 0.05), -10px -10px 20px rgba(255, 255, 255, 0.7)',
+        'neuro-dark': '10px 10px 20px rgba(0, 0, 0, 0.3), -10px -10px 20px rgba(255, 255, 255, 0.05)',
+        'neuro-sm': '5px 5px 10px rgba(0, 0, 0, 0.05), -5px -5px 10px rgba(255, 255, 255, 0.7)',
+        'neuro-sm-dark': '5px 5px 10px rgba(0, 0, 0, 0.3), -5px -5px 10px rgba(255, 255, 255, 0.05)',
+        'card': '0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.06)',
+        'card-hover': '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
       },
       keyframes: {
         'accordion-down': {
@@ -132,9 +170,6 @@ export default {
         'float': 'float 3s ease-in-out infinite',
         'pulse-soft': 'pulse-soft 2s ease-in-out infinite'
       },
-      fontFamily: {
-        sans: ['Inter', 'Manrope', 'SF Pro', 'sans-serif'],
-      },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #0039C2 0%, #00D1FF 100%)',
         'gradient-secondary': 'linear-gradient(135deg, #00D1FF 0%, #0039C2 100%)',
@@ -143,11 +178,11 @@ export default {
         'gradient-danger': 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
         'gradient-info': 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
       },
-      boxShadow: {
-        'neuro': '10px 10px 20px rgba(0, 0, 0, 0.05), -10px -10px 20px rgba(255, 255, 255, 0.7)',
-        'neuro-dark': '10px 10px 20px rgba(0, 0, 0, 0.3), -10px -10px 20px rgba(255, 255, 255, 0.05)',
-        'neuro-sm': '5px 5px 10px rgba(0, 0, 0, 0.05), -5px -5px 10px rgba(255, 255, 255, 0.7)',
-        'neuro-sm-dark': '5px 5px 10px rgba(0, 0, 0, 0.3), -5px -5px 10px rgba(255, 255, 255, 0.05)',
+      spacing: {
+        '0.5': '0.125rem',
+        '1.5': '0.375rem',
+        '2.5': '0.625rem',
+        '3.5': '0.875rem',
       }
     }
   },

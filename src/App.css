@@ -1,4 +1,5 @@
 
+/* Base Styles */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -34,6 +35,7 @@
   }
 }
 
+/* Card Component Styles */
 .card {
   padding: 2em;
   border-radius: var(--radius);
@@ -67,6 +69,11 @@
   backdrop-filter: blur(10px) !important;
 }
 
+.dark .recharts-default-tooltip {
+  background-color: rgba(37, 42, 51, 0.95) !important;
+  color: white !important;
+}
+
 .recharts-tooltip-item {
   padding: 4px 0 !important;
   font-weight: 500 !important;
@@ -76,6 +83,10 @@
 .recharts-tooltip-item-name {
   margin-right: 8px !important;
   color: #333 !important;
+}
+
+.dark .recharts-tooltip-item-name {
+  color: #e9edf0 !important;
 }
 
 .recharts-tooltip-item-separator {
@@ -92,12 +103,24 @@
   fill: #888 !important;
 }
 
+.dark .recharts-cartesian-axis-tick-value {
+  fill: #9BA6B2 !important;
+}
+
 .recharts-cartesian-grid-horizontal line {
   stroke: rgba(240, 240, 245, 0.8) !important;
 }
 
+.dark .recharts-cartesian-grid-horizontal line {
+  stroke: rgba(54, 62, 74, 0.4) !important;
+}
+
 .recharts-cartesian-grid-vertical line {
   stroke: rgba(240, 240, 245, 0.6) !important;
+}
+
+.dark .recharts-cartesian-grid-vertical line {
+  stroke: rgba(54, 62, 74, 0.3) !important;
 }
 
 .recharts-line-dots {
@@ -108,6 +131,7 @@
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1)) !important;
 }
 
+/* Component Styles */
 .category-icon {
   display: flex;
   align-items: center;
@@ -116,6 +140,10 @@
   height: 40px;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.dark .category-icon {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .transaction-row {
@@ -132,7 +160,11 @@
   background-color: rgba(0, 0, 0, 0.03);
 }
 
-/* Onboarding specific styles */
+.dark .transaction-row:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Onboarding Styles */
 .onboarding-container {
   display: flex;
   flex-direction: column;
@@ -146,6 +178,11 @@
   border-radius: var(--radius);
   padding: 2rem;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+}
+
+.dark .onboarding-card {
+  background: var(--ma-gray-800);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
 }
 
 .onboarding-heading {
@@ -172,6 +209,10 @@
   margin: 0 0.25rem;
   border-radius: 9999px;
   transition: background-color 0.3s ease;
+}
+
+.dark .onboarding-progress-step {
+  background-color: rgba(54, 62, 74, 1);
 }
 
 .onboarding-progress-step.active {
@@ -230,6 +271,7 @@
   }
 }
 
+/* Bank option styling */
 .bank-option {
   display: flex;
   align-items: center;
@@ -241,14 +283,28 @@
   transition: all 0.3s ease;
 }
 
+.dark .bank-option {
+  border-color: rgba(54, 62, 74, 1);
+}
+
 .bank-option:hover {
   border-color: #0039C2;
   background-color: rgba(0, 57, 194, 0.05);
 }
 
+.dark .bank-option:hover {
+  border-color: #0039C2;
+  background-color: rgba(0, 57, 194, 0.1);
+}
+
 .bank-option.selected {
   border-color: #0039C2;
   background-color: rgba(0, 57, 194, 0.1);
+}
+
+.dark .bank-option.selected {
+  border-color: #0039C2;
+  background-color: rgba(0, 57, 194, 0.2);
 }
 
 .bank-option-logo {
@@ -296,13 +352,17 @@
   margin-bottom: 1.5rem;
 }
 
+.dark .completion-icon {
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
 .completion-icon svg {
   color: #10b981;
   width: 2rem;
   height: 2rem;
 }
 
-/* Better mobile styles */
+/* Mobile optimization */
 @media (max-width: 640px) {
   .bank-option {
     padding: 0.75rem;
@@ -313,7 +373,7 @@
   }
 }
 
-/* Improved typography */
+/* Typography Improvement */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Manrope", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -322,11 +382,15 @@ body {
   color: #333;
 }
 
+.dark body {
+  color: #E9EDF0;
+}
+
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
 }
 
-/* Consistent amount formatting */
+/* Amount formatting */
 .text-red-500 {
   display: flex;
   align-items: center;
@@ -339,7 +403,7 @@ h1, h2, h3, h4, h5, h6 {
   gap: 0.25rem;
 }
 
-/* Hide scrollbars on mobile while preserving functionality */
+/* Hide scrollbars but keep functionality */
 ::-webkit-scrollbar {
   width: 0px;
   height: 0px;
@@ -351,26 +415,90 @@ h1, h2, h3, h4, h5, h6 {
   scrollbar-width: none; /* Firefox */
 }
 
-/* Modern card styling */
+/* Card modernization */
 .card {
   background-color: white;
   border-radius: 16px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.06);
 }
 
-/* Apple-style buttons */
+.dark .card {
+  background-color: var(--ma-gray-800);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.18);
+}
+
+/* Button styling */
 button {
   font-weight: 500;
 }
 
-/* Chart container styling */
+/* Chart container */
 .recharts-wrapper {
   max-width: 100%;
   overflow: hidden;
   padding: 0;
 }
 
-/* Smooth transitions for select inputs */
+/* Select inputs */
 select {
   transition: all 0.2s ease;
+}
+
+/* Accessibility improvements */
+button, a, input, select, textarea {
+  outline-offset: 2px;
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible, 
+select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--ma-blue);
+}
+
+/* Focus ring for keyboard navigation */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--ma-blue);
+  outline-offset: 2px;
+}
+
+/* Skip to content link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--ma-blue);
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* High contrast mode adjustments */
+@media (forced-colors: active) {
+  .card, .button, .input {
+    border: 1px solid;
+  }
+}
+
+/* Dark mode toggle styles */
+.mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.mode-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dark .mode-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
