@@ -10,6 +10,7 @@ import Investments from "@/components/Investments";
 import ProfilePage from "@/components/ProfilePage";
 import { useProfile } from "@/hooks/use-profile";
 import { useOnboarded } from "@/hooks/use-onboarded";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -39,22 +40,67 @@ const Index = () => {
 
   // Show a loading state while checking onboarding status
   if (isLoading) {
-    return <div className="h-screen w-full flex items-center justify-center">Chargement...</div>
+    return (
+      <div className="h-screen w-full flex items-center justify-center">
+        <div className="flex flex-col items-center">
+          <div className="loading-spinner"></div>
+          <p className="mt-4 text-muted-foreground">Chargement...</p>
+        </div>
+      </div>
+    )
   }
 
-  const renderCurrentView = () => {
-    switch (currentRoute) {
-      case "/":
-        return <Dashboard />;
-      case "/education":
-        return <Education />;
-      case "/analysis":
-        return <Analysis />;
-      case "/investments":
-        return <Investments />;
-      default:
-        return <Dashboard />;
+  // Animation variants for the view transitions
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      x: 10,
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+    },
+    out: {
+      opacity: 0,
+      x: -10,
     }
+  };
+
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 0.3
+  };
+
+  const renderCurrentView = () => {
+    const View = (() => {
+      switch (currentRoute) {
+        case "/":
+          return Dashboard;
+        case "/education":
+          return Education;
+        case "/analysis":
+          return Analysis;
+        case "/investments":
+          return Investments;
+        default:
+          return Dashboard;
+      }
+    })();
+
+    return (
+      <motion.div
+        key={currentRoute}
+        initial="initial"
+        animate="in"
+        exit="out"
+        variants={pageVariants}
+        transition={pageTransition}
+        className="w-full"
+      >
+        <View />
+      </motion.div>
+    );
   };
 
   return (
@@ -64,9 +110,11 @@ const Index = () => {
       ) : (
         <>
           <Navigation currentRoute={currentRoute} onRouteChange={setCurrentRoute} />
-          <main className="pb-20 md:pb-6 px-0 mx-auto max-w-5xl">
-            {renderCurrentView()}
-          </main>
+          <AnimatePresence mode="wait">
+            <main className="pb-20 md:pb-6 px-0 mx-auto max-w-5xl">
+              {renderCurrentView()}
+            </main>
+          </AnimatePresence>
           <ProfilePage 
             isOpen={isProfileOpen} 
             onClose={closeProfile} 
