@@ -29,7 +29,9 @@ import {
   ResponsiveContainer,
   PieChart, 
   Pie, 
-  Cell
+  Cell,
+  Area,
+  AreaChart
 } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -38,6 +40,7 @@ import { useProfile } from "@/hooks/use-profile";
 import { motion } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Dashboard = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -103,7 +106,7 @@ export const Dashboard = () => {
   // Chart config for the line chart
   const chartConfig = {
     revenus: { label: "Revenus", theme: { light: "#1F6FEB", dark: "#1F6FEB" } },
-    dépenses: { label: "Dépenses", theme: { light: "#00D1FF", dark: "#00D1FF" } },
+    dépenses: { label: "Dépenses", theme: { light: "#7C84FF", dark: "#7C84FF" } },
     budget: { label: "Budget", theme: { light: "#10B981", dark: "#10B981" } }
   };
 
@@ -358,31 +361,31 @@ export const Dashboard = () => {
                 <h3 className="text-lg font-bold text-foreground">Évolution Mensuelle</h3>
                 <p className="text-sm text-muted-foreground">Visualisez vos finances sur la durée</p>
               </div>
-              <select 
-                className="text-xs border rounded-xl p-2 bg-white border-gray-200 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary w-full sm:w-auto"
+              <Select
                 value={selectedPeriod}
-                onChange={(e) => setSelectedPeriod(e.target.value as "30" | "90" | "180")}
+                onValueChange={(value) => setSelectedPeriod(value as "30" | "90" | "180")}
               >
-                <option value="30">Derniers 30 jours</option>
-                <option value="90">Derniers 90 jours</option>
-                <option value="180">Derniers 6 mois</option>
-              </select>
+                <SelectTrigger className="w-full sm:w-[180px] h-9 text-xs rounded-xl">
+                  <SelectValue placeholder="Sélectionner une période" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="30">Derniers 30 jours</SelectItem>
+                  <SelectItem value="90">Derniers 90 jours</SelectItem>
+                  <SelectItem value="180">Derniers 6 mois</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             
-            <div className="h-[200px] sm:h-[240px] mt-4">
+            <div className="h-[220px] sm:h-[240px] mt-4">
               <ChartContainer config={chartConfig} className="[&_.recharts-cartesian-axis-tick]:text-xs">
-                <LineChart
+                <AreaChart
                   data={getChartData()}
                   margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
                 >
                   <defs>
-                    <linearGradient id="revenusGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#1F6FEB" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#1F6FEB" stopOpacity={0} />
-                    </linearGradient>
-                    <linearGradient id="depensesGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#00D1FF" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#00D1FF" stopOpacity={0} />
+                    <linearGradient id="dépensesGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#7C84FF" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#7C84FF" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
@@ -402,38 +405,19 @@ export const Dashboard = () => {
                     width={25}
                   />
                   <ChartTooltip content={<ChartTooltipContent />} />
-                  <Line 
-                    type="monotone" 
-                    dataKey="revenus" 
-                    name="revenus"
-                    stroke="#1F6FEB" 
-                    strokeWidth={2.5}
-                    dot={{ r: 2, strokeWidth: 2, fill: "#fff" }}
-                    activeDot={{ r: 4, strokeWidth: 0 }}
-                    animationDuration={1000}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="dépenses" 
+                  <Area
+                    type="monotone"
+                    dataKey="dépenses"
                     name="dépenses"
-                    stroke="#00D1FF" 
+                    stroke="#7C84FF"
+                    fillOpacity={1}
+                    fill="url(#dépensesGradient)"
                     strokeWidth={2.5}
                     dot={{ r: 2, strokeWidth: 2, fill: "#fff" }}
-                    activeDot={{ r: 4, strokeWidth: 0 }} 
-                    animationDuration={1000}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="budget" 
-                    name="budget"
-                    stroke="#10B981" 
-                    strokeWidth={2}
-                    strokeDasharray="5 5" 
-                    dot={{ r: 0 }}
                     activeDot={{ r: 4, strokeWidth: 0 }}
-                    animationDuration={1000}
+                    animationDuration={1500}
                   />
-                </LineChart>
+                </AreaChart>
               </ChartContainer>
             </div>
             
@@ -528,7 +512,7 @@ export const Dashboard = () => {
                 onClick={() => setActiveCategory(activeCategory === category.id ? null : category.id)}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`category-icon ${category.color} h-10 w-10`}>
+                  <div className={`category-icon ${category.color} h-10 w-10 rounded-xl flex items-center justify-center`}>
                     <category.icon className="h-5 w-5" />
                   </div>
                   <div className="flex flex-col">
@@ -587,7 +571,7 @@ export const Dashboard = () => {
                 onClick={() => setActiveCategory(activeCategory === category.id ? null : category.id)}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`category-icon ${category.color} h-10 w-10`}>
+                  <div className={`category-icon ${category.color} h-10 w-10 rounded-xl flex items-center justify-center`}>
                     <category.icon className="h-5 w-5" />
                   </div>
                   <div className="flex flex-col">
