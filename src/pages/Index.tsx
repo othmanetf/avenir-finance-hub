@@ -10,6 +10,7 @@ import Investments from "@/components/Investments";
 import ProfilePage from "@/components/ProfilePage";
 import { useProfile } from "@/hooks/use-profile";
 import { useOnboarded } from "@/hooks/use-onboarded";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -25,7 +26,7 @@ const Index = () => {
       return;
     }
 
-    // Ignorer l'écran de démarrage pour les utilisateurs qui reviennent
+    // Ignore splash screen for returning users
     const hasSeenSplash = localStorage.getItem("hasSeenSplash");
     if (hasSeenSplash) {
       setShowSplash(false);
@@ -39,22 +40,25 @@ const Index = () => {
 
   // Show a loading state while checking onboarding status
   if (isLoading) {
-    return <div className="h-screen w-full flex items-center justify-center">Chargement...</div>
+    return (
+      <div className="h-screen w-full flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-8 w-8 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+          <p className="text-sm text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   const renderCurrentView = () => {
-    switch (currentRoute) {
-      case "/":
-        return <Dashboard />;
-      case "/education":
-        return <Education />;
-      case "/analysis":
-        return <Analysis />;
-      case "/investments":
-        return <Investments />;
-      default:
-        return <Dashboard />;
-    }
+    const views = {
+      "/": <Dashboard />,
+      "/education": <Education />,
+      "/analysis": <Analysis />,
+      "/investments": <Investments />
+    };
+    
+    return views[currentRoute as keyof typeof views] || <Dashboard />;
   };
 
   return (
@@ -65,7 +69,17 @@ const Index = () => {
         <>
           <Navigation currentRoute={currentRoute} onRouteChange={setCurrentRoute} />
           <main className="pb-20 md:pb-6 px-0 mx-auto max-w-5xl">
-            {renderCurrentView()}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentRoute}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                {renderCurrentView()}
+              </motion.div>
+            </AnimatePresence>
           </main>
           <ProfilePage 
             isOpen={isProfileOpen} 

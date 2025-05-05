@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
 @import './styles/design-system.css';
 
@@ -176,94 +175,66 @@
   .btn-primary-gradient {
     @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan text-white rounded-full shadow-md hover:shadow-lg transition-all;
   }
-  
-  /* Onboarding specific styles */
-  .onboarding-step-icon {
-    @apply flex items-center justify-center w-10 h-10 rounded-full;
-  }
-  
-  .onboarding-step-active {
-    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan text-white;
-  }
-  
-  .onboarding-step-inactive {
-    @apply bg-gray-100 text-gray-400;
-  }
-  
-  .onboarding-container {
-    @apply pt-28 px-4 max-w-md mx-auto;
-  }
-  
-  .onboarding-title {
-    @apply text-2xl font-bold mb-2;
-  }
-  
-  .onboarding-subtitle {
-    @apply text-gray-500 dark:text-gray-400 mb-6;
+
+  /* Animation classes */
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
   }
 
-  /* Design System Components */
-  .ds-heading-1 {
-    @apply text-4xl font-bold tracking-tight;
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
   }
 
-  .ds-heading-2 {
-    @apply text-3xl font-bold;
+  .animate-pulse-soft {
+    animation: pulse-soft 2s ease-in-out infinite;
   }
 
-  .ds-heading-3 {
-    @apply text-2xl font-semibold;
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
   }
 
-  .ds-heading-4 {
-    @apply text-xl font-semibold;
+  .animate-slide-in {
+    animation: slide-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
-  .ds-text {
-    @apply text-base leading-relaxed;
+  @keyframes slide-in {
+    from { transform: translateX(20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
   }
 
-  .ds-text-small {
-    @apply text-sm;
+  .animate-fade-in {
+    animation: fade-in 0.5s ease forwards;
   }
 
-  .ds-card {
-    @apply bg-card text-card-foreground rounded-xl p-5 shadow-md transition-all duration-200 hover:shadow-lg;
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
-  .ds-button {
-    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50;
+  .animate-scale-in {
+    animation: scale-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
-  .ds-button-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  @keyframes scale-in {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
   }
 
-  .ds-button-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  /* Dashboard specific */
+  .progress-container {
+    @apply relative h-2 bg-gray-200 rounded-full overflow-hidden;
   }
 
-  .ds-button-outline {
-    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+  .progress-bar {
+    @apply absolute top-0 left-0 h-full transition-all duration-1000 ease-out;
   }
+}
 
-  .ds-input {
-    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
-  }
-
-  .ds-badge {
-    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
-  }
-
-  .ds-badge-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/80;
-  }
-
-  .ds-badge-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
-  }
-
-  .ds-badge-outline {
-    @apply border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground;
+@layer utilities {
+  .h-screen-custom {
+    height: calc(var(--vh, 1vh) * 100);
   }
 }
