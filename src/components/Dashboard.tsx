@@ -10,18 +10,13 @@ import {
   Car,
   Utensils,
   Plus,
-  Calendar,
-  Euro,
-  Bitcoin,
-  Wallet
+  Calendar
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { 
-  LineChart, 
-  Line, 
   XAxis, 
   YAxis, 
   CartesianGrid, 
@@ -66,13 +61,6 @@ export const Dashboard = () => {
   const currentDay = currentDate.getDate();
   const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
   
-  // Données pour les comptes
-  const accountsData = [
-    { name: "Portefeuille", icon: Wallet, amount: -2354, currency: "DH", transactions: 201, color: "bg-blue-100" },
-    { name: "Euro", icon: Euro, amount: -340, currency: "€", transactions: 5, color: "bg-cyan-100" },
-    { name: "Bitcoin", icon: Bitcoin, amount: 0.01, currency: "₿", transactions: 1, color: "bg-amber-100" },
-  ];
-
   // Données pour le graphique d'évolution mensuelle selon la période
   const getChartData = () => {
     if (selectedPeriod === "30") {
@@ -252,111 +240,99 @@ export const Dashboard = () => {
         </Avatar>
       </motion.div>
 
-      {/* Section des comptes */}
-      <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5" variants={itemVariants}>
-        {accountsData.map((account, index) => (
-          <motion.div 
-            key={index}
-            className="overflow-hidden"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          >
-            <Card className={`${account.color} border-0 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-2xl`}>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <span className="text-foreground font-semibold text-base">{account.name}</span>
-                    <span className="text-foreground text-xl font-bold">
-                      {account.amount} {account.currency}
-                    </span>
-                    <span className="text-muted-foreground text-xs">{account.transactions} transactions</span>
-                  </div>
-                  <div className="rounded-full bg-white/80 p-2.5 shadow-sm">
-                    <account.icon className="h-5 w-5" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </motion.div>
-
-      {/* Aperçu du budget */}
+      {/* Aperçu du budget - UI Enhanced */}
       <motion.div variants={itemVariants} className="mb-5">
-        <Card className="bg-white shadow-md border-0 rounded-3xl overflow-hidden">
-          <CardContent className="p-5 space-y-4">
+        <Card className="bg-white shadow-lg border-0 rounded-3xl overflow-hidden">
+          <CardContent className="p-6 space-y-5">
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="text-xl font-bold text-foreground">Dépenses Mensuelles</h3>
-                <p className="text-lg font-medium text-foreground">
-                  <span className="text-primary">{budgetData.spent.toLocaleString()} DH</span> 
-                  <span className="text-sm text-muted-foreground"> sur {budgetData.totalBudget.toLocaleString()} DH</span>
-                </p>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-lg font-semibold text-primary">{budgetData.spent.toLocaleString()} DH</span> 
+                  <span className="text-sm text-muted-foreground">sur {budgetData.totalBudget.toLocaleString()} DH</span>
+                </div>
               </div>
-              <Button size="icon" variant="outline" className="rounded-full h-9 w-9 border-primary/30">
-                <Calendar className="h-4 w-4 text-primary" />
+              <Button size="icon" variant="outline" className="rounded-full h-10 w-10 border-primary/30 shadow-sm hover:shadow-md transition-all">
+                <Calendar className="h-5 w-5 text-primary" />
               </Button>
             </div>
             
-            <div className="relative pt-5 pb-3">
-              <div className="flex justify-between text-xs text-muted-foreground mb-2">
+            <div className="relative pt-6 pb-4">
+              {/* Progress Bar with Improved Design */}
+              <div className="flex justify-between text-xs text-muted-foreground mb-3">
                 <span>1 Juin</span>
-                <span>Aujourd'hui</span>
                 <span>30 Juin</span>
               </div>
-              <div className="relative">
-                <Progress value={budgetData.progressPercentage} className="h-2.5 rounded-full bg-primary/20" />
-                <div 
-                  className="absolute top-0 h-5 w-0.5 bg-gray-800 rounded-full transform -translate-y-1.5"
+              
+              <div className="relative mb-6">
+                <Progress value={budgetData.progressPercentage} className="h-3 rounded-full bg-primary/10" />
+                <motion.div 
+                  className="absolute top-0 h-6 w-1 bg-gray-800 rounded-full transform -translate-y-1.5 shadow-md"
                   style={{ left: `${(currentDay/lastDay) * 100}%` }}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 24 }}
+                  transition={{ delay: 0.5, duration: 0.3 }}
                 >
-                  <div className="absolute top-0 left-50 transform -translate-x-1/2 -translate-y-full bg-gray-800 text-white text-xs rounded-md px-2 py-1 shadow-md">
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-gray-800 text-white text-xs font-medium rounded-lg px-2.5 py-1.5 shadow-lg">
                     Aujourd'hui
                   </div>
-                </div>
+                </motion.div>
               </div>
-              <p className="text-sm text-center mt-4 text-muted-foreground">
-                Vous pouvez dépenser <span className="font-medium text-primary">{budgetData.dailyBudget.toLocaleString()} DH</span> par jour pour les <span className="font-medium text-primary">{budgetData.remainingDays}</span> prochains jours
-              </p>
+              
+              {/* Daily Budget Message */}
+              <motion.div 
+                className="bg-primary/5 rounded-xl p-4 text-center"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
+              >
+                <p className="text-sm text-foreground">
+                  Vous pouvez dépenser <span className="font-semibold text-primary">{budgetData.dailyBudget.toLocaleString()} DH</span> par jour pour les <span className="font-semibold text-primary">{budgetData.remainingDays}</span> prochains jours
+                </p>
+              </motion.div>
             </div>
             
             {/* Statistiques de revenus et dépenses */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="stat-block income-block flex items-center justify-between p-4 rounded-xl shadow-sm">
+            <div className="grid grid-cols-2 gap-4">
+              <motion.div 
+                className="stat-block flex items-center justify-between p-5 rounded-xl shadow-sm bg-gradient-to-br from-blue-50 to-blue-100/80"
+                whileHover={{ y: -2, transition: { duration: 0.2 } }}
+              >
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center justify-center rounded-full bg-blue-200/70 h-10 w-10">
+                  <div className="flex items-center justify-center rounded-full bg-blue-200/70 h-12 w-12 shadow-inner">
                     <ArrowUp className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
-                    <span className="block text-xs">Revenus</span>
-                    <span className="font-semibold text-sm md:text-base">{budgetData.income.toLocaleString()} DH</span>
+                    <span className="block text-xs text-blue-600/80 font-medium mb-0.5">Revenus</span>
+                    <span className="font-semibold text-base md:text-lg">{budgetData.income.toLocaleString()} DH</span>
                   </div>
                 </div>
-                <div className="hidden md:block h-8 w-0.5 bg-blue-200 rounded-full"></div>
-              </div>
+              </motion.div>
               
-              <div className="stat-block spend-block flex items-center justify-between p-4 rounded-xl shadow-sm">
+              <motion.div 
+                className="stat-block flex items-center justify-between p-5 rounded-xl shadow-sm bg-gradient-to-br from-red-50 to-red-100/80"
+                whileHover={{ y: -2, transition: { duration: 0.2 } }}
+              >
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center justify-center rounded-full bg-red-200/70 h-10 w-10">
+                  <div className="flex items-center justify-center rounded-full bg-red-200/70 h-12 w-12 shadow-inner">
                     <ArrowDown className="h-5 w-5 text-red-500" />
                   </div>
                   <div>
-                    <span className="block text-xs">Dépenses</span>
-                    <span className="font-semibold text-sm md:text-base">{budgetData.expenses.toLocaleString()} DH</span>
+                    <span className="block text-xs text-red-600/80 font-medium mb-0.5">Dépenses</span>
+                    <span className="font-semibold text-base md:text-lg">{budgetData.expenses.toLocaleString()} DH</span>
                   </div>
                 </div>
-                <div className="hidden md:block h-8 w-0.5 bg-red-200 rounded-full"></div>
-              </div>
+              </motion.div>
             </div>
           </CardContent>
         </Card>
       </motion.div>
 
-      {/* Graphique d'évolution mensuelle */}
+      {/* Graphique d'évolution mensuelle - Fixed Chart */}
       <motion.div variants={itemVariants} className="mb-5">
         <Card className="bg-white shadow-md border-0 rounded-3xl overflow-hidden">
-          <CardContent className="p-5">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-4">
+          <CardContent className="p-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mb-5">
               <div>
                 <h3 className="text-lg font-bold text-foreground">Évolution Mensuelle</h3>
                 <p className="text-sm text-muted-foreground">Visualisez vos finances sur la durée</p>
@@ -365,8 +341,8 @@ export const Dashboard = () => {
                 value={selectedPeriod}
                 onValueChange={(value) => setSelectedPeriod(value as "30" | "90" | "180")}
               >
-                <SelectTrigger className="w-full sm:w-[180px] h-9 text-xs rounded-xl">
-                  <SelectValue placeholder="Sélectionner une période" />
+                <SelectTrigger className="w-full sm:w-[180px] h-10 text-xs rounded-xl bg-gray-50 border-gray-100 shadow-sm">
+                  <SelectValue placeholder="Derniers 30 jours" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="30">Derniers 30 jours</SelectItem>
@@ -376,57 +352,66 @@ export const Dashboard = () => {
               </Select>
             </div>
             
-            <div className="h-[220px] sm:h-[240px] mt-4">
-              <ChartContainer config={chartConfig} className="[&_.recharts-cartesian-axis-tick]:text-xs">
+            <div className="h-[250px] mt-6">
+              <ResponsiveContainer width="100%" height="100%">
                 <AreaChart
                   data={getChartData()}
-                  margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
+                  margin={{ top: 10, right: 10, left: 0, bottom: 10 }}
                 >
                   <defs>
-                    <linearGradient id="dépensesGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#7C84FF" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#7C84FF" stopOpacity={0} />
+                    <linearGradient id="colorDepenses" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#7C84FF" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#7C84FF" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
                   <XAxis 
                     dataKey="jour" 
-                    tick={{ fontSize: 10 }}
-                    tickMargin={8}
+                    tick={{ fontSize: 11 }}
+                    tickMargin={10}
                     axisLine={false}
                     tickLine={false}
-                    padding={{ left: 5, right: 5 }}
+                    padding={{ left: 10, right: 10 }}
                   />
                   <YAxis 
-                    tick={{ fontSize: 10 }}
+                    tick={{ fontSize: 11 }}
                     tickFormatter={(value) => `${value / 1000}k`}
                     axisLine={false}
                     tickLine={false}
-                    width={25}
+                    width={30}
                   />
-                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)', 
+                      borderRadius: '12px', 
+                      border: 'none',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                      padding: '12px 16px'
+                    }}
+                    formatter={(value) => [`${value.toLocaleString()} DH`, ""]}
+                    labelFormatter={(label) => `Jour ${label}`}
+                  />
                   <Area
                     type="monotone"
                     dataKey="dépenses"
-                    name="dépenses"
+                    name="Dépenses"
                     stroke="#7C84FF"
                     fillOpacity={1}
-                    fill="url(#dépensesGradient)"
+                    fill="url(#colorDepenses)"
                     strokeWidth={2.5}
-                    dot={{ r: 2, strokeWidth: 2, fill: "#fff" }}
-                    activeDot={{ r: 4, strokeWidth: 0 }}
-                    animationDuration={1500}
+                    activeDot={{ r: 6, strokeWidth: 0 }}
+                    dot={{ r: 3, strokeWidth: 2, fill: "#fff" }}
                   />
                 </AreaChart>
-              </ChartContainer>
+              </ResponsiveContainer>
             </div>
             
-            <div className="mt-4 pt-2 flex space-x-3 justify-center border-t border-gray-100">
+            <div className="mt-4 pt-3 flex space-x-3 justify-center border-t border-gray-100">
               <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "all" | "expenses" | "income")} className="w-full">
-                <TabsList className="grid grid-cols-3 bg-muted/40 rounded-xl p-1">
-                  <TabsTrigger value="all" className="rounded-lg text-xs data-[state=active]:bg-white data-[state=active]:shadow-sm">Tous</TabsTrigger>
-                  <TabsTrigger value="expenses" className="rounded-lg text-xs data-[state=active]:bg-white data-[state=active]:shadow-sm">Dépenses</TabsTrigger>
-                  <TabsTrigger value="income" className="rounded-lg text-xs data-[state=active]:bg-white data-[state=active]:shadow-sm">Revenus</TabsTrigger>
+                <TabsList className="grid grid-cols-3 bg-muted/40 rounded-xl p-1.5">
+                  <TabsTrigger value="all" className="rounded-lg text-xs py-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm">Tous</TabsTrigger>
+                  <TabsTrigger value="expenses" className="rounded-lg text-xs py-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm">Dépenses</TabsTrigger>
+                  <TabsTrigger value="income" className="rounded-lg text-xs py-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm">Revenus</TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
@@ -434,17 +419,17 @@ export const Dashboard = () => {
         </Card>
       </motion.div>
 
-      {/* Répartition des dépenses avec graphique circulaire */}
+      {/* Répartition des dépenses avec graphique circulaire - Improved pie chart with better tooltips */}
       <motion.div variants={itemVariants} className="mb-5">
         <Card className="bg-white shadow-md border-0 rounded-3xl overflow-hidden">
-          <CardContent className="p-5">
+          <CardContent className="p-6">
             <div className="mb-4">
               <h3 className="text-lg font-bold text-foreground">Répartition des dépenses</h3>
               <p className="text-sm text-muted-foreground">Visualisation par catégorie</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-              <div className="h-[200px] flex items-center justify-center">
+              <div className="h-[220px] flex items-center justify-center">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -452,38 +437,72 @@ export const Dashboard = () => {
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      outerRadius={80}
-                      innerRadius={40}
+                      outerRadius={85}
+                      innerRadius={50}
                       fill="#8884d8"
                       dataKey="value"
                       animationBegin={0}
                       animationDuration={1500}
+                      paddingAngle={2}
                     >
                       {pieData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={categories[index].pieColor} />
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={categories[index].pieColor} 
+                          stroke="white"
+                          strokeWidth={2}
+                        />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value) => [`${value} DH`, ""]} />
+                    <Tooltip 
+                      formatter={(value) => [`${value.toLocaleString()} DH`, ""]}
+                      contentStyle={{ 
+                        backgroundColor: 'rgba(255, 255, 255, 0.97)', 
+                        borderRadius: '10px', 
+                        border: 'none',
+                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
+                        padding: '10px 14px'
+                      }}
+                      itemStyle={{
+                        padding: '4px 0',
+                        fontSize: '13px'
+                      }}
+                      labelStyle={{
+                        fontWeight: '600',
+                        marginBottom: '5px'
+                      }}
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
               
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {categories.map((category, index) => (
-                  <div key={index} className="flex flex-col">
-                    <div className="flex justify-between items-center mb-1">
+                  <motion.div 
+                    key={index} 
+                    className="flex flex-col"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 + 0.2 }}
+                  >
+                    <div className="flex justify-between items-center mb-1.5">
                       <div className="flex items-center">
-                        <div className={`w-3 h-3 rounded-full mr-2`} style={{ backgroundColor: category.pieColor }}></div>
+                        <div className="w-3 h-3 rounded-full mr-2.5" style={{ backgroundColor: category.pieColor }}></div>
                         <span className="text-sm font-medium">{category.name}</span>
                       </div>
-                      <div className="text-sm font-semibold">{category.amount.toLocaleString()} DH</div>
+                      <div className="text-sm font-semibold bg-gray-50 px-3 py-1 rounded-full shadow-sm">
+                        {category.amount.toLocaleString()} DH
+                      </div>
                     </div>
                     <Progress 
                       value={category.progress} 
                       className="h-1.5 rounded-full"
-                      style={{ backgroundColor: `${category.pieColor}30` }}
+                      style={{ 
+                        backgroundColor: `${category.pieColor}20`,
+                        "--tw-progress-value": category.pieColor 
+                      } as React.CSSProperties}
                     />
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
