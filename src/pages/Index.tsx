@@ -41,16 +41,16 @@ const Index = () => {
   // Show a loading state while checking onboarding status
   if (isLoading) {
     return (
-      <div className="h-screen w-full flex items-center justify-center">
+      <div className="h-screen w-full flex items-center justify-center bg-background">
         <div className="flex flex-col items-center">
-          <div className="loading-spinner"></div>
+          <div className="loading-spinner border-primary"></div>
           <p className="mt-4 text-muted-foreground">Chargement...</p>
         </div>
       </div>
     )
   }
 
-  // Animation variants for the view transitions
+  // Animation variants for the view transitions - optimized for mobile
   const pageVariants = {
     initial: {
       opacity: 0,
@@ -104,14 +104,14 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-[#F7F9FA] overflow-x-hidden">
       {showSplash ? (
         <SplashScreen onComplete={handleSplashComplete} />
       ) : (
         <>
           <Navigation currentRoute={currentRoute} onRouteChange={setCurrentRoute} />
           <AnimatePresence mode="wait">
-            <main className="pb-20 md:pb-6 px-0 mx-auto max-w-6xl">
+            <main className="pb-20 md:pb-6 px-4 md:px-6 mx-auto max-w-6xl">
               {renderCurrentView()}
             </main>
           </AnimatePresence>

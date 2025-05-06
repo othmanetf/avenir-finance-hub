@@ -17,12 +17,14 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 20%;
 
-    --primary: 225 100% 38%;  /* Deep blue from logo */
+    --primary: 217 90% 52%;  /* #1F6FEB */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 192 100% 50%;  /* Bright cyan from logo */
+    --secondary: 180 100% 50%;  /* #00CFFF */
     --secondary-foreground: 222 47% 20%;
 
+    --tertiary: 283 61% 47%;  /* #8E44AD - Violet */
+    
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
@@ -34,9 +36,9 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 225 100% 38%;
+    --ring: 217 90% 52%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -49,11 +51,13 @@
     --popover: 225 100% 12%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 225 100% 38%;
+    --primary: 217 90% 52%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 192 100% 50%;
+    --secondary: 180 100% 50%;
     --secondary-foreground: 210 40% 98%;
+
+    --tertiary: 283 61% 47%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
@@ -66,7 +70,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 225 100% 38%;
+    --ring: 217 90% 52%;
   }
 }
 
@@ -81,12 +85,13 @@
 }
 
 @layer components {
+  /* Replace gradients with solid colors */
   .card-gradient-primary {
-    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan text-white;
+    @apply bg-[#1F6FEB] text-white;
   }
   
   .text-gradient {
-    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan bg-clip-text text-transparent;
+    @apply text-[#1F6FEB];
   }
   
   .transaction-item {
@@ -94,51 +99,42 @@
   }
   
   .stat-card {
-    @apply flex flex-col justify-center rounded-2xl p-4 text-white h-24 w-full shadow-neuro-sm dark:shadow-neuro-sm-dark;
+    @apply flex flex-col justify-center rounded-xl p-4 text-white h-20 md:h-24 w-full shadow-md;
   }
 
   /* Utility classes */
   .wallet-card {
-    @apply relative rounded-2xl shadow-lg overflow-hidden h-44 flex flex-col justify-between p-4 transition-all duration-300;
+    @apply relative rounded-xl shadow-lg overflow-hidden h-40 flex flex-col justify-between p-4 transition-all duration-300;
   }
 
   .visa-card {
-    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan;
+    @apply bg-[#1F6FEB];
   }
 
   .mastercard {
-    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan;
+    @apply bg-[#1F6FEB];
   }
 
   .stat-block {
-    @apply flex items-center justify-center space-x-2 rounded-2xl px-4 py-3 shadow-md;
+    @apply flex items-center justify-center space-x-2 rounded-xl px-3 py-2.5 md:px-4 md:py-3 shadow-md;
   }
 
   .income-block {
-    @apply bg-blue-100/80 text-blue-600 dark:bg-blue-900 dark:text-blue-200;
+    @apply bg-[#E6F0FF] text-[#1F6FEB];
   }
 
   .spend-block {
-    @apply bg-red-100/80 text-red-500 dark:bg-red-900 dark:text-red-200;
+    @apply bg-[#FFF0F3] text-red-500;
   }
   
   .transaction-row {
-    @apply flex items-center justify-between px-4 py-3 rounded-xl hover:bg-accent/30 transition-all duration-200;
+    @apply flex items-center justify-between px-3 py-2.5 md:px-4 md:py-3 rounded-xl hover:bg-accent/30 transition-all duration-200;
   }
   
   .category-icon {
-    @apply flex items-center justify-center h-10 w-10 rounded-xl shadow-sm;
+    @apply flex items-center justify-center h-9 w-9 md:h-10 md:w-10 rounded-xl shadow-sm;
   }
 
-  /* Gradient backgrounds */
-  .bg-gradient-primary {
-    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan;
-  }
-  
-  .bg-gradient-secondary {
-    @apply bg-gradient-to-r from-monavenir-cyan to-monavenir-blue;
-  }
-  
   /* Mobile-optimized classes */
   .mobile-menu-item {
     @apply flex flex-col items-center justify-center p-1 rounded-lg transition-colors;
@@ -173,8 +169,8 @@
   }
   
   /* Consistent button styling */
-  .btn-primary-gradient {
-    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan text-white rounded-full shadow-md hover:shadow-lg transition-all;
+  .btn-primary {
+    @apply bg-[#1F6FEB] text-white rounded-xl shadow-md hover:shadow-lg transition-all;
   }
   
   /* Onboarding specific styles */
@@ -183,7 +179,7 @@
   }
   
   .onboarding-step-active {
-    @apply bg-gradient-to-r from-monavenir-blue to-monavenir-cyan text-white;
+    @apply bg-[#1F6FEB] text-white;
   }
   
   .onboarding-step-inactive {
@@ -191,11 +187,11 @@
   }
   
   .onboarding-container {
-    @apply pt-28 px-4 max-w-md mx-auto;
+    @apply pt-20 px-4 max-w-md mx-auto;
   }
   
   .onboarding-title {
-    @apply text-2xl font-bold mb-2;
+    @apply text-xl md:text-2xl font-bold mb-2;
   }
   
   .onboarding-subtitle {
@@ -204,35 +200,35 @@
 
   /* Design System Components */
   .ds-heading-1 {
-    @apply text-4xl font-bold tracking-tight;
+    @apply text-3xl md:text-4xl font-bold tracking-tight;
   }
 
   .ds-heading-2 {
-    @apply text-3xl font-bold;
+    @apply text-2xl md:text-3xl font-bold;
   }
 
   .ds-heading-3 {
-    @apply text-2xl font-semibold;
+    @apply text-xl md:text-2xl font-semibold;
   }
 
   .ds-heading-4 {
-    @apply text-xl font-semibold;
+    @apply text-lg md:text-xl font-semibold;
   }
 
   .ds-text {
-    @apply text-base leading-relaxed;
+    @apply text-sm md:text-base leading-relaxed;
   }
 
   .ds-text-small {
-    @apply text-sm;
+    @apply text-xs md:text-sm;
   }
 
   .ds-card {
-    @apply bg-card text-card-foreground rounded-xl p-5 shadow-md transition-all duration-200 hover:shadow-lg;
+    @apply bg-card text-card-foreground rounded-xl p-4 md:p-5 shadow-md transition-all duration-200 hover:shadow-lg;
   }
 
   .ds-button {
-    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50;
+    @apply inline-flex items-center justify-center rounded-md px-3 py-2 md:px-4 md:py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50;
   }
 
   .ds-button-primary {
@@ -248,11 +244,11 @@
   }
 
   .ds-input {
-    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply flex h-10 md:h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .ds-badge {
-    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    @apply inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
   }
 
   .ds-badge-primary {

@@ -92,8 +92,8 @@ export const Dashboard = () => {
 
   // Chart configuration
   const chartConfig = {
-    revenus: { label: "Revenus", color: "#0ea5e9" },
-    dépenses: { label: "Dépenses", color: "#0284c7" },
+    revenus: { label: "Revenus", color: "#1F6FEB" },
+    dépenses: { label: "Dépenses", color: "#8E44AD" },
     budget: { label: "Budget", color: "#10b981" }
   };
 
@@ -121,7 +121,7 @@ export const Dashboard = () => {
       amount: 875,
       budget: 1000, 
       color: "bg-blue-100 text-blue-500",
-      pieColor: "#0ea5e9",
+      pieColor: "#1F6FEB",
       progress: 87,
       transactions: [
         { name: "Magasin de vêtements", date: "15 juin, 14:30", amount: 475 },
@@ -135,7 +135,7 @@ export const Dashboard = () => {
       amount: 1800,
       budget: 1800, 
       color: "bg-violet-100 text-violet-500",
-      pieColor: "#8b5cf6",
+      pieColor: "#8E44AD",
       progress: 100,
       transactions: [
         { name: "Loyer", date: "5 juin, 09:00", amount: 1800 }
@@ -202,36 +202,36 @@ export const Dashboard = () => {
       transition: { 
         when: "beforeChildren", 
         staggerChildren: 0.1,
-        duration: 0.5
+        duration: 0.3
       } 
     }
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 15, opacity: 0 },
     visible: { 
       y: 0, 
       opacity: 1,
-      transition: { duration: 0.5 }
+      transition: { duration: 0.3 }
     }
   };
 
   return (
     <motion.div 
-      className="flex flex-col p-6 md:p-8 md:pl-24"
+      className="flex flex-col p-4 md:p-6 md:pl-20"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       {/* Header with Welcome and Avatar */}
-      <motion.div className="flex justify-between items-center mb-8" variants={itemVariants}>
+      <motion.div className="flex justify-between items-center mb-6" variants={itemVariants}>
         <div className="flex flex-col">
           <p className="text-sm text-muted-foreground">Bienvenue</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Mohamed</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground">Mohamed</h2>
         </div>
         
         <Avatar 
-          className="h-12 w-12 sm:h-14 sm:w-14 border-2 border-white shadow-lg cursor-pointer hover:opacity-90 transition-opacity" 
+          className="h-10 w-10 sm:h-12 sm:w-12 border-2 border-white shadow-md cursor-pointer hover:opacity-90 transition-opacity" 
           onClick={openProfile}
         >
           <AvatarImage src="https://github.com/shadcn.png" alt="Mohamed" />
@@ -239,40 +239,40 @@ export const Dashboard = () => {
         </Avatar>
       </motion.div>
 
-      {/* Monthly Expenses Overview - Clean Modern UI */}
-      <motion.div variants={itemVariants} className="mb-6">
+      {/* Monthly Expenses Overview - Mobile optimized */}
+      <motion.div variants={itemVariants} className="mb-5">
         <Card className="bg-white shadow-sm border-0 rounded-2xl overflow-hidden">
-          <CardContent className="p-6 space-y-5">
+          <CardContent className="p-5 space-y-4">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-xl font-semibold text-foreground">Dépenses Mensuelles</h3>
+                <h3 className="text-lg font-semibold text-foreground">Dépenses Mensuelles</h3>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-lg font-semibold text-primary">{budgetData.spent.toLocaleString()} DH</span> 
+                  <span className="text-lg font-semibold text-[#1F6FEB]">{budgetData.spent.toLocaleString()} DH</span> 
                   <span className="text-sm text-muted-foreground">sur {budgetData.totalBudget.toLocaleString()} DH</span>
                 </div>
               </div>
-              <Button size="icon" variant="outline" className="rounded-full h-10 w-10 border-primary/20 shadow-sm">
-                <Calendar className="h-5 w-5 text-primary" />
+              <Button size="icon" variant="outline" className="rounded-full h-9 w-9 border-[#1F6FEB]/20 shadow-sm">
+                <Calendar className="h-4 w-4 text-[#1F6FEB]" />
               </Button>
             </div>
             
-            <div className="relative pt-6 pb-4">
+            <div className="relative pt-4 pb-3">
               {/* Progress Bar with Clean Design */}
-              <div className="flex justify-between text-xs text-muted-foreground mb-3">
+              <div className="flex justify-between text-xs text-muted-foreground mb-2">
                 <span>1 Juin</span>
                 <span>30 Juin</span>
               </div>
               
-              <div className="relative mb-6">
-                <Progress value={budgetData.progressPercentage} className="h-3 rounded-full bg-sky-100" />
+              <div className="relative mb-5">
+                <Progress value={budgetData.progressPercentage} className="h-2.5 rounded-full bg-[#1F6FEB]/10" />
                 <motion.div 
-                  className="absolute top-0 h-6 w-1 bg-sky-600 rounded-full transform -translate-y-1.5 shadow-sm"
+                  className="absolute top-0 h-5 w-1 bg-[#1F6FEB] rounded-full transform -translate-y-1 shadow-sm"
                   style={{ left: `${(currentDay/lastDay) * 100}%` }}
                   initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 24 }}
+                  animate={{ opacity: 1, height: 20 }}
                   transition={{ delay: 0.5, duration: 0.3 }}
                 >
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-sky-600 text-white text-xs font-medium rounded-lg px-2.5 py-1.5 shadow-sm">
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-[#1F6FEB] text-white text-[10px] font-medium rounded-lg px-2 py-1 shadow-sm">
                     Aujourd'hui
                   </div>
                 </motion.div>
@@ -280,45 +280,45 @@ export const Dashboard = () => {
               
               {/* Daily Budget Message */}
               <motion.div 
-                className="bg-sky-50 rounded-xl p-4 text-center"
+                className="bg-[#F7F9FA] rounded-xl p-3.5 text-center"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
               >
                 <p className="text-sm text-foreground">
-                  Vous pouvez dépenser <span className="font-semibold text-sky-600">{budgetData.dailyBudget.toLocaleString()} DH</span> par jour pour les <span className="font-semibold text-sky-600">{budgetData.remainingDays}</span> prochains jours
+                  Vous pouvez dépenser <span className="font-semibold text-[#1F6FEB]">{budgetData.dailyBudget.toLocaleString()} DH</span> par jour pour les <span className="font-semibold text-[#1F6FEB]">{budgetData.remainingDays}</span> prochains jours
                 </p>
               </motion.div>
             </div>
             
-            {/* Revenue and Expense Stats */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Revenue and Expense Stats - Mobile optimized */}
+            <div className="grid grid-cols-2 gap-3">
               <motion.div 
-                className="stat-block flex items-center justify-between p-5 rounded-xl shadow-sm bg-sky-50"
+                className="stat-block flex items-center justify-between p-4 rounded-xl shadow-sm bg-[#E6F0FF]"
                 whileHover={{ y: -2, transition: { duration: 0.2 } }}
               >
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center justify-center rounded-full bg-sky-100 h-12 w-12 shadow-inner">
-                    <ArrowUp className="h-5 w-5 text-sky-600" />
+                  <div className="flex items-center justify-center rounded-full bg-white h-10 w-10 shadow-inner">
+                    <ArrowUp className="h-4 w-4 text-[#1F6FEB]" />
                   </div>
                   <div>
-                    <span className="block text-xs text-sky-600/80 font-medium mb-0.5">Revenus</span>
-                    <span className="font-semibold text-base md:text-lg">{budgetData.income.toLocaleString()} DH</span>
+                    <span className="block text-xs text-[#1F6FEB]/80 font-medium mb-0.5">Revenus</span>
+                    <span className="font-semibold text-sm md:text-base">{budgetData.income.toLocaleString()} DH</span>
                   </div>
                 </div>
               </motion.div>
               
               <motion.div 
-                className="stat-block flex items-center justify-between p-5 rounded-xl shadow-sm bg-rose-50"
+                className="stat-block flex items-center justify-between p-4 rounded-xl shadow-sm bg-rose-50"
                 whileHover={{ y: -2, transition: { duration: 0.2 } }}
               >
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center justify-center rounded-full bg-rose-100 h-12 w-12 shadow-inner">
-                    <ArrowDown className="h-5 w-5 text-rose-500" />
+                  <div className="flex items-center justify-center rounded-full bg-white h-10 w-10 shadow-inner">
+                    <ArrowDown className="h-4 w-4 text-rose-500" />
                   </div>
                   <div>
                     <span className="block text-xs text-rose-600/80 font-medium mb-0.5">Dépenses</span>
-                    <span className="font-semibold text-base md:text-lg">{budgetData.expenses.toLocaleString()} DH</span>
+                    <span className="font-semibold text-sm md:text-base">{budgetData.expenses.toLocaleString()} DH</span>
                   </div>
                 </div>
               </motion.div>
@@ -327,11 +327,11 @@ export const Dashboard = () => {
         </Card>
       </motion.div>
 
-      {/* Monthly Evolution Chart - Modern Clean UI */}
-      <motion.div variants={itemVariants} className="mb-6">
+      {/* Monthly Evolution Chart - Mobile optimized */}
+      <motion.div variants={itemVariants} className="mb-5">
         <Card className="bg-white shadow-sm border-0 rounded-2xl overflow-hidden">
-          <CardContent className="p-6">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mb-5">
+          <CardContent className="p-5">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-foreground">Évolution Mensuelle</h3>
                 <p className="text-sm text-muted-foreground">Visualisez vos finances sur la durée</p>
@@ -340,7 +340,7 @@ export const Dashboard = () => {
                 value={selectedPeriod}
                 onValueChange={(value) => setSelectedPeriod(value as "30" | "90" | "180")}
               >
-                <SelectTrigger className="w-full sm:w-[180px] h-10 text-xs rounded-xl bg-gray-50 border-gray-100 shadow-sm">
+                <SelectTrigger className="w-full sm:w-[170px] h-9 text-xs rounded-xl bg-gray-50 border-gray-100 shadow-sm">
                   <SelectValue placeholder="Derniers 30 jours" />
                 </SelectTrigger>
                 <SelectContent>
@@ -351,41 +351,41 @@ export const Dashboard = () => {
               </Select>
             </div>
             
-            <div className="h-[250px] mt-6">
+            <div className="h-[220px] mt-4">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart
                   data={getChartData()}
-                  margin={{ top: 10, right: 10, left: 0, bottom: 10 }}
+                  margin={{ top: 10, right: 5, left: -15, bottom: 10 }}
                 >
                   <defs>
                     <linearGradient id="colorDepenses" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#1F6FEB" stopOpacity={0.2}/>
+                      <stop offset="95%" stopColor="#1F6FEB" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
                   <XAxis 
                     dataKey="jour" 
-                    tick={{ fontSize: 11 }}
-                    tickMargin={10}
+                    tick={{ fontSize: 10 }}
+                    tickMargin={8}
                     axisLine={false}
                     tickLine={false}
-                    padding={{ left: 10, right: 10 }}
+                    padding={{ left: 5, right: 5 }}
                   />
                   <YAxis 
-                    tick={{ fontSize: 11 }}
+                    tick={{ fontSize: 10 }}
                     tickFormatter={(value) => `${value / 1000}k`}
                     axisLine={false}
                     tickLine={false}
-                    width={30}
+                    width={25}
                   />
                   <Tooltip 
                     contentStyle={{ 
                       backgroundColor: 'rgba(255, 255, 255, 0.98)', 
-                      borderRadius: '16px', 
+                      borderRadius: '14px', 
                       border: 'none',
                       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.06)',
-                      padding: '12px 16px'
+                      padding: '10px 14px'
                     }}
                     formatter={(value) => [`${value.toLocaleString()} DH`, ""]}
                     labelFormatter={(label) => `Jour ${label}`}
@@ -394,20 +394,20 @@ export const Dashboard = () => {
                     type="monotone"
                     dataKey="dépenses"
                     name="Dépenses"
-                    stroke="#0ea5e9"
+                    stroke="#1F6FEB"
                     fillOpacity={1}
                     fill="url(#colorDepenses)"
-                    strokeWidth={2.5}
-                    activeDot={{ r: 6, strokeWidth: 0 }}
-                    dot={{ r: 3, strokeWidth: 2, fill: "#fff" }}
+                    strokeWidth={2}
+                    activeDot={{ r: 5, strokeWidth: 0 }}
+                    dot={{ r: 2.5, strokeWidth: 2, fill: "#fff" }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
             
-            <div className="mt-4 pt-3 flex space-x-3 justify-center border-t border-gray-100">
+            <div className="mt-3 pt-2 flex space-x-3 justify-center border-t border-gray-100">
               <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "all" | "expenses" | "income")} className="w-full">
-                <TabsList className="grid grid-cols-3 bg-muted/40 rounded-xl p-1.5">
+                <TabsList className="grid grid-cols-3 bg-muted/40 rounded-xl p-1">
                   <TabsTrigger value="all" className="rounded-lg text-xs py-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm">Tous</TabsTrigger>
                   <TabsTrigger value="expenses" className="rounded-lg text-xs py-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm">Dépenses</TabsTrigger>
                   <TabsTrigger value="income" className="rounded-lg text-xs py-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm">Revenus</TabsTrigger>
@@ -418,17 +418,17 @@ export const Dashboard = () => {
         </Card>
       </motion.div>
 
-      {/* Expense Distribution with Pie Chart - Improved with better tooltips */}
-      <motion.div variants={itemVariants} className="mb-6">
+      {/* Expense Distribution with Pie Chart - Mobile optimized */}
+      <motion.div variants={itemVariants} className="mb-5">
         <Card className="bg-white shadow-sm border-0 rounded-2xl overflow-hidden">
-          <CardContent className="p-6">
-            <div className="mb-4">
+          <CardContent className="p-5">
+            <div className="mb-3">
               <h3 className="text-lg font-semibold text-foreground">Répartition des dépenses</h3>
               <p className="text-sm text-muted-foreground">Visualisation par catégorie</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-              <div className="h-[220px] flex items-center justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
+              <div className="h-[200px] flex items-center justify-center">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -436,8 +436,8 @@ export const Dashboard = () => {
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      outerRadius={85}
-                      innerRadius={50}
+                      outerRadius={75}
+                      innerRadius={45}
                       fill="#8884d8"
                       dataKey="value"
                       animationBegin={0}
@@ -457,25 +457,25 @@ export const Dashboard = () => {
                       formatter={(value) => [`${value.toLocaleString()} DH`, ""]}
                       contentStyle={{ 
                         backgroundColor: 'rgba(255, 255, 255, 0.98)', 
-                        borderRadius: '16px', 
+                        borderRadius: '14px', 
                         border: 'none',
                         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.06)',
-                        padding: '12px 16px'
+                        padding: '10px 14px'
                       }}
                       itemStyle={{
                         padding: '4px 0',
-                        fontSize: '13px'
+                        fontSize: '12px'
                       }}
                       labelStyle={{
                         fontWeight: '600',
-                        marginBottom: '5px'
+                        marginBottom: '4px'
                       }}
                     />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {categories.map((category, index) => (
                   <motion.div 
                     key={index} 
@@ -484,12 +484,12 @@ export const Dashboard = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 + 0.2 }}
                   >
-                    <div className="flex justify-between items-center mb-1.5">
+                    <div className="flex justify-between items-center mb-1">
                       <div className="flex items-center">
-                        <div className="w-3 h-3 rounded-full mr-2.5" style={{ backgroundColor: category.pieColor }}></div>
+                        <div className="w-2.5 h-2.5 rounded-full mr-2" style={{ backgroundColor: category.pieColor }}></div>
                         <span className="text-sm font-medium">{category.name}</span>
                       </div>
-                      <div className="text-sm font-semibold bg-gray-50 px-3 py-1 rounded-full shadow-sm amount-tag">
+                      <div className="text-xs font-semibold bg-gray-50 px-2.5 py-1 rounded-full shadow-sm amount-tag">
                         {category.amount.toLocaleString()} DH
                       </div>
                     </div>
@@ -509,11 +509,11 @@ export const Dashboard = () => {
         </Card>
       </motion.div>
 
-      {/* Expense Categories */}
-      <motion.div variants={itemVariants} className="space-y-3 mb-6">
+      {/* Expense Categories - Mobile optimized */}
+      <motion.div variants={itemVariants} className="space-y-2 mb-5">
         <div className="flex justify-between items-center">
           <h3 className="font-semibold text-lg text-foreground">Dépenses par catégorie</h3>
-          <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
+          <Button variant="ghost" size="sm" className="text-xs text-[#1F6FEB] hover:text-[#1F6FEB]/80 hover:bg-accent/50">
             Voir tout
           </Button>
         </div>
@@ -529,9 +529,9 @@ export const Dashboard = () => {
                 className="transaction-row cursor-pointer"
                 onClick={() => setActiveCategory(activeCategory === category.id ? null : category.id)}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`category-icon ${category.color} h-11 w-11 rounded-xl flex items-center justify-center`}>
-                    <category.icon className="h-5 w-5" />
+                <div className="flex items-center gap-2.5">
+                  <div className={`category-icon ${category.color} h-10 w-10 rounded-xl flex items-center justify-center`}>
+                    <category.icon className="h-4.5 w-4.5" />
                   </div>
                   <div className="flex flex-col">
                     <span className="font-medium text-sm">{category.name}</span>
@@ -550,10 +550,10 @@ export const Dashboard = () => {
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="pl-12 pr-4 py-2 space-y-1 bg-gray-50 rounded-xl mt-1 mb-2 overflow-hidden"
+                  className="pl-11 pr-3 py-1.5 space-y-1 bg-gray-50 rounded-xl mt-1 mb-2 overflow-hidden"
                 >
                   {category.transactions.map((transaction, idx) => (
-                    <div key={idx} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0">
+                    <div key={idx} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
                       <div className="flex flex-col">
                         <span className="text-sm">{transaction.name}</span>
                         <span className="text-xs text-muted-foreground">{transaction.date}</span>
@@ -568,11 +568,11 @@ export const Dashboard = () => {
         </div>
       </motion.div>
       
-      {/* Income Categories */}
-      <motion.div variants={itemVariants} className="space-y-3 mb-24 md:mb-10">
+      {/* Income Categories - Mobile optimized */}
+      <motion.div variants={itemVariants} className="space-y-2 mb-24 md:mb-10">
         <div className="flex justify-between items-center">
           <h3 className="font-semibold text-lg text-foreground">Revenus par catégorie</h3>
-          <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
+          <Button variant="ghost" size="sm" className="text-xs text-[#1F6FEB] hover:text-[#1F6FEB]/80 hover:bg-accent/50">
             Voir tout
           </Button>
         </div>
@@ -588,9 +588,9 @@ export const Dashboard = () => {
                 className="transaction-row cursor-pointer"
                 onClick={() => setActiveCategory(activeCategory === category.id ? null : category.id)}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`category-icon ${category.color} h-11 w-11 rounded-xl flex items-center justify-center`}>
-                    <category.icon className="h-5 w-5" />
+                <div className="flex items-center gap-2.5">
+                  <div className={`category-icon ${category.color} h-10 w-10 rounded-xl flex items-center justify-center`}>
+                    <category.icon className="h-4.5 w-4.5" />
                   </div>
                   <div className="flex flex-col">
                     <span className="font-medium text-sm">{category.name}</span>
@@ -609,10 +609,10 @@ export const Dashboard = () => {
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="pl-12 pr-4 py-2 space-y-1 bg-gray-50 rounded-xl mt-1 mb-2 overflow-hidden"
+                  className="pl-11 pr-3 py-1.5 space-y-1 bg-gray-50 rounded-xl mt-1 mb-2 overflow-hidden"
                 >
                   {category.transactions.map((transaction, idx) => (
-                    <div key={idx} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0">
+                    <div key={idx} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
                       <div className="flex flex-col">
                         <span className="text-sm">{transaction.name}</span>
                         <span className="text-xs text-muted-foreground">{transaction.date}</span>
@@ -627,9 +627,9 @@ export const Dashboard = () => {
         </div>
       </motion.div>
 
-      {/* Action Button */}
+      {/* Action Button - Enhanced for mobile touch */}
       <motion.div 
-        className="fixed bottom-20 right-5 sm:right-6 z-10 md:bottom-6"
+        className="fixed bottom-20 right-4 sm:right-5 z-10 md:bottom-6"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.5 }}
@@ -637,11 +637,11 @@ export const Dashboard = () => {
         whileTap={{ scale: 0.95 }}
       >
         <Button 
-          className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-sky-500 shadow-lg hover:shadow-xl hover:bg-sky-600 transition-all" 
+          className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-[#1F6FEB] shadow-lg hover:shadow-xl hover:bg-[#1F6FEB]/90 transition-all" 
           size="icon"
           onClick={() => setIsTransactionModalOpen(true)}
         >
-          <Plus className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
+          <Plus className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
         </Button>
       </motion.div>
 
