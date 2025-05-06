@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { motion } from "framer-motion";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type BudgetOverviewProps = {
   budgetData: {
@@ -22,7 +23,7 @@ type BudgetOverviewProps = {
 export const BudgetOverview = ({ budgetData, currentDay, lastDay }: BudgetOverviewProps) => {
   return (
     <Card className="bg-white shadow-sm border-0 rounded-2xl overflow-hidden">
-      <CardContent className="p-5 space-y-4">
+      <CardContent className="p-4 space-y-4">
         <div className="flex justify-between items-center">
           <div>
             <h3 className="text-lg font-semibold text-foreground">Dépenses Mensuelles</h3>
@@ -31,19 +32,19 @@ export const BudgetOverview = ({ budgetData, currentDay, lastDay }: BudgetOvervi
               <span className="text-sm text-muted-foreground">sur {budgetData.totalBudget.toLocaleString()} DH</span>
             </div>
           </div>
-          <Button size="icon" variant="outline" className="rounded-full h-9 w-9 border-[#1F6FEB]/20 shadow-sm">
+          <Button size="icon" variant="outline" className="rounded-full h-9 w-9 border-[#1F6FEB]/20 shadow-sm flex-shrink-0">
             <Calendar className="h-4 w-4 text-[#1F6FEB]" />
           </Button>
         </div>
         
-        <div className="relative pt-4 pb-3">
+        <div className="relative pt-2 pb-2">
           {/* Progress Bar with Clean Design */}
           <div className="flex justify-between text-xs text-muted-foreground mb-2">
             <span>1 Juin</span>
             <span>30 Juin</span>
           </div>
           
-          <div className="relative mb-5">
+          <div className="relative mb-4">
             <Progress value={budgetData.progressPercentage} className="h-2.5 rounded-full bg-[#1F6FEB]/10" />
             <motion.div 
               className="absolute top-0 h-5 w-1 bg-[#1F6FEB] rounded-full transform -translate-y-1 shadow-sm"
@@ -60,7 +61,7 @@ export const BudgetOverview = ({ budgetData, currentDay, lastDay }: BudgetOvervi
           
           {/* Daily Budget Message */}
           <motion.div 
-            className="bg-[#F7F9FA] rounded-xl p-3.5 text-center"
+            className="bg-[#F7F9FA] rounded-xl p-3 text-center mb-3"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.4 }}
@@ -71,36 +72,32 @@ export const BudgetOverview = ({ budgetData, currentDay, lastDay }: BudgetOvervi
           </motion.div>
         </div>
         
-        {/* Revenue and Expense Stats - Mobile optimized */}
-        <div className="grid grid-cols-2 gap-3">
+        {/* Revenue and Expense Stats - Improved for mobile */}
+        <div className="grid grid-cols-2 gap-2.5">
           <motion.div 
-            className="stat-block flex items-center justify-between p-4 rounded-xl shadow-sm bg-[#E6F0FF]"
+            className="stat-block flex flex-col items-start p-3.5 rounded-xl shadow-sm bg-[#E6F0FF]"
             whileHover={{ y: -2, transition: { duration: 0.2 } }}
           >
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center justify-center rounded-full bg-white h-10 w-10 shadow-inner">
+            <div className="flex items-center space-x-2 mb-1.5">
+              <div className="flex items-center justify-center rounded-full bg-white h-8 w-8 shadow-inner">
                 <ArrowUp className="h-4 w-4 text-[#1F6FEB]" />
               </div>
-              <div>
-                <span className="block text-xs text-[#1F6FEB]/80 font-medium mb-0.5">Revenus</span>
-                <span className="font-semibold text-sm md:text-base">{budgetData.income.toLocaleString()} DH</span>
-              </div>
+              <span className="text-xs text-[#1F6FEB]/80 font-medium">Revenus</span>
             </div>
+            <span className="ml-10 font-semibold text-sm">{budgetData.income.toLocaleString()} DH</span>
           </motion.div>
           
           <motion.div 
-            className="stat-block flex items-center justify-between p-4 rounded-xl shadow-sm bg-rose-50"
+            className="stat-block flex flex-col items-start p-3.5 rounded-xl shadow-sm bg-rose-50"
             whileHover={{ y: -2, transition: { duration: 0.2 } }}
           >
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center justify-center rounded-full bg-white h-10 w-10 shadow-inner">
+            <div className="flex items-center space-x-2 mb-1.5">
+              <div className="flex items-center justify-center rounded-full bg-white h-8 w-8 shadow-inner">
                 <ArrowDown className="h-4 w-4 text-rose-500" />
               </div>
-              <div>
-                <span className="block text-xs text-rose-600/80 font-medium mb-0.5">Dépenses</span>
-                <span className="font-semibold text-sm md:text-base">{budgetData.expenses.toLocaleString()} DH</span>
-              </div>
+              <span className="text-xs text-rose-600/80 font-medium">Dépenses</span>
             </div>
+            <span className="ml-10 font-semibold text-sm">{budgetData.expenses.toLocaleString()} DH</span>
           </motion.div>
         </div>
       </CardContent>
