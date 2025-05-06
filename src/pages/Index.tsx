@@ -111,7 +111,7 @@ const Index = () => {
         <>
           <Navigation currentRoute={currentRoute} onRouteChange={setCurrentRoute} />
           <AnimatePresence mode="wait">
-            <main className="pb-20 md:pb-6 px-0 mx-auto max-w-5xl">
+            <main className="pb-20 md:pb-6 px-0 mx-auto max-w-6xl">
               {renderCurrentView()}
             </main>
           </AnimatePresence>

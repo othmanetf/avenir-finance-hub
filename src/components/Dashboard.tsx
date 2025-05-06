@@ -28,7 +28,6 @@ import {
   Area,
   AreaChart
 } from 'recharts';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { useIsMobile } from "@/hooks/use-mobile";
 import TransactionModal from "@/components/TransactionModal";
 import { useProfile } from "@/hooks/use-profile";
@@ -45,7 +44,7 @@ export const Dashboard = () => {
   const isMobile = useIsMobile();
   const { openProfile } = useProfile();
 
-  // Données d'exemple - dans une application réelle, ces données seraient dynamiques
+  // Sample data - in a real app, this would be dynamic
   const budgetData = {
     totalBudget: 7500,
     spent: 4825,
@@ -56,12 +55,12 @@ export const Dashboard = () => {
     progressPercentage: 64
   };
 
-  // Date actuelle pour l'affichage
+  // Current date for display
   const currentDate = new Date();
   const currentDay = currentDate.getDate();
   const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
   
-  // Données pour le graphique d'évolution mensuelle selon la période
+  // Chart data based on selected period
   const getChartData = () => {
     if (selectedPeriod === "30") {
       return [
@@ -91,11 +90,11 @@ export const Dashboard = () => {
     }
   };
 
-  // Chart config for the line chart
+  // Chart configuration
   const chartConfig = {
-    revenus: { label: "Revenus", theme: { light: "#1F6FEB", dark: "#1F6FEB" } },
-    dépenses: { label: "Dépenses", theme: { light: "#7C84FF", dark: "#7C84FF" } },
-    budget: { label: "Budget", theme: { light: "#10B981", dark: "#10B981" } }
+    revenus: { label: "Revenus", color: "#0ea5e9" },
+    dépenses: { label: "Dépenses", color: "#0284c7" },
+    budget: { label: "Budget", color: "#10b981" }
   };
 
   const categories = [
@@ -106,7 +105,7 @@ export const Dashboard = () => {
       amount: 1250,
       budget: 1600, 
       color: "bg-orange-100 text-orange-500",
-      pieColor: "#FF9F7A",
+      pieColor: "#f97316",
       progress: 78,
       transactions: [
         { name: "Supermarché", date: "Aujourd'hui, 10:42", amount: 320 },
@@ -122,7 +121,7 @@ export const Dashboard = () => {
       amount: 875,
       budget: 1000, 
       color: "bg-blue-100 text-blue-500",
-      pieColor: "#7AB8FF",
+      pieColor: "#0ea5e9",
       progress: 87,
       transactions: [
         { name: "Magasin de vêtements", date: "15 juin, 14:30", amount: 475 },
@@ -136,7 +135,7 @@ export const Dashboard = () => {
       amount: 1800,
       budget: 1800, 
       color: "bg-violet-100 text-violet-500",
-      pieColor: "#B57AFF",
+      pieColor: "#8b5cf6",
       progress: 100,
       transactions: [
         { name: "Loyer", date: "5 juin, 09:00", amount: 1800 }
@@ -149,7 +148,7 @@ export const Dashboard = () => {
       amount: 900,
       budget: 1100, 
       color: "bg-green-100 text-green-500",
-      pieColor: "#7AFFB5",
+      pieColor: "#10b981",
       progress: 82,
       transactions: [
         { name: "Carburant", date: "12 juin, 11:15", amount: 350 },
@@ -168,7 +167,7 @@ export const Dashboard = () => {
       amount: 8000,
       budget: 8000, 
       color: "bg-emerald-100 text-emerald-500",
-      pieColor: "#7AFFB5",
+      pieColor: "#10b981",
       progress: 100,
       transactions: [
         { name: "Emploi principal", date: "5 juin, 10:00", amount: 8000 }
@@ -181,7 +180,7 @@ export const Dashboard = () => {
       amount: 500,
       budget: 0, 
       color: "bg-pink-100 text-pink-500",
-      pieColor: "#FF7AAE",
+      pieColor: "#ec4899",
       progress: 100,
       transactions: [
         { name: "Cadeau d'anniversaire", date: "8 juin, 09:20", amount: 500 }
@@ -189,7 +188,7 @@ export const Dashboard = () => {
     }
   ];
 
-  // Données pour le graphique circulaire
+  // Pie chart data
   const pieData = categories.map(category => ({
     name: category.name,
     value: category.amount
@@ -219,16 +218,16 @@ export const Dashboard = () => {
 
   return (
     <motion.div 
-      className="flex flex-col p-4 md:p-6 md:pl-24"
+      className="flex flex-col p-6 md:p-8 md:pl-24"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
-      {/* En-tête avec Bienvenue et Avatar */}
-      <motion.div className="flex justify-between items-center mb-6" variants={itemVariants}>
+      {/* Header with Welcome and Avatar */}
+      <motion.div className="flex justify-between items-center mb-8" variants={itemVariants}>
         <div className="flex flex-col">
           <p className="text-sm text-muted-foreground">Bienvenue</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground bg-gradient-to-r from-monavenir-blue to-monavenir-cyan bg-clip-text text-transparent">Mohamed</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Mohamed</h2>
         </div>
         
         <Avatar 
@@ -240,40 +239,40 @@ export const Dashboard = () => {
         </Avatar>
       </motion.div>
 
-      {/* Aperçu du budget - UI Enhanced */}
-      <motion.div variants={itemVariants} className="mb-5">
-        <Card className="bg-white shadow-lg border-0 rounded-3xl overflow-hidden">
+      {/* Monthly Expenses Overview - Clean Modern UI */}
+      <motion.div variants={itemVariants} className="mb-6">
+        <Card className="bg-white shadow-sm border-0 rounded-2xl overflow-hidden">
           <CardContent className="p-6 space-y-5">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-xl font-bold text-foreground">Dépenses Mensuelles</h3>
+                <h3 className="text-xl font-semibold text-foreground">Dépenses Mensuelles</h3>
                 <div className="flex items-center gap-2 mt-1">
                   <span className="text-lg font-semibold text-primary">{budgetData.spent.toLocaleString()} DH</span> 
                   <span className="text-sm text-muted-foreground">sur {budgetData.totalBudget.toLocaleString()} DH</span>
                 </div>
               </div>
-              <Button size="icon" variant="outline" className="rounded-full h-10 w-10 border-primary/30 shadow-sm hover:shadow-md transition-all">
+              <Button size="icon" variant="outline" className="rounded-full h-10 w-10 border-primary/20 shadow-sm">
                 <Calendar className="h-5 w-5 text-primary" />
               </Button>
             </div>
             
             <div className="relative pt-6 pb-4">
-              {/* Progress Bar with Improved Design */}
+              {/* Progress Bar with Clean Design */}
               <div className="flex justify-between text-xs text-muted-foreground mb-3">
                 <span>1 Juin</span>
                 <span>30 Juin</span>
               </div>
               
               <div className="relative mb-6">
-                <Progress value={budgetData.progressPercentage} className="h-3 rounded-full bg-primary/10" />
+                <Progress value={budgetData.progressPercentage} className="h-3 rounded-full bg-sky-100" />
                 <motion.div 
-                  className="absolute top-0 h-6 w-1 bg-gray-800 rounded-full transform -translate-y-1.5 shadow-md"
+                  className="absolute top-0 h-6 w-1 bg-sky-600 rounded-full transform -translate-y-1.5 shadow-sm"
                   style={{ left: `${(currentDay/lastDay) * 100}%` }}
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 24 }}
                   transition={{ delay: 0.5, duration: 0.3 }}
                 >
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-gray-800 text-white text-xs font-medium rounded-lg px-2.5 py-1.5 shadow-lg">
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-sky-600 text-white text-xs font-medium rounded-lg px-2.5 py-1.5 shadow-sm">
                     Aujourd'hui
                   </div>
                 </motion.div>
@@ -281,44 +280,44 @@ export const Dashboard = () => {
               
               {/* Daily Budget Message */}
               <motion.div 
-                className="bg-primary/5 rounded-xl p-4 text-center"
+                className="bg-sky-50 rounded-xl p-4 text-center"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
               >
                 <p className="text-sm text-foreground">
-                  Vous pouvez dépenser <span className="font-semibold text-primary">{budgetData.dailyBudget.toLocaleString()} DH</span> par jour pour les <span className="font-semibold text-primary">{budgetData.remainingDays}</span> prochains jours
+                  Vous pouvez dépenser <span className="font-semibold text-sky-600">{budgetData.dailyBudget.toLocaleString()} DH</span> par jour pour les <span className="font-semibold text-sky-600">{budgetData.remainingDays}</span> prochains jours
                 </p>
               </motion.div>
             </div>
             
-            {/* Statistiques de revenus et dépenses */}
+            {/* Revenue and Expense Stats */}
             <div className="grid grid-cols-2 gap-4">
               <motion.div 
-                className="stat-block flex items-center justify-between p-5 rounded-xl shadow-sm bg-gradient-to-br from-blue-50 to-blue-100/80"
+                className="stat-block flex items-center justify-between p-5 rounded-xl shadow-sm bg-sky-50"
                 whileHover={{ y: -2, transition: { duration: 0.2 } }}
               >
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center justify-center rounded-full bg-blue-200/70 h-12 w-12 shadow-inner">
-                    <ArrowUp className="h-5 w-5 text-blue-600" />
+                  <div className="flex items-center justify-center rounded-full bg-sky-100 h-12 w-12 shadow-inner">
+                    <ArrowUp className="h-5 w-5 text-sky-600" />
                   </div>
                   <div>
-                    <span className="block text-xs text-blue-600/80 font-medium mb-0.5">Revenus</span>
+                    <span className="block text-xs text-sky-600/80 font-medium mb-0.5">Revenus</span>
                     <span className="font-semibold text-base md:text-lg">{budgetData.income.toLocaleString()} DH</span>
                   </div>
                 </div>
               </motion.div>
               
               <motion.div 
-                className="stat-block flex items-center justify-between p-5 rounded-xl shadow-sm bg-gradient-to-br from-red-50 to-red-100/80"
+                className="stat-block flex items-center justify-between p-5 rounded-xl shadow-sm bg-rose-50"
                 whileHover={{ y: -2, transition: { duration: 0.2 } }}
               >
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center justify-center rounded-full bg-red-200/70 h-12 w-12 shadow-inner">
-                    <ArrowDown className="h-5 w-5 text-red-500" />
+                  <div className="flex items-center justify-center rounded-full bg-rose-100 h-12 w-12 shadow-inner">
+                    <ArrowDown className="h-5 w-5 text-rose-500" />
                   </div>
                   <div>
-                    <span className="block text-xs text-red-600/80 font-medium mb-0.5">Dépenses</span>
+                    <span className="block text-xs text-rose-600/80 font-medium mb-0.5">Dépenses</span>
                     <span className="font-semibold text-base md:text-lg">{budgetData.expenses.toLocaleString()} DH</span>
                   </div>
                 </div>
@@ -328,13 +327,13 @@ export const Dashboard = () => {
         </Card>
       </motion.div>
 
-      {/* Graphique d'évolution mensuelle - Fixed Chart */}
-      <motion.div variants={itemVariants} className="mb-5">
-        <Card className="bg-white shadow-md border-0 rounded-3xl overflow-hidden">
+      {/* Monthly Evolution Chart - Modern Clean UI */}
+      <motion.div variants={itemVariants} className="mb-6">
+        <Card className="bg-white shadow-sm border-0 rounded-2xl overflow-hidden">
           <CardContent className="p-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mb-5">
               <div>
-                <h3 className="text-lg font-bold text-foreground">Évolution Mensuelle</h3>
+                <h3 className="text-lg font-semibold text-foreground">Évolution Mensuelle</h3>
                 <p className="text-sm text-muted-foreground">Visualisez vos finances sur la durée</p>
               </div>
               <Select
@@ -360,8 +359,8 @@ export const Dashboard = () => {
                 >
                   <defs>
                     <linearGradient id="colorDepenses" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#7C84FF" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#7C84FF" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
@@ -382,10 +381,10 @@ export const Dashboard = () => {
                   />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: 'rgba(255, 255, 255, 0.95)', 
-                      borderRadius: '12px', 
+                      backgroundColor: 'rgba(255, 255, 255, 0.98)', 
+                      borderRadius: '16px', 
                       border: 'none',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.06)',
                       padding: '12px 16px'
                     }}
                     formatter={(value) => [`${value.toLocaleString()} DH`, ""]}
@@ -395,7 +394,7 @@ export const Dashboard = () => {
                     type="monotone"
                     dataKey="dépenses"
                     name="Dépenses"
-                    stroke="#7C84FF"
+                    stroke="#0ea5e9"
                     fillOpacity={1}
                     fill="url(#colorDepenses)"
                     strokeWidth={2.5}
@@ -419,12 +418,12 @@ export const Dashboard = () => {
         </Card>
       </motion.div>
 
-      {/* Répartition des dépenses avec graphique circulaire - Improved pie chart with better tooltips */}
-      <motion.div variants={itemVariants} className="mb-5">
-        <Card className="bg-white shadow-md border-0 rounded-3xl overflow-hidden">
+      {/* Expense Distribution with Pie Chart - Improved with better tooltips */}
+      <motion.div variants={itemVariants} className="mb-6">
+        <Card className="bg-white shadow-sm border-0 rounded-2xl overflow-hidden">
           <CardContent className="p-6">
             <div className="mb-4">
-              <h3 className="text-lg font-bold text-foreground">Répartition des dépenses</h3>
+              <h3 className="text-lg font-semibold text-foreground">Répartition des dépenses</h3>
               <p className="text-sm text-muted-foreground">Visualisation par catégorie</p>
             </div>
             
@@ -457,11 +456,11 @@ export const Dashboard = () => {
                     <Tooltip 
                       formatter={(value) => [`${value.toLocaleString()} DH`, ""]}
                       contentStyle={{ 
-                        backgroundColor: 'rgba(255, 255, 255, 0.97)', 
-                        borderRadius: '10px', 
+                        backgroundColor: 'rgba(255, 255, 255, 0.98)', 
+                        borderRadius: '16px', 
                         border: 'none',
-                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
-                        padding: '10px 14px'
+                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.06)',
+                        padding: '12px 16px'
                       }}
                       itemStyle={{
                         padding: '4px 0',
@@ -490,7 +489,7 @@ export const Dashboard = () => {
                         <div className="w-3 h-3 rounded-full mr-2.5" style={{ backgroundColor: category.pieColor }}></div>
                         <span className="text-sm font-medium">{category.name}</span>
                       </div>
-                      <div className="text-sm font-semibold bg-gray-50 px-3 py-1 rounded-full shadow-sm">
+                      <div className="text-sm font-semibold bg-gray-50 px-3 py-1 rounded-full shadow-sm amount-tag">
                         {category.amount.toLocaleString()} DH
                       </div>
                     </div>
@@ -510,10 +509,10 @@ export const Dashboard = () => {
         </Card>
       </motion.div>
 
-      {/* Catégories de dépenses */}
-      <motion.div variants={itemVariants} className="space-y-3 mb-5">
+      {/* Expense Categories */}
+      <motion.div variants={itemVariants} className="space-y-3 mb-6">
         <div className="flex justify-between items-center">
-          <h3 className="font-bold text-lg text-foreground">Dépenses par catégorie</h3>
+          <h3 className="font-semibold text-lg text-foreground">Dépenses par catégorie</h3>
           <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
             Voir tout
           </Button>
@@ -527,11 +526,11 @@ export const Dashboard = () => {
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
               <div 
-                className="transaction-row cursor-pointer bg-white rounded-xl shadow-sm"
+                className="transaction-row cursor-pointer"
                 onClick={() => setActiveCategory(activeCategory === category.id ? null : category.id)}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`category-icon ${category.color} h-10 w-10 rounded-xl flex items-center justify-center`}>
+                  <div className={`category-icon ${category.color} h-11 w-11 rounded-xl flex items-center justify-center`}>
                     <category.icon className="h-5 w-5" />
                   </div>
                   <div className="flex flex-col">
@@ -544,7 +543,7 @@ export const Dashboard = () => {
                 </span>
               </div>
               
-              {/* Détail des transactions */}
+              {/* Transaction Details */}
               {activeCategory === category.id && (
                 <motion.div 
                   initial={{ height: 0, opacity: 0 }}
@@ -569,10 +568,10 @@ export const Dashboard = () => {
         </div>
       </motion.div>
       
-      {/* Catégories de revenus */}
+      {/* Income Categories */}
       <motion.div variants={itemVariants} className="space-y-3 mb-24 md:mb-10">
         <div className="flex justify-between items-center">
-          <h3 className="font-bold text-lg text-foreground">Revenus par catégorie</h3>
+          <h3 className="font-semibold text-lg text-foreground">Revenus par catégorie</h3>
           <Button variant="ghost" size="sm" className="text-xs text-primary hover:text-primary/80 hover:bg-accent/50">
             Voir tout
           </Button>
@@ -586,11 +585,11 @@ export const Dashboard = () => {
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
               <div 
-                className="transaction-row cursor-pointer bg-white rounded-xl shadow-sm"
+                className="transaction-row cursor-pointer"
                 onClick={() => setActiveCategory(activeCategory === category.id ? null : category.id)}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`category-icon ${category.color} h-10 w-10 rounded-xl flex items-center justify-center`}>
+                  <div className={`category-icon ${category.color} h-11 w-11 rounded-xl flex items-center justify-center`}>
                     <category.icon className="h-5 w-5" />
                   </div>
                   <div className="flex flex-col">
@@ -603,7 +602,7 @@ export const Dashboard = () => {
                 </span>
               </div>
               
-              {/* Détail des transactions */}
+              {/* Transaction Details */}
               {activeCategory === category.id && (
                 <motion.div 
                   initial={{ height: 0, opacity: 0 }}
@@ -628,9 +627,9 @@ export const Dashboard = () => {
         </div>
       </motion.div>
 
-      {/* Bouton d'action */}
+      {/* Action Button */}
       <motion.div 
-        className="fixed bottom-20 right-4 sm:right-6 z-10 md:bottom-6"
+        className="fixed bottom-20 right-5 sm:right-6 z-10 md:bottom-6"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.5 }}
@@ -638,7 +637,7 @@ export const Dashboard = () => {
         whileTap={{ scale: 0.95 }}
       >
         <Button 
-          className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-gradient-to-r from-monavenir-blue to-monavenir-cyan shadow-lg hover:shadow-xl backdrop-blur-sm hover:opacity-90 transition-all border border-white/20" 
+          className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-sky-500 shadow-lg hover:shadow-xl hover:bg-sky-600 transition-all" 
           size="icon"
           onClick={() => setIsTransactionModalOpen(true)}
         >
@@ -646,7 +645,7 @@ export const Dashboard = () => {
         </Button>
       </motion.div>
 
-      {/* Modal d'ajout de transaction */}
+      {/* Transaction Modal */}
       <TransactionModal 
         isOpen={isTransactionModalOpen} 
         onClose={() => setIsTransactionModalOpen(false)} 
