@@ -3,8 +3,8 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { EducationCategories, educationCategories } from "@/components/education/EducationCategories";
 import { EducationCard, EducationItemType } from "@/components/education/EducationCard";
 import { QuizSection } from "@/components/education/QuizSection";
+import { PodcastSection } from "@/components/education/PodcastSection";
 import { educationItems } from "@/components/education/educationData";
-import { Icon } from "@/components/ui/icon-provider";
 import { GraduationCap } from "lucide-react";
 
 export const Education = () => {
@@ -46,6 +46,8 @@ export const Education = () => {
           </TabsContent>
         ))}
       </Tabs>
+
+      <PodcastSection />
 
       <div className="mt-6">
         <QuizSection />

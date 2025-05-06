@@ -82,6 +82,24 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
   }
+  
+  /* Hide scrollbars everywhere but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+  
+  /* Override default scrollbar appearance */
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+    display: none;
+  }
 }
 
 @layer components {

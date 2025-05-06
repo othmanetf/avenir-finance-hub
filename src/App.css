@@ -1,4 +1,3 @@
-
 /* Base Styles */
 #root {
   max-width: 1280px;
@@ -302,19 +301,18 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hide scrollbars but keep functionality */
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-  background: transparent;
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  background: transparent;
 }
 
 * {
   -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: thin; /* Firefox */
+  scrollbar-width: none; /* Firefox */
 }
 
 /* Card modernization - Mobile optimized */
