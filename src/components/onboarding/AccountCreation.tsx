@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useOnboarding } from "@/context/OnboardingContext";
@@ -13,7 +12,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Mail, Lock, User, Phone, Check, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import AvatarSelector from "./AvatarSelector";
-
 interface AccountCreationProps {
   onComplete?: () => void;
 }
@@ -38,10 +36,19 @@ const phoneSchema = z.object({
 const profileSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters")
 });
-
-export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
-  const { setFullName, setEmail, setPassword, setPhoneNumber, 
-          setVerificationCode, profilePicture, setProfilePicture, setUsername } = useOnboarding();
+export const AccountCreation = ({
+  onComplete
+}: AccountCreationProps) => {
+  const {
+    setFullName,
+    setEmail,
+    setPassword,
+    setPhoneNumber,
+    setVerificationCode,
+    profilePicture,
+    setProfilePicture,
+    setUsername
+  } = useOnboarding();
   const [subStep, setSubStep] = useState(1);
   const [verificationCode, setVerificationCodeLocal] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
@@ -56,14 +63,12 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
       confirmPassword: ""
     }
   });
-
   const phoneForm = useForm({
     resolver: zodResolver(phoneSchema),
     defaultValues: {
       phoneNumber: ""
     }
   });
-
   const profileForm = useForm({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -78,13 +83,11 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
     setPassword(data.password);
     setSubStep(2);
   };
-
   const onPhoneSubmit = (data: z.infer<typeof phoneSchema>) => {
     setPhoneNumber(data.phoneNumber);
     setIsVerifying(true);
     toast.success("Code de vérification envoyé à votre téléphone");
   };
-
   const onVerifyCode = () => {
     if (verificationCode.length === 6) {
       setVerificationCode(verificationCode);
@@ -94,12 +97,10 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
       toast.error("Le code doit avoir 6 chiffres");
     }
   };
-
   const onProfileSubmit = (data: z.infer<typeof profileSchema>) => {
     setUsername(data.username);
     setSubStep(4); // Show success screen
   };
-
   const handleContinue = () => {
     if (onComplete) {
       onComplete();
@@ -131,70 +132,55 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
 
   // Animation variants
   const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
+    hidden: {
+      opacity: 0
+    },
+    visible: {
       opacity: 1,
-      transition: { 
+      transition: {
         duration: 0.5,
         when: "beforeChildren",
         staggerChildren: 0.1
-      } 
+      }
     },
     exit: {
       opacity: 0,
-      transition: { duration: 0.2 }
+      transition: {
+        duration: 0.2
+      }
     }
   };
-
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
-    exit: { y: -20, opacity: 0 }
+    hidden: {
+      y: 20,
+      opacity: 0
+    },
+    visible: {
+      y: 0,
+      opacity: 1
+    },
+    exit: {
+      y: -20,
+      opacity: 0
+    }
   };
-
-  return (
-    <div className="px-4 py-4 max-w-md mx-auto">
+  return <div className="px-4 py-4 max-w-md mx-auto">
       <div className="w-full max-w-md mx-auto">
         {/* Progress indicator */}
         <div className="flex justify-between mb-8">
-          {[1, 2, 3, 4].map((s) => (
-            <div 
-              key={s} 
-              className={`h-2 rounded-full flex-1 mx-1 ${
-                subStep >= s ? "bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD]" : "bg-gray-200 dark:bg-gray-700"
-              }`}
-            />
-          ))}
+          {[1, 2, 3, 4].map(s => <div key={s} className={`h-2 rounded-full flex-1 mx-1 ${subStep >= s ? "bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD]" : "bg-gray-200 dark:bg-gray-700"}`} />)}
         </div>
 
         <div className="text-right mb-2">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="text-xs text-gray-500"
-            onClick={skipStep}
-          >
+          <Button variant="ghost" size="sm" className="text-xs text-gray-500" onClick={skipStep}>
             {subStep < 4 ? "Ignorer cette étape" : "Terminer"}
           </Button>
         </div>
 
         {/* Step 1: Basic Information */}
-        {subStep === 1 && (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="space-y-6"
-          >
+        {subStep === 1 && <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-6">
             <motion.div variants={itemVariants}>
-              <div className="flex items-center justify-center mb-6">
-                <img 
-                  src="/lovable-uploads/7fe54294-a4f9-4328-b4c5-837bc792315b.png" 
-                  alt="MonAvenir+" 
-                  className="h-16 w-16" 
-                />
-              </div>
+              
               <h1 className="text-2xl font-bold text-center mb-2">Créer votre compte</h1>
               <p className="text-gray-500 dark:text-gray-400 text-center mb-6">
                 Commençons par quelques informations de base
@@ -203,11 +189,9 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
 
             <Form {...basicInfoForm}>
               <form onSubmit={basicInfoForm.handleSubmit(onBasicInfoSubmit)} className="space-y-4">
-                <FormField
-                  control={basicInfoForm.control}
-                  name="fullName"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={basicInfoForm.control} name="fullName" render={({
+              field
+            }) => <FormItem>
                       <FormLabel>Nom complet</FormLabel>
                       <FormControl>
                         <div className="relative">
@@ -216,15 +200,11 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                         </div>
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
-                <FormField
-                  control={basicInfoForm.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={basicInfoForm.control} name="email" render={({
+              field
+            }) => <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <div className="relative">
@@ -233,15 +213,11 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                         </div>
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
-                <FormField
-                  control={basicInfoForm.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={basicInfoForm.control} name="password" render={({
+              field
+            }) => <FormItem>
                       <FormLabel>Mot de passe</FormLabel>
                       <FormControl>
                         <div className="relative">
@@ -250,15 +226,11 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                         </div>
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
-                <FormField
-                  control={basicInfoForm.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={basicInfoForm.control} name="confirmPassword" render={({
+              field
+            }) => <FormItem>
                       <FormLabel>Confirmer le mot de passe</FormLabel>
                       <FormControl>
                         <div className="relative">
@@ -267,9 +239,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                         </div>
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
                 <motion.div variants={itemVariants} className="text-sm text-gray-500 dark:text-gray-400 mt-4">
                   En vous inscrivant, vous acceptez nos <a href="#" className="text-blue-500 hover:underline">Conditions d'utilisation</a>
@@ -282,18 +252,10 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                 </motion.div>
               </form>
             </Form>
-          </motion.div>
-        )}
+          </motion.div>}
 
         {/* Step 2: Phone Verification */}
-        {subStep === 2 && (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="space-y-6"
-          >
+        {subStep === 2 && <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-6">
             <motion.div variants={itemVariants}>
               <h1 className="text-2xl font-bold text-center mb-2">Vérifiez votre téléphone</h1>
               <p className="text-gray-500 dark:text-gray-400 text-center mb-6">
@@ -301,14 +263,11 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
               </p>
             </motion.div>
 
-            {!isVerifying ? (
-              <Form {...phoneForm}>
+            {!isVerifying ? <Form {...phoneForm}>
                 <form onSubmit={phoneForm.handleSubmit(onPhoneSubmit)} className="space-y-4">
-                  <FormField
-                    control={phoneForm.control}
-                    name="phoneNumber"
-                    render={({ field }) => (
-                      <FormItem>
+                  <FormField control={phoneForm.control} name="phoneNumber" render={({
+              field
+            }) => <FormItem>
                         <FormLabel>Numéro de téléphone</FormLabel>
                         <FormControl>
                           <div className="relative">
@@ -317,9 +276,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                           </div>
                         </FormControl>
                         <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      </FormItem>} />
 
                   <motion.div variants={itemVariants}>
                     <Button type="submit" className="w-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white">
@@ -327,14 +284,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                     </Button>
                   </motion.div>
                 </form>
-              </Form>
-            ) : (
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="space-y-6"
-              >
+              </Form> : <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6">
                 <motion.div variants={itemVariants}>
                   <p className="text-center mb-4">
                     Entrez le code à 6 chiffres envoyé au numéro 
@@ -343,18 +293,11 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="flex justify-center">
-                  <InputOTP
-                    maxLength={6}
-                    value={verificationCode}
-                    onChange={setVerificationCodeLocal}
-                    render={({ slots }) => (
-                      <InputOTPGroup>
-                        {slots.map((slot, idx) => (
-                          <InputOTPSlot key={idx} {...slot} index={idx} />
-                        ))}
-                      </InputOTPGroup>
-                    )}
-                  />
+                  <InputOTP maxLength={6} value={verificationCode} onChange={setVerificationCodeLocal} render={({
+              slots
+            }) => <InputOTPGroup>
+                        {slots.map((slot, idx) => <InputOTPSlot key={idx} {...slot} index={idx} />)}
+                      </InputOTPGroup>} />
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
@@ -364,28 +307,15 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="text-center">
-                  <button 
-                    type="button"
-                    onClick={() => setIsVerifying(false)}
-                    className="text-sm text-[#1F6FEB] hover:underline"
-                  >
+                  <button type="button" onClick={() => setIsVerifying(false)} className="text-sm text-[#1F6FEB] hover:underline">
                     Modifier le numéro
                   </button>
                 </motion.div>
-              </motion.div>
-            )}
-          </motion.div>
-        )}
+              </motion.div>}
+          </motion.div>}
 
         {/* Step 3: Profile Setup */}
-        {subStep === 3 && (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="space-y-6"
-          >
+        {subStep === 3 && <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-6">
             <motion.div variants={itemVariants}>
               <h1 className="text-2xl font-bold text-center mb-2">Personnalisez votre profil</h1>
               <p className="text-gray-500 dark:text-gray-400 text-center mb-6">
@@ -394,19 +324,14 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
             </motion.div>
 
             <motion.div variants={itemVariants} className="flex justify-center mb-6">
-              <AvatarSelector 
-                profilePicture={profilePicture} 
-                onSelectPicture={setProfilePicture} 
-              />
+              <AvatarSelector profilePicture={profilePicture} onSelectPicture={setProfilePicture} />
             </motion.div>
 
             <Form {...profileForm}>
               <form onSubmit={profileForm.handleSubmit(onProfileSubmit)} className="space-y-4">
-                <FormField
-                  control={profileForm.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={profileForm.control} name="username" render={({
+              field
+            }) => <FormItem>
                       <FormLabel>Nom d'utilisateur</FormLabel>
                       <FormControl>
                         <div className="relative">
@@ -415,9 +340,7 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                         </div>
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
                 <motion.div variants={itemVariants}>
                   <Button type="submit" className="w-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white">
@@ -426,54 +349,36 @@ export const AccountCreation = ({ onComplete }: AccountCreationProps) => {
                 </motion.div>
               </form>
             </Form>
-          </motion.div>
-        )}
+          </motion.div>}
 
         {/* Step 4: Success Screen */}
-        {subStep === 4 && (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="space-y-8 text-center"
-          >
-            <motion.div 
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", damping: 12 }}
-              className="w-24 h-24 rounded-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] flex items-center justify-center mx-auto"
-            >
+        {subStep === 4 && <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-8 text-center">
+            <motion.div initial={{
+          scale: 0
+        }} animate={{
+          scale: 1
+        }} transition={{
+          type: "spring",
+          damping: 12
+        }} className="w-24 h-24 rounded-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] flex items-center justify-center mx-auto">
               <Check className="h-12 w-12 text-white" />
             </motion.div>
             
-            <motion.h1 
-              variants={itemVariants}
-              className="text-2xl font-bold"
-            >
+            <motion.h1 variants={itemVariants} className="text-2xl font-bold">
               🎉 Votre compte a été créé avec succès!
             </motion.h1>
             
-            <motion.p
-              variants={itemVariants}
-              className="text-gray-600 dark:text-gray-400"
-            >
+            <motion.p variants={itemVariants} className="text-gray-600 dark:text-gray-400">
               C'est le moment de connaître un peu plus vos habitudes financières.
             </motion.p>
             
             <motion.div variants={itemVariants}>
-              <Button 
-                onClick={handleContinue}
-                className="w-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white"
-              >
+              <Button onClick={handleContinue} className="w-full bg-gradient-to-r from-[#1F6FEB] to-[#8E44AD] text-white">
                 Continuer <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </motion.div>
-          </motion.div>
-        )}
+          </motion.div>}
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default AccountCreation;
