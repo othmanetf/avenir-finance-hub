@@ -4,15 +4,14 @@ import { motion } from "framer-motion";
 import { useOnboarding } from "@/context/OnboardingContext";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/ui/icon-provider";
-import { Check, X, ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { useOnboarded } from "@/hooks/use-onboarded";
-import { cn } from "@/lib/utils";
+import BankList from "./BankList";
+import { Bank } from "./BankList";
 
 // Bank logos are now using the uploaded images
-const bankOptions = [
+const bankOptions: Bank[] = [
   {
     id: "attijari",
     name: "Attijariwafa Bank",
@@ -126,40 +125,11 @@ const BankConnection = () => {
           </motion.div>
 
           <motion.div variants={itemVariants} className="mt-6 space-y-4">
-            <div className="grid grid-cols-1 gap-3">
-              {bankOptions.map((bank) => (
-                <motion.div 
-                  key={bank.id}
-                  className={cn(
-                    "flex items-center space-x-3 border rounded-xl p-3 cursor-pointer transition-all duration-200",
-                    selectedBanks.includes(bank.id) 
-                      ? "border-[#1F6FEB] bg-[#1F6FEB]/5" 
-                      : "border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
-                  )}
-                  onClick={() => toggleBank(bank.id)}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="w-12 h-12 bg-white rounded-md flex items-center justify-center p-1 overflow-hidden">
-                    <img src={bank.logo} alt={bank.name} className="max-h-10 max-w-full object-contain" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-sm md:text-base">{bank.name}</p>
-                  </div>
-                  <div className={cn(
-                    "w-6 h-6 rounded-full flex items-center justify-center", 
-                    selectedBanks.includes(bank.id) 
-                      ? "bg-[#1F6FEB] text-white" 
-                      : "bg-gray-100 text-gray-400 dark:bg-gray-700"
-                  )}>
-                    {selectedBanks.includes(bank.id) ? (
-                      <Check className="h-4 w-4" />
-                    ) : (
-                      <div className="w-3 h-3" />
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            <BankList 
+              banks={bankOptions} 
+              selectedBanks={selectedBanks} 
+              toggleBank={toggleBank} 
+            />
 
             <div className="text-center text-xs text-gray-500 dark:text-gray-400 mt-2">
               Vos données bancaires sont sécurisées et chiffrées
