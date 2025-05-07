@@ -11,32 +11,32 @@ import { Check, X, ArrowRight, Loader2 } from "lucide-react";
 import { useOnboarded } from "@/hooks/use-onboarded";
 import { cn } from "@/lib/utils";
 
-// Bank logos stored locally to ensure they load properly
+// Bank logos are now using the uploaded images
 const bankOptions = [
   {
     id: "attijari",
     name: "Attijariwafa Bank",
-    logo: "/lovable-uploads/451a0f05-c9c4-4985-a6a4-d0e441d1e0d2.png"
+    logo: "/lovable-uploads/87e0d633-d00c-408e-962c-489327b541ac.png"  // Logo maison rouge et jaune
   },
   {
     id: "bmce",
     name: "Bank of Africa (ex-BMCE)",
-    logo: "/lovable-uploads/de74a85e-1f8f-433f-bac9-bb3e92a8087a.png"
+    logo: "/lovable-uploads/14ed2c24-9bce-40c2-85f3-7343992d7812.png"  // Logo cercle bleu avec l'Afrique turquoise
   },
   {
     id: "cih",
     name: "CIH Bank",
-    logo: "/lovable-uploads/69b09907-4fdb-4696-8de1-ac20da10f2bc.png"
+    logo: "/lovable-uploads/0939d09f-22ce-4088-990d-1afac195a71b.png"  // Logo CIH en noir avec flèches rouge/bleue
   },
   {
     id: "sgma",
     name: "Société Générale Maroc",
-    logo: "/lovable-uploads/ab549ad1-6498-4f4c-9b7e-632c48c3f72b.png"
+    logo: "/lovable-uploads/09f795f9-2422-4b78-8c9c-5b7ac6793d54.png"  // Logo rectangle rouge sur noir
   },
   {
     id: "bp",
     name: "Banque Populaire",
-    logo: "/lovable-uploads/f0ec1277-c7c9-4a7f-8544-0789cdc4eb4b.png"
+    logo: "/lovable-uploads/fc969314-7d86-4044-b219-98bfa946076a.png"  // Logo cheval marron dans un cercle orange
   }
 ];
 
@@ -103,7 +103,7 @@ const BankConnection = () => {
   };
 
   return (
-    <div className="container max-w-md mx-auto px-4 py-8 pt-24">
+    <div className="container max-w-md mx-auto px-4 py-8 pt-24 overflow-hidden">
       <div className="w-full max-w-md mx-auto">
         <motion.div
           variants={containerVariants}
@@ -131,7 +131,7 @@ const BankConnection = () => {
                 <motion.div 
                   key={bank.id}
                   className={cn(
-                    "flex items-center space-x-3 border rounded-xl p-4 cursor-pointer transition-all duration-200",
+                    "flex items-center space-x-3 border rounded-xl p-3 cursor-pointer transition-all duration-200",
                     selectedBanks.includes(bank.id) 
                       ? "border-[#1F6FEB] bg-[#1F6FEB]/5" 
                       : "border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
@@ -139,11 +139,11 @@ const BankConnection = () => {
                   onClick={() => toggleBank(bank.id)}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="w-10 h-10 bg-white rounded-md flex items-center justify-center p-1 overflow-hidden">
-                    <img src={bank.logo} alt={bank.name} className="max-h-8 max-w-full object-contain" />
+                  <div className="w-12 h-12 bg-white rounded-md flex items-center justify-center p-1 overflow-hidden">
+                    <img src={bank.logo} alt={bank.name} className="max-h-10 max-w-full object-contain" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium">{bank.name}</p>
+                    <p className="font-medium text-sm md:text-base">{bank.name}</p>
                   </div>
                   <div className={cn(
                     "w-6 h-6 rounded-full flex items-center justify-center", 
@@ -161,7 +161,7 @@ const BankConnection = () => {
               ))}
             </div>
 
-            <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
+            <div className="text-center text-xs text-gray-500 dark:text-gray-400 mt-2">
               Vos données bancaires sont sécurisées et chiffrées
             </div>
           </motion.div>

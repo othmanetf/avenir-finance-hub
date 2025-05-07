@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { OnboardingProvider } from "@/context/OnboardingContext";
@@ -114,7 +115,7 @@ const OnboardingPage = () => {
           </div>
         </div>
         
-        <div className="pt-28 pb-4">
+        <div className="pt-28 pb-4 overflow-hidden">
           <AnimatePresence mode="wait">
             {isCompleting ? (
               <motion.div 
@@ -134,7 +135,7 @@ const OnboardingPage = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className="h-full"
+                className="h-full overflow-hidden"
               >
                 <AccountCreation onComplete={() => handleStepChange(2)} />
               </motion.div>
@@ -145,7 +146,7 @@ const OnboardingPage = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className="h-full"
+                className="h-full overflow-hidden"
               >
                 <FinancialProfiling onComplete={() => handleStepChange(3)} />
               </motion.div>
@@ -156,7 +157,7 @@ const OnboardingPage = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className="h-full"
+                className="h-full overflow-hidden"
               >
                 <BankConnection />
               </motion.div>
