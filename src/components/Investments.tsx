@@ -1,7 +1,5 @@
-
 import { useState } from "react";
 import { 
-  Banknote, 
   PiggyBank, 
   TrendingUp, 
   ChevronRight, 
@@ -40,6 +38,7 @@ import { toast } from "sonner";
 import { ConsultationForm } from "./investment/ConsultationForm";
 import { InvestmentGuides } from "./investment/InvestmentGuides";
 import { Icon } from "@/components/ui/icon-provider";
+import { AddTransactionButton } from "./dashboard/AddTransactionButton";
 
 export const Investments = () => {
   const [activeTab, setActiveTab] = useState<"save" | "invest">("save");
@@ -189,6 +188,16 @@ export const Investments = () => {
   const handleExploreGuides = () => {
     setShowGuides(true);
   };
+
+  const handleAddTransaction = () => {
+    toast.info("Créez un nouvel objectif d'épargne ou d'investissement", {
+      description: "Cette fonctionnalité sera bientôt disponible",
+      action: {
+        label: "Rappel",
+        onClick: () => toast.success("Nous vous préviendrons dès que cette fonctionnalité sera disponible")
+      }
+    })
+  };
   
   return (
     <div className="flex flex-col p-4 md:p-6 gap-4 md:gap-6 md:pl-24 mb-20 md:mb-6">
@@ -240,11 +249,7 @@ export const Investments = () => {
                   <Card key={option.id} className="shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
                     <div className="flex p-4 border-b items-center">
                       <div className="flex-shrink-0 h-10 w-10 md:h-12 md:w-12 rounded-lg bg-gray-100 flex items-center justify-center text-lg">
-                        {option.logo.startsWith("/") ? (
-                          <img src={option.logo} alt={option.bank} className="h-8 w-8 object-contain" />
-                        ) : (
-                          <Banknote className="h-6 w-6 text-primary" />
-                        )}
+                        <PiggyBank className="h-6 w-6 text-primary" />
                       </div>
                       <div className="flex-1 ml-3 md:ml-4">
                         <p className="text-xs text-muted-foreground">{option.bank}</p>
@@ -438,21 +443,7 @@ export const Investments = () => {
       </Dialog>
       
       {/* Bouton d'action */}
-      <div className="fixed bottom-20 right-6 z-10 md:bottom-6">
-        <Button 
-          className="h-16 w-16 rounded-full bg-gradient-to-r from-primary to-secondary shadow-lg backdrop-blur-sm hover:opacity-90 transition-all border border-white/20" 
-          size="icon"
-          onClick={() => toast.info("Créez un nouvel objectif d'épargne ou d'investissement", {
-            description: "Cette fonctionnalité sera bientôt disponible",
-            action: {
-              label: "Rappel",
-              onClick: () => toast.success("Nous vous préviendrons dès que cette fonctionnalité sera disponible")
-            }
-          })}
-        >
-          <Plus className="h-7 w-7" />
-        </Button>
-      </div>
+      <AddTransactionButton onClick={handleAddTransaction} />
     </div>
   );
 };
