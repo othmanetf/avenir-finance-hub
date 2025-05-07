@@ -10,7 +10,8 @@ import {
   Tooltip, 
   ResponsiveContainer,
   Area,
-  AreaChart
+  AreaChart,
+  Legend
 } from 'recharts';
 
 type MonthlyEvolutionChartProps = {
@@ -57,6 +58,39 @@ export const MonthlyEvolutionChart = ({
     }
   };
 
+  // Format number with spaces for thousands
+  const formatNumber = (num: number) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  };
+
+  // Custom tooltip formatter to remove ":" and format numbers
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-3 rounded-xl shadow-md border border-gray-100">
+          <p className="font-medium mb-1">{`Jour ${label}`}</p>
+          {activeTab === "all" || activeTab === "expenses" ? (
+            payload[0] && (
+              <p className="text-[#1F6FEB]">
+                <span>Dépenses: </span>
+                <span className="font-medium">{`${formatNumber(payload[0].value)} DH`}</span>
+              </p>
+            )
+          ) : null}
+          {activeTab === "all" || activeTab === "income" ? (
+            payload[activeTab === "all" ? 1 : 0] && (
+              <p className="text-[#0EA5E9]">
+                <span>Revenus: </span>
+                <span className="font-medium">{`${formatNumber(payload[activeTab === "all" ? 1 : 0].value)} DH`}</span>
+              </p>
+            )
+          ) : null}
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <Card className="bg-white shadow-sm border-0 rounded-2xl overflow-hidden">
       <CardContent className="p-5">
@@ -91,6 +125,10 @@ export const MonthlyEvolutionChart = ({
                   <stop offset="5%" stopColor="#1F6FEB" stopOpacity={0.2}/>
                   <stop offset="95%" stopColor="#1F6FEB" stopOpacity={0}/>
                 </linearGradient>
+                <linearGradient id="colorRevenus" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.2}/>
+                  <stop offset="95%" stopColor="#0EA5E9" stopOpacity={0}/>
+                </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
               <XAxis 
@@ -103,32 +141,44 @@ export const MonthlyEvolutionChart = ({
               />
               <YAxis 
                 tick={{ fontSize: 10 }}
-                tickFormatter={(value) => `${value / 1000}k`}
+                tickFormatter={(value) => `${value / 1000}k DH`}
                 axisLine={false}
                 tickLine={false}
-                width={25}
+                width={40}
               />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'rgba(255, 255, 255, 0.98)', 
-                  borderRadius: '14px', 
-                  border: 'none',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.06)',
-                  padding: '10px 14px'
-                }}
-                formatter={(value) => [`${value.toLocaleString()} DH`, ""]}
-                labelFormatter={(label) => `Jour ${label}`}
-              />
-              <Area
-                type="monotone"
-                dataKey="dépenses"
-                name="Dépenses"
-                stroke="#1F6FEB"
-                fillOpacity={1}
-                fill="url(#colorDepenses)"
-                strokeWidth={2}
-                activeDot={{ r: 5, strokeWidth: 0 }}
-                dot={{ r: 2.5, strokeWidth: 2, fill: "#fff" }}
+              <Tooltip content={<CustomTooltip />} />
+              
+              {(activeTab === "all" || activeTab === "expenses") && (
+                <Area
+                  type="monotone"
+                  dataKey="dépenses"
+                  name="Dépenses"
+                  stroke="#1F6FEB"
+                  fillOpacity={1}
+                  fill="url(#colorDepenses)"
+                  strokeWidth={2}
+                  activeDot={{ r: 5, strokeWidth: 0 }}
+                  dot={{ r: 2.5, strokeWidth: 2, fill: "#fff" }}
+                />
+              )}
+              
+              {(activeTab === "all" || activeTab === "income") && (
+                <Area
+                  type="monotone"
+                  dataKey="revenus"
+                  name="Revenus"
+                  stroke="#0EA5E9"
+                  fillOpacity={1}
+                  fill="url(#colorRevenus)"
+                  strokeWidth={2}
+                  activeDot={{ r: 5, strokeWidth: 0 }}
+                  dot={{ r: 2.5, strokeWidth: 2, fill: "#fff" }}
+                />
+              )}
+              
+              <Legend 
+                wrapperStyle={{ bottom: 0 }} 
+                formatter={(value) => <span className="text-xs">{value}</span>}
               />
             </AreaChart>
           </ResponsiveContainer>

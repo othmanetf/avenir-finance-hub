@@ -180,6 +180,11 @@ const ChartTooltipContent = React.forwardRef<
 
     const nestLabel = payload.length === 1 && indicator !== "dot"
 
+    // Format number with spaces for thousands
+    const formatNumber = (num: number) => {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    };
+
     return (
       <div
         ref={ref}
@@ -246,7 +251,7 @@ const ChartTooltipContent = React.forwardRef<
                       {item.value && (
                         <span className="font-mono font-medium tabular-nums text-foreground">
                           {typeof item.value === 'number' ? 
-                            item.value.toLocaleString() + ' DH' : 
+                            formatNumber(item.value) + ' DH' : 
                             item.value}
                         </span>
                       )}
