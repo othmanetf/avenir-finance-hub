@@ -18,11 +18,11 @@ export const AddTransactionButton = ({ onClick }: AddTransactionButtonProps) => 
       whileTap={{ scale: 0.95 }}
     >
       <Button 
-        className="h-16 w-16 rounded-full bg-gradient-to-r from-primary to-secondary shadow-lg backdrop-blur-sm hover:opacity-90 transition-all border border-white/20" 
+        className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-[#1F6FEB] shadow-lg hover:shadow-xl hover:bg-[#1F6FEB]/90 transition-all" 
         size="icon"
         onClick={onClick}
       >
-        <Plus className="h-7 w-7" />
+        <Plus className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
       </Button>
     </motion.div>
   );

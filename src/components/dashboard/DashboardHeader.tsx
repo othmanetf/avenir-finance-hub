@@ -23,7 +23,7 @@ export const DashboardHeader = ({ openProfile }: DashboardHeaderProps) => {
         className="h-10 w-10 sm:h-12 sm:w-12 border-2 border-white shadow-md cursor-pointer hover:opacity-90 transition-opacity" 
         onClick={openProfile}
       >
-        <AvatarImage src="https://github.com/shadcn.png" alt="Mohamed" />
+        <AvatarImage src="/lovable-uploads/8f7f6e7a-523f-4df4-9cad-d01a0d3f8823.png" alt="Mohamed" />
         <AvatarFallback>M</AvatarFallback>
       </Avatar>
     </motion.div>

@@ -212,7 +212,7 @@ export const Investments = () => {
           className="h-10 w-10 md:h-12 md:w-12 border-2 border-white shadow-sm cursor-pointer hover:opacity-90 transition-opacity" 
           onClick={openProfile}
         >
-          <AvatarImage src="/lovable-uploads/69b09907-4fdb-4696-8de1-ac20da10f2bc.png" alt="Mohamed" />
+          <AvatarImage src="/lovable-uploads/8f7f6e7a-523f-4df4-9cad-d01a0d3f8823.png" alt="Mohamed" />
           <AvatarFallback>M</AvatarFallback>
         </Avatar>
       </div>
