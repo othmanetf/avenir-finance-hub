@@ -12,7 +12,7 @@ interface AvatarSelectorProps {
 }
 
 const defaultAvatars = [
-  "/lovable-uploads/8f7f6e7a-523f-4df4-9cad-d01a0d3f8823.png",
+  "/lovable-uploads/00f8cbcf-bc0c-4f7a-b176-88f2c04a328a.png",
   "/lovable-uploads/de74a85e-1f8f-433f-bac9-bb3e92a8087a.png",
   "/lovable-uploads/69b09907-4fdb-4696-8de1-ac20da10f2bc.png",
   "/lovable-uploads/ab549ad1-6498-4f4c-9b7e-632c48c3f72b.png",

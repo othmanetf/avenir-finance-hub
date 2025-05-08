@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { 
   PiggyBank, 
@@ -209,10 +210,10 @@ export const Investments = () => {
         </div>
         
         <Avatar 
-          className="h-10 w-10 md:h-12 md:w-12 border-2 border-white shadow-sm cursor-pointer hover:opacity-90 transition-opacity" 
+          className="h-14 w-14 sm:h-16 sm:w-16 border-2 border-white shadow-md cursor-pointer hover:opacity-90 transition-opacity" 
           onClick={openProfile}
         >
-          <AvatarImage src="/lovable-uploads/8f7f6e7a-523f-4df4-9cad-d01a0d3f8823.png" alt="Mohamed" />
+          <AvatarImage src="/lovable-uploads/00f8cbcf-bc0c-4f7a-b176-88f2c04a328a.png" alt="Mohamed" />
           <AvatarFallback>M</AvatarFallback>
         </Avatar>
       </div>
@@ -237,6 +238,29 @@ export const Investments = () => {
         </TabsList>
         
         <TabsContent value="save" className="space-y-4 md:space-y-6 animate-fade-in">
+          {/* Composant de consultation d'épargne repositionné en haut */}
+          <Card className="bg-primary text-white shadow-md border-0 rounded-3xl">
+            <CardContent className="p-4 md:p-6">
+              <div className="flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
+                  <Calendar className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="font-medium">Besoin de conseils sur l'épargne?</h3>
+                  <p className="text-sm text-white/90 mt-1">Planifiez une séance d'épargne personnalisée avec l'un de nos conseillers financiers.</p>
+                </div>
+              </div>
+              
+              <Button 
+                className="mt-4 w-full bg-white text-primary hover:bg-white/90 hover:text-primary"
+                onClick={handleBookConsultation}
+              >
+                <Phone className="h-4 w-4 mr-2" />
+                Planifier une séance d'épargne
+              </Button>
+            </CardContent>
+          </Card>
+
           <Card className="bg-white shadow-md border-0 rounded-3xl overflow-hidden">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg md:text-xl">Comptes d'épargne</CardTitle>
@@ -300,31 +324,32 @@ export const Investments = () => {
               </div>
             </CardContent>
           </Card>
-          
-          <Card className="bg-gradient-to-r from-primary to-secondary text-white shadow-md border-0 rounded-3xl">
+        </TabsContent>
+        
+        <TabsContent value="invest" className="space-y-4 md:space-y-6 animate-fade-in">
+          {/* Composant d'guides d'investissement repositionné en haut */}
+          <Card className="bg-primary text-white shadow-md border-0 rounded-3xl">
             <CardContent className="p-4 md:p-6">
               <div className="flex items-center gap-4">
                 <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
-                  <Calendar className="h-6 w-6" />
+                  <BookText className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="font-medium">Besoin de conseils sur l'épargne?</h3>
-                  <p className="text-sm text-white/80 mt-1">Nos conseillers financiers peuvent vous aider à choisir le meilleur compte d'épargne pour vos besoins.</p>
+                  <h3 className="font-medium">Nouveau dans l'investissement?</h3>
+                  <p className="text-sm text-white/90 mt-1">Découvrez nos ressources adaptées pour commencer votre parcours d'investisseur.</p>
                 </div>
               </div>
               
               <Button 
                 className="mt-4 w-full bg-white text-primary hover:bg-white/90 hover:text-primary"
-                onClick={handleBookConsultation}
+                onClick={handleExploreGuides}
               >
-                <Phone className="h-4 w-4 mr-2" />
-                Planifier une consultation
+                <FileText className="h-4 w-4 mr-2" />
+                Explorer les guides d'investissement
               </Button>
             </CardContent>
           </Card>
-        </TabsContent>
-        
-        <TabsContent value="invest" className="space-y-4 md:space-y-6 animate-fade-in">
+
           <Card className="bg-white shadow-md border-0 rounded-3xl overflow-hidden">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg md:text-xl">Opportunités d'investissement</CardTitle>
@@ -392,28 +417,6 @@ export const Investments = () => {
               </div>
             </CardContent>
           </Card>
-          
-          <Card className="bg-gradient-to-r from-primary to-secondary text-white shadow-md border-0 rounded-3xl">
-            <CardContent className="p-4 md:p-6">
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
-                  <BookText className="h-6 w-6" />
-                </div>
-                <div>
-                  <h3 className="font-medium">Nouveau dans l'investissement?</h3>
-                  <p className="text-sm text-white/80 mt-1">Commencez avec nos guides d'investissement adaptés aux débutants et nos ressources éducatives.</p>
-                </div>
-              </div>
-              
-              <Button 
-                className="mt-4 w-full bg-white text-primary hover:bg-white/90 hover:text-primary"
-                onClick={handleExploreGuides}
-              >
-                <FileText className="h-4 w-4 mr-2" />
-                Explorer les guides d'investissement
-              </Button>
-            </CardContent>
-          </Card>
         </TabsContent>
       </Tabs>
       
@@ -421,7 +424,7 @@ export const Investments = () => {
       <Dialog open={showConsultation} onOpenChange={setShowConsultation}>
         <DialogContent className="sm:max-w-md rounded-xl">
           <DialogHeader>
-            <DialogTitle>Planifier une consultation financière</DialogTitle>
+            <DialogTitle>Planifier une séance d'épargne</DialogTitle>
             <DialogDescription>
               Prenez rendez-vous avec l'un de nos conseillers financiers pour discuter de vos objectifs d'épargne.
             </DialogDescription>

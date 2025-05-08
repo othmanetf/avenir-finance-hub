@@ -72,7 +72,7 @@ export const MonthlyEvolutionChart = ({
           {activeTab === "all" || activeTab === "expenses" ? (
             payload[0] && (
               <p className="text-[#1F6FEB]">
-                <span>Dépenses: </span>
+                <span>Dépenses </span>
                 <span className="font-medium">{`${formatNumber(payload[0].value)} DH`}</span>
               </p>
             )
@@ -80,7 +80,7 @@ export const MonthlyEvolutionChart = ({
           {activeTab === "all" || activeTab === "income" ? (
             payload[activeTab === "all" ? 1 : 0] && (
               <p className="text-[#0EA5E9]">
-                <span>Revenus: </span>
+                <span>Revenus </span>
                 <span className="font-medium">{`${formatNumber(payload[activeTab === "all" ? 1 : 0].value)} DH`}</span>
               </p>
             )

@@ -6,29 +6,28 @@ import { QuizSection } from "@/components/education/QuizSection";
 import { PodcastSection } from "@/components/education/PodcastSection";
 import { educationItems } from "@/components/education/educationData";
 import { GraduationCap } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useProfile } from "@/hooks/use-profile";
 
 export const Education = () => {
+  const { openProfile } = useProfile();
+
   return (
     <div className="p-4 md:p-6 md:pl-24">
-      <div className="mb-5 md:mb-6 flex flex-col space-y-1">
-        <div className="flex items-center gap-2">
-          <div className="relative">
-            <svg width="24" height="24" className="absolute">
-              <linearGradient id="education-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#1F6FEB" />
-                <stop offset="100%" stopColor="#00CFFF" />
-              </linearGradient>
-            </svg>
-            <GraduationCap 
-              className="h-6 w-6" 
-              style={{
-                stroke: "url(#education-gradient)"
-              }}
-            />
-          </div>
-          <h1 className="text-xl md:text-2xl font-bold text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text">Éducation Financière</h1>
+      {/* En-tête unifié */}
+      <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col">
+          <p className="text-sm text-muted-foreground">Éducation Financière</p>
+          <h2 className="text-xl md:text-2xl font-bold text-foreground">Apprenez les bases de la finance</h2>
         </div>
-        <p className="text-sm md:text-base text-muted-foreground">Apprenez et développez vos connaissances financières</p>
+        
+        <Avatar 
+          className="h-14 w-14 sm:h-16 sm:w-16 border-2 border-white shadow-md cursor-pointer hover:opacity-90 transition-opacity" 
+          onClick={openProfile}
+        >
+          <AvatarImage src="/lovable-uploads/00f8cbcf-bc0c-4f7a-b176-88f2c04a328a.png" alt="Mohamed" />
+          <AvatarFallback>M</AvatarFallback>
+        </Avatar>
       </div>
 
       <Tabs defaultValue="all" className="mb-6 md:mb-8 animate-fade-in">
