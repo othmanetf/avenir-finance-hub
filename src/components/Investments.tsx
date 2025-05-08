@@ -192,18 +192,6 @@ export const Investments = () => {
     setShowGuides(true);
   };
 
-  const handleViewSavingsTypes = () => {
-    toast.info("Découvrez les différents types de comptes d'épargne disponibles", {
-      description: "Comparez les options pour trouver celle qui correspond à vos objectifs"
-    });
-  };
-
-  const handleExploreOpportunities = () => {
-    toast.info("Explorez les opportunités d'investissement disponibles", {
-      description: "Découvrez les différentes options adaptées à votre profil d'investisseur"
-    });
-  };
-
   const handleAddTransaction = () => {
     toast.info("Créez un nouvel objectif d'épargne ou d'investissement", {
       description: "Cette fonctionnalité sera bientôt disponible",
@@ -379,31 +367,33 @@ export const Investments = () => {
                 {investmentOptions.map((option) => (
                   <Card key={option.id} className="shadow-sm hover:shadow-md transition-shadow duration-300">
                     <CardContent className="p-4">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 md:h-12 md:w-12 rounded-lg bg-gray-100 flex items-center justify-center text-lg">
-                          {option.type === "ETF" ? (
-                            <LineChart className="h-6 w-6 text-primary" />
-                          ) : option.type === "Action" ? (
-                            <BarChart className="h-6 w-6 text-primary" />
-                          ) : (
-                            <BadgePercent className="h-6 w-6 text-primary" />
-                          )}
-                        </div>
-                        
-                        <div className="flex-1 ml-3 md:ml-4">
-                          <div className="flex items-center flex-wrap gap-2">
-                            <Badge variant="outline" className="text-xs">
-                              {option.type}
-                            </Badge>
-                            <Badge variant="outline" className={`text-xs ${option.levelColor}`}>
-                              {option.level}
-                            </Badge>
+                      <div className="flex flex-col sm:flex-row sm:items-center">
+                        <div className="flex items-center mb-3 sm:mb-0">
+                          <div className="flex-shrink-0 h-10 w-10 md:h-12 md:w-12 rounded-lg bg-gray-100 flex items-center justify-center text-lg">
+                            {option.type === "ETF" ? (
+                              <LineChart className="h-6 w-6 text-primary" />
+                            ) : option.type === "Action" ? (
+                              <BarChart className="h-6 w-6 text-primary" />
+                            ) : (
+                              <BadgePercent className="h-6 w-6 text-primary" />
+                            )}
                           </div>
-                          <h4 className="font-medium mt-1">{option.name}</h4>
-                          <p className="text-xs text-muted-foreground">{option.ticker}</p>
+                          
+                          <div className="flex-1 ml-3 md:ml-4">
+                            <div className="flex flex-wrap gap-2 mb-1">
+                              <Badge variant="outline" className="text-xs">
+                                {option.type}
+                              </Badge>
+                              <Badge variant="outline" className={`text-xs ${option.levelColor}`}>
+                                {option.level}
+                              </Badge>
+                            </div>
+                            <h4 className="font-medium line-clamp-1">{option.name}</h4>
+                            <p className="text-xs text-muted-foreground">{option.ticker}</p>
+                          </div>
                         </div>
                         
-                        <div className="text-right">
+                        <div className="text-right sm:ml-auto">
                           <span className="font-bold">{option.price.toLocaleString()} DH</span>
                           <p className={`text-xs ${option.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                             {option.change >= 0 ? '+' : ''}{option.change}%
@@ -411,12 +401,12 @@ export const Investments = () => {
                         </div>
                       </div>
                       
-                      <p className="text-xs text-muted-foreground mt-2">{option.description}</p>
+                      <p className="text-xs text-muted-foreground mt-2 line-clamp-2">{option.description}</p>
                       
-                      <div className="mt-3 pt-3 border-t flex justify-between items-center">
-                        <div className="flex items-center gap-1.5">
-                          <Tag className="h-4 w-4 text-primary" />
-                          <span className="text-xs text-muted-foreground">Niveau de risque: {option.level}</span>
+                      <div className="mt-3 pt-3 border-t flex justify-between items-center flex-wrap gap-2">
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                          <Tag className="h-3.5 w-3.5 text-primary" />
+                          <span>Niveau: {option.level}</span>
                         </div>
                         
                         <Button 

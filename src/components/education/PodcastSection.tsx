@@ -1,10 +1,12 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EyeIcon, ExternalLink, Headphones, Clock, Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export type PodcastType = {
   id: number;
@@ -17,6 +19,15 @@ export type PodcastType = {
   image: string;
   link: string;
 };
+
+const podcastCategories = [
+  { id: "all", label: "Tous" },
+  { id: "économie", label: "Économie" },
+  { id: "investissement", label: "Investissement" },
+  { id: "épargne", label: "Épargne" },
+  { id: "crypto", label: "Crypto" },
+  { id: "budget", label: "Budget" },
+];
 
 const podcasts: PodcastType[] = [
   {
@@ -77,6 +88,12 @@ const podcasts: PodcastType[] = [
 ];
 
 export const PodcastSection = () => {
+  const [activeCategory, setActiveCategory] = useState("all");
+
+  const filteredPodcasts = podcasts.filter(
+    podcast => activeCategory === "all" || podcast.category === activeCategory
+  );
+
   return (
     <div className="mt-8 mb-12">
       <div className="flex items-center justify-between mb-5">
@@ -89,8 +106,27 @@ export const PodcastSection = () => {
         </Button>
       </div>
       
+      {/* Filtrage par catégorie */}
+      <div className="mb-4 overflow-x-auto pb-2 -mx-1 px-1">
+        <TabsList className="flex flex-nowrap overflow-x-auto justify-start gap-1.5 bg-transparent h-auto">
+          {podcastCategories.map((category) => (
+            <TabsTrigger
+              key={category.id}
+              value={category.id}
+              onClick={() => setActiveCategory(category.id)}
+              className={cn(
+                "px-3 py-1.5 text-xs rounded-full whitespace-nowrap flex-shrink-0 shadow-sm bg-white border border-gray-100",
+                activeCategory === category.id ? "bg-primary text-white border-primary" : ""
+              )}
+            >
+              {category.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </div>
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {podcasts.map((podcast) => (
+        {filteredPodcasts.map((podcast) => (
           <PodcastCard key={podcast.id} podcast={podcast} />
         ))}
       </div>

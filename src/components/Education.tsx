@@ -100,15 +100,15 @@ const updatedEducationItems: EducationItemType[] = [
     link: "https://www.youtube.com/watch?v=ZflVSNl0pIY",
   },
   {
-    id: 9,
-    title: "La règle des 50/30/20: simplifier votre budget",
-    description: "Comment appliquer cette règle simple pour organiser vos finances personnelles sans prise de tête",
-    category: "budgeting",
+    id: 10,
+    title: "Méthodes d'investissement pour débutants",
+    description: "Stratégies simples pour débuter l'investissement sans risque et avec un petit budget",
+    category: "investing",
     type: "article",
-    readTime: "6 min de lecture",
-    views: 4728,
-    image: "https://images.unsplash.com/photo-1554224154-26032ffc0a07?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    link: "https://www.ramsey.com/dave-ramsey-7-baby-steps/",
+    readTime: "7 min de lecture",
+    views: 3854,
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    link: "https://www.investopedia.com/articles/basics/06/invest1000.asp",
   }
 ];
 

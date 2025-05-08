@@ -35,16 +35,16 @@ export const MonthlyEvolutionChart = ({
         { jour: '1', dépenses: 150, revenus: 0, budget: 250 },
         { jour: '5', dépenses: 410, revenus: 8000, budget: 1000 },
         { jour: '10', dépenses: 1200, revenus: 8000, budget: 2500 },
-        { jour: '15', dépenses: 2500, revenus: 8200, budget: 3750 },
+        { jour: '13', dépenses: 2500, revenus: 8200, budget: 3750 },
         { jour: '20', dépenses: 3800, revenus: 8350, budget: 5000 },
         { jour: '25', dépenses: 4500, revenus: 8500, budget: 6250 },
-        { jour: '30', dépenses: 4825, revenus: 8500, budget: 7500 },
+        { jour: '31', dépenses: 4825, revenus: 8500, budget: 7500 },
       ];
     } else if (selectedPeriod === "90") {
       return [
-        { jour: 'Jan', dépenses: 4200, revenus: 8000, budget: 7000 },
-        { jour: 'Fév', dépenses: 4500, revenus: 8200, budget: 7200 },
-        { jour: 'Mars', dépenses: 4825, revenus: 8500, budget: 7500 },
+        { jour: 'Mars', dépenses: 4200, revenus: 8000, budget: 7000 },
+        { jour: 'Avril', dépenses: 4500, revenus: 8200, budget: 7200 },
+        { jour: 'Mai', dépenses: 4825, revenus: 8500, budget: 7500 },
       ];
     } else {
       return [
@@ -52,8 +52,7 @@ export const MonthlyEvolutionChart = ({
         { jour: 'Fév', dépenses: 4100, revenus: 7900, budget: 7100 },
         { jour: 'Mars', dépenses: 4300, revenus: 8100, budget: 7200 },
         { jour: 'Avr', dépenses: 4400, revenus: 8200, budget: 7300 },
-        { jour: 'Mai', dépenses: 4600, revenus: 8300, budget: 7400 },
-        { jour: 'Juin', dépenses: 4825, revenus: 8500, budget: 7500 },
+        { jour: 'Mai', dépenses: 4825, revenus: 8500, budget: 7500 },
       ];
     }
   };
