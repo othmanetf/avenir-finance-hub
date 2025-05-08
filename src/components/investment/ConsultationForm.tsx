@@ -19,14 +19,15 @@ import { fr } from "date-fns/locale";
 
 interface ConsultationFormProps {
   onClose: () => void;
+  consultationType?: "epargne" | "investissement";
 }
 
-export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
+export const ConsultationForm = ({ onClose, consultationType = "epargne" }: ConsultationFormProps) => {
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [consultationType, setConsultationType] = useState("epargne");
+  const [selectedType, setSelectedType] = useState(consultationType);
   const [timeSlot, setTimeSlot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -56,21 +57,21 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 neuro-card p-6 dark:bg-gray-800">
-      <div className="space-y-2">
-        <Label htmlFor="name" className="text-foreground/90">Nom complet</Label>
+    <form onSubmit={handleSubmit} className="space-y-5 p-6">
+      <div className="space-y-3">
+        <Label htmlFor="name" className="text-foreground/90 text-sm">Nom complet</Label>
         <Input 
           id="name" 
           placeholder="Mohamed El Fassi" 
           value={name} 
           onChange={(e) => setName(e.target.value)}
           required
-          className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark focus:shadow-none transition-all duration-300"
+          className="rounded-xl shadow-sm focus:shadow-none transition-all duration-300"
         />
       </div>
       
-      <div className="space-y-2">
-        <Label htmlFor="email" className="text-foreground/90">Email</Label>
+      <div className="space-y-3">
+        <Label htmlFor="email" className="text-foreground/90 text-sm">Email</Label>
         <Input 
           id="email" 
           type="email" 
@@ -78,26 +79,26 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
           value={email} 
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark focus:shadow-none transition-all duration-300"
+          className="rounded-xl shadow-sm focus:shadow-none transition-all duration-300"
         />
       </div>
       
-      <div className="space-y-2">
-        <Label htmlFor="phone" className="text-foreground/90">Téléphone</Label>
+      <div className="space-y-3">
+        <Label htmlFor="phone" className="text-foreground/90 text-sm">Téléphone</Label>
         <Input 
           id="phone" 
           placeholder="06 XX XX XX XX" 
           value={phone} 
           onChange={(e) => setPhone(e.target.value)}
           required
-          className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark focus:shadow-none transition-all duration-300"
+          className="rounded-xl shadow-sm focus:shadow-none transition-all duration-300"
         />
       </div>
       
-      <div className="space-y-2">
-        <Label className="text-foreground/90">Type de consultation</Label>
-        <Select value={consultationType} onValueChange={setConsultationType}>
-          <SelectTrigger className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark focus:shadow-none transition-all duration-300">
+      <div className="space-y-3">
+        <Label className="text-foreground/90 text-sm">Type de consultation</Label>
+        <Select value={selectedType} onValueChange={setSelectedType as any}>
+          <SelectTrigger className="rounded-xl shadow-sm focus:shadow-none transition-all duration-300">
             <SelectValue placeholder="Sélectionnez le type de consultation" />
           </SelectTrigger>
           <SelectContent className="rounded-xl shadow-md">
@@ -110,15 +111,15 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
       </div>
       
       <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label className="text-foreground/90">Date du rendez-vous</Label>
+        <div className="space-y-3">
+          <Label className="text-foreground/90 text-sm">Date du rendez-vous</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
-                className="w-full justify-start text-left font-normal rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark hover:shadow-none transition-all duration-300"
+                className="w-full justify-start text-left font-normal rounded-xl shadow-sm hover:shadow-none transition-all duration-300"
               >
-                <CalendarIcon className="mr-2 h-4 w-4 text-monavenir-blue" />
+                <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
                 {date ? format(date, 'P', { locale: fr }) : <span>Choisir une date</span>}
               </Button>
             </PopoverTrigger>
@@ -139,14 +140,14 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
           </Popover>
         </div>
         
-        <div className="space-y-2">
-          <Label className="text-foreground/90">Heure</Label>
+        <div className="space-y-3">
+          <Label className="text-foreground/90 text-sm">Heure</Label>
           <Select value={timeSlot} onValueChange={setTimeSlot}>
-            <SelectTrigger className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark focus:shadow-none transition-all duration-300">
+            <SelectTrigger className="rounded-xl shadow-sm focus:shadow-none transition-all duration-300">
               <SelectValue placeholder="Choisir l'heure">
                 {timeSlot ? (
                   <div className="flex items-center">
-                    <Clock className="mr-2 h-4 w-4 text-monavenir-blue" />
+                    <Clock className="mr-2 h-4 w-4 text-primary" />
                     {timeSlot}
                   </div>
                 ) : (
@@ -165,19 +166,19 @@ export const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
         </div>
       </div>
       
-      <div className="flex justify-end gap-2 pt-4">
+      <div className="flex justify-end gap-3 pt-4">
         <Button 
           type="button" 
           variant="outline" 
           onClick={onClose}
-          className="rounded-xl shadow-neuro-sm dark:shadow-neuro-sm-dark hover:shadow-none transition-all duration-300"
+          className="rounded-xl shadow-sm hover:shadow-none transition-all duration-300"
         >
           Annuler
         </Button>
         <Button 
           type="submit" 
           disabled={isSubmitting}
-          className="rounded-xl bg-gradient-primary hover:opacity-90 transition-opacity"
+          className="rounded-xl bg-primary hover:bg-primary/90 text-white transition-opacity"
         >
           {isSubmitting ? "Confirmation en cours..." : "Confirmer le rendez-vous"}
         </Button>

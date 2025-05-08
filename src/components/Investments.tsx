@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   PiggyBank, 
@@ -46,6 +45,7 @@ export const Investments = () => {
   const { openProfile } = useProfile();
   const [showConsultation, setShowConsultation] = useState(false);
   const [showGuides, setShowGuides] = useState(false);
+  const [consultationType, setConsultationType] = useState<"epargne" | "investissement">("epargne");
   
   // Données réelles de banques et produits d'épargne marocains
   const savingOptions = [
@@ -182,7 +182,8 @@ export const Investments = () => {
     }
   ];
 
-  const handleBookConsultation = () => {
+  const handleBookConsultation = (type: "epargne" | "investissement") => {
+    setConsultationType(type);
     setShowConsultation(true);
   };
 
@@ -250,26 +251,19 @@ export const Investments = () => {
         </TabsList>
         
         <TabsContent value="save" className="space-y-4 md:space-y-6 animate-fade-in">
-          {/* Nouvelle version du bloc coaching épargne */}
+          {/* Bloc coaching épargne - Modification pour supprimer le bouton secondaire */}
           <Card className="bg-primary text-white shadow-md border-0 rounded-2xl">
             <CardContent className="p-5 md:p-6">
               <div className="flex flex-col">
                 <h3 className="text-lg font-semibold mb-2">Besoin d'aide pour épargner ?</h3>
                 <p className="text-sm text-white/90 mb-4">Recevez un accompagnement personnalisé pour choisir et optimiser votre compte d'épargne.</p>
                 
-                <div className="flex flex-col sm:flex-row gap-3 mt-1">
+                <div className="flex justify-center mt-1">
                   <Button 
-                    className="w-full bg-white text-primary hover:bg-white/90 hover:text-primary font-medium"
-                    onClick={handleBookConsultation}
+                    className="w-full md:w-3/4 bg-white text-primary hover:bg-white/90 hover:text-primary font-medium py-5"
+                    onClick={() => handleBookConsultation("epargne")}
                   >
                     Planifier un coaching épargne
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-white/30 text-white hover:bg-white/10 hover:text-white"
-                    onClick={handleViewSavingsTypes}
-                  >
-                    Voir les types d'épargne
                   </Button>
                 </div>
               </div>
@@ -342,26 +336,19 @@ export const Investments = () => {
         </TabsContent>
         
         <TabsContent value="invest" className="space-y-4 md:space-y-6 animate-fade-in">
-          {/* Nouvelle version du bloc coaching investissement */}
+          {/* Bloc coaching investissement - Modification pour supprimer le bouton secondaire */}
           <Card className="bg-primary text-white shadow-md border-0 rounded-2xl">
             <CardContent className="p-5 md:p-6">
               <div className="flex flex-col">
                 <h3 className="text-lg font-semibold mb-2">Envie de débuter dans l'investissement ?</h3>
                 <p className="text-sm text-white/90 mb-4">Un conseiller vous aide à comprendre les options et stratégies adaptées à votre profil.</p>
                 
-                <div className="flex flex-col sm:flex-row gap-3 mt-1">
+                <div className="flex justify-center mt-1">
                   <Button 
-                    className="w-full bg-white text-primary hover:bg-white/90 hover:text-primary font-medium"
-                    onClick={handleBookConsultation}
+                    className="w-full md:w-3/4 bg-white text-primary hover:bg-white/90 hover:text-primary font-medium py-5"
+                    onClick={() => handleBookConsultation("investissement")}
                   >
                     Planifier un coaching investissement
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-white/30 text-white hover:bg-white/10 hover:text-white"
-                    onClick={handleExploreOpportunities}
-                  >
-                    Explorer les opportunités
                   </Button>
                 </div>
               </div>
@@ -447,7 +434,7 @@ export const Investments = () => {
               Prenez rendez-vous avec l'un de nos conseillers financiers pour discuter de vos objectifs d'épargne.
             </DialogDescription>
           </DialogHeader>
-          <ConsultationForm onClose={() => setShowConsultation(false)} />
+          <ConsultationForm onClose={() => setShowConsultation(false)} consultationType={consultationType} />
         </DialogContent>
       </Dialog>
 

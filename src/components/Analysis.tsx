@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   ArrowUp, 
@@ -102,17 +101,17 @@ export const Analysis = () => {
         </div>
         
         <Avatar 
-          className="h-12 w-12 border-2 border-white shadow-sm cursor-pointer hover:opacity-90 transition-opacity" 
+          className="h-16 w-16 sm:h-18 sm:w-18 border-2 border-white shadow-md cursor-pointer hover:opacity-90 transition-opacity" 
           onClick={openProfile}
         >
-          <AvatarImage src="https://github.com/shadcn.png" alt="Mohamed" />
+          <AvatarImage src="/lovable-uploads/dbddec41-e0a6-473b-8088-5944e5f0ce16.png" alt="Mohamed" />
           <AvatarFallback>M</AvatarFallback>
         </Avatar>
       </div>
 
-      {/* Score Financier */}
+      {/* Score Financier - Maintenant avec une couleur unie au lieu du dégradé */}
       <Card className="bg-white shadow-md border-0 rounded-3xl overflow-hidden animate-fade-in">
-        <div className="bg-gradient-to-r from-primary to-purple-500 p-4 sm:p-6 text-white">
+        <div className="bg-primary p-4 sm:p-6 text-white">
           <div className="flex justify-between items-center">
             <h3 className="font-medium text-base sm:text-lg">Votre Score Financier</h3>
             <Badge className="bg-white/20 hover:bg-white/30 text-white">
@@ -122,7 +121,7 @@ export const Analysis = () => {
           
           <div className="mt-4 flex flex-col">
             <div className="flex items-center justify-center mb-2">
-              <span className="text-4xl sm:text-5xl font-bold" style={gradientStyle}>{financeScore}</span>
+              <span className="text-4xl sm:text-5xl font-bold text-white">{financeScore}</span>
               <span className="text-sm opacity-80 ml-2 self-end mb-2">/&nbsp;100</span>
             </div>
             
