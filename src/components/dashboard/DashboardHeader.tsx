@@ -20,10 +20,10 @@ export const DashboardHeader = ({ openProfile }: DashboardHeaderProps) => {
       </div>
       
       <Avatar 
-        className="h-14 w-14 sm:h-16 sm:w-16 border-2 border-white shadow-md cursor-pointer hover:opacity-90 transition-opacity" 
+        className="h-16 w-16 sm:h-18 sm:w-18 border-2 border-white shadow-md cursor-pointer hover:opacity-90 transition-opacity" 
         onClick={openProfile}
       >
-        <AvatarImage src="/lovable-uploads/00f8cbcf-bc0c-4f7a-b176-88f2c04a328a.png" alt="Mohamed" />
+        <AvatarImage src="/lovable-uploads/dbddec41-e0a6-473b-8088-5944e5f0ce16.png" alt="Mohamed" />
         <AvatarFallback>M</AvatarFallback>
       </Avatar>
     </motion.div>

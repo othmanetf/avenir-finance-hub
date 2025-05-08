@@ -190,6 +190,18 @@ export const Investments = () => {
     setShowGuides(true);
   };
 
+  const handleViewSavingsTypes = () => {
+    toast.info("Découvrez les différents types de comptes d'épargne disponibles", {
+      description: "Comparez les options pour trouver celle qui correspond à vos objectifs"
+    });
+  };
+
+  const handleExploreOpportunities = () => {
+    toast.info("Explorez les opportunités d'investissement disponibles", {
+      description: "Découvrez les différentes options adaptées à votre profil d'investisseur"
+    });
+  };
+
   const handleAddTransaction = () => {
     toast.info("Créez un nouvel objectif d'épargne ou d'investissement", {
       description: "Cette fonctionnalité sera bientôt disponible",
@@ -210,10 +222,10 @@ export const Investments = () => {
         </div>
         
         <Avatar 
-          className="h-14 w-14 sm:h-16 sm:w-16 border-2 border-white shadow-md cursor-pointer hover:opacity-90 transition-opacity" 
+          className="h-16 w-16 sm:h-18 sm:w-18 border-2 border-white shadow-md cursor-pointer hover:opacity-90 transition-opacity" 
           onClick={openProfile}
         >
-          <AvatarImage src="/lovable-uploads/00f8cbcf-bc0c-4f7a-b176-88f2c04a328a.png" alt="Mohamed" />
+          <AvatarImage src="/lovable-uploads/dbddec41-e0a6-473b-8088-5944e5f0ce16.png" alt="Mohamed" />
           <AvatarFallback>M</AvatarFallback>
         </Avatar>
       </div>
@@ -238,26 +250,29 @@ export const Investments = () => {
         </TabsList>
         
         <TabsContent value="save" className="space-y-4 md:space-y-6 animate-fade-in">
-          {/* Composant de consultation d'épargne repositionné en haut */}
-          <Card className="bg-primary text-white shadow-md border-0 rounded-3xl">
-            <CardContent className="p-4 md:p-6">
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
-                  <Calendar className="h-6 w-6" />
-                </div>
-                <div>
-                  <h3 className="font-medium">Besoin de conseils sur l'épargne?</h3>
-                  <p className="text-sm text-white/90 mt-1">Planifiez une séance d'épargne personnalisée avec l'un de nos conseillers financiers.</p>
+          {/* Nouvelle version du bloc coaching épargne */}
+          <Card className="bg-primary text-white shadow-md border-0 rounded-2xl">
+            <CardContent className="p-5 md:p-6">
+              <div className="flex flex-col">
+                <h3 className="text-lg font-semibold mb-2">Besoin d'aide pour épargner ?</h3>
+                <p className="text-sm text-white/90 mb-4">Recevez un accompagnement personnalisé pour choisir et optimiser votre compte d'épargne.</p>
+                
+                <div className="flex flex-col sm:flex-row gap-3 mt-1">
+                  <Button 
+                    className="w-full bg-white text-primary hover:bg-white/90 hover:text-primary font-medium"
+                    onClick={handleBookConsultation}
+                  >
+                    Planifier un coaching épargne
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-white/30 text-white hover:bg-white/10 hover:text-white"
+                    onClick={handleViewSavingsTypes}
+                  >
+                    Voir les types d'épargne
+                  </Button>
                 </div>
               </div>
-              
-              <Button 
-                className="mt-4 w-full bg-white text-primary hover:bg-white/90 hover:text-primary"
-                onClick={handleBookConsultation}
-              >
-                <Phone className="h-4 w-4 mr-2" />
-                Planifier une séance d'épargne
-              </Button>
             </CardContent>
           </Card>
 
@@ -327,26 +342,29 @@ export const Investments = () => {
         </TabsContent>
         
         <TabsContent value="invest" className="space-y-4 md:space-y-6 animate-fade-in">
-          {/* Composant d'guides d'investissement repositionné en haut */}
-          <Card className="bg-primary text-white shadow-md border-0 rounded-3xl">
-            <CardContent className="p-4 md:p-6">
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
-                  <BookText className="h-6 w-6" />
-                </div>
-                <div>
-                  <h3 className="font-medium">Nouveau dans l'investissement?</h3>
-                  <p className="text-sm text-white/90 mt-1">Découvrez nos ressources adaptées pour commencer votre parcours d'investisseur.</p>
+          {/* Nouvelle version du bloc coaching investissement */}
+          <Card className="bg-primary text-white shadow-md border-0 rounded-2xl">
+            <CardContent className="p-5 md:p-6">
+              <div className="flex flex-col">
+                <h3 className="text-lg font-semibold mb-2">Envie de débuter dans l'investissement ?</h3>
+                <p className="text-sm text-white/90 mb-4">Un conseiller vous aide à comprendre les options et stratégies adaptées à votre profil.</p>
+                
+                <div className="flex flex-col sm:flex-row gap-3 mt-1">
+                  <Button 
+                    className="w-full bg-white text-primary hover:bg-white/90 hover:text-primary font-medium"
+                    onClick={handleBookConsultation}
+                  >
+                    Planifier un coaching investissement
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-white/30 text-white hover:bg-white/10 hover:text-white"
+                    onClick={handleExploreOpportunities}
+                  >
+                    Explorer les opportunités
+                  </Button>
                 </div>
               </div>
-              
-              <Button 
-                className="mt-4 w-full bg-white text-primary hover:bg-white/90 hover:text-primary"
-                onClick={handleExploreGuides}
-              >
-                <FileText className="h-4 w-4 mr-2" />
-                Explorer les guides d'investissement
-              </Button>
             </CardContent>
           </Card>
 
