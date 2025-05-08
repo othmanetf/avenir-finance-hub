@@ -194,7 +194,7 @@ const ProfilePage = ({ isOpen, onClose }: ProfilePageProps) => {
       <div className="flex flex-col items-center p-4 bg-primary/5 rounded-2xl">
         <div className="relative mb-4">
           <Avatar className="h-24 w-24 border-2 border-primary/20">
-            <AvatarImage src="https://github.com/shadcn.png" alt="Mohamed" />
+            <AvatarImage src="/lovable-uploads/dbddec41-e0a6-473b-8088-5944e5f0ce16.png" alt="Mohamed" />
             <AvatarFallback className="text-2xl">M</AvatarFallback>
           </Avatar>
           <Button variant="outline" size="icon" className="absolute right-0 bottom-0 rounded-full bg-white h-8 w-8">

@@ -35,6 +35,14 @@ export const ConsultationForm = ({ onClose, consultationType = "epargne" }: Cons
     "09:00", "10:00", "11:00", "14:00", "15:00", "16:00"
   ];
 
+  const formTitle = selectedType === "epargne" 
+    ? "Planifier une séance d'épargne"
+    : "Planifier une séance d'investissement";
+    
+  const formDescription = selectedType === "epargne"
+    ? "Prenez rendez-vous avec l'un de nos conseillers financiers pour discuter de vos objectifs d'épargne."
+    : "Prenez rendez-vous avec l'un de nos conseillers financiers pour découvrir les meilleures stratégies d'investissement selon votre profil et vos objectifs.";
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -110,9 +118,9 @@ export const ConsultationForm = ({ onClose, consultationType = "epargne" }: Cons
         </Select>
       </div>
       
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-3">
-          <Label className="text-foreground/90 text-sm">Date du rendez-vous</Label>
+      <div className="space-y-3">
+        <Label className="text-foreground/90 text-sm">Date et heure du rendez-vous</Label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -138,10 +146,7 @@ export const ConsultationForm = ({ onClose, consultationType = "epargne" }: Cons
               />
             </PopoverContent>
           </Popover>
-        </div>
-        
-        <div className="space-y-3">
-          <Label className="text-foreground/90 text-sm">Heure</Label>
+          
           <Select value={timeSlot} onValueChange={setTimeSlot}>
             <SelectTrigger className="rounded-xl shadow-sm focus:shadow-none transition-all duration-300">
               <SelectValue placeholder="Choisir l'heure">

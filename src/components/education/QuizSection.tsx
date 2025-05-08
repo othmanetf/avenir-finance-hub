@@ -231,16 +231,16 @@ export const QuizSection = () => {
             </div>
             
             <div className="bg-accent/10 p-4 rounded-lg mb-4">
-              <h3 className="font-medium text-base mb-2">{currentQuestion.text}</h3>
+              <h3 className="font-medium text-base mb-2 break-words">{currentQuestion.text}</h3>
               <div className="space-y-2">
                 {currentQuestion.options.map((option) => (
                   <Button
                     key={option.id}
                     variant="outline"
-                    className="w-full justify-start text-left h-auto py-3 px-4"
+                    className="w-full justify-start text-left h-auto py-3 px-4 whitespace-normal break-words"
                     onClick={() => handleOptionSelect(currentQuestion.id, option.id, option.points)}
                   >
-                    <span className="mr-2 bg-accent/50 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">
+                    <span className="mr-2 bg-accent/50 w-6 h-6 flex-shrink-0 rounded-full flex items-center justify-center text-xs font-bold">
                       {option.id.toUpperCase()}
                     </span>
                     <span className="text-sm">{option.text}</span>

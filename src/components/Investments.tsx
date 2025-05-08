@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { 
   PiggyBank, 
@@ -213,6 +214,18 @@ export const Investments = () => {
     })
   };
   
+  const getDialogTitle = () => {
+    return consultationType === "epargne" 
+      ? "Planifier une séance d'épargne" 
+      : "Planifier une séance d'investissement";
+  };
+  
+  const getDialogDescription = () => {
+    return consultationType === "epargne"
+      ? "Prenez rendez-vous avec l'un de nos conseillers financiers pour discuter de vos objectifs d'épargne."
+      : "Prenez rendez-vous avec l'un de nos conseillers financiers pour découvrir les meilleures stratégies d'investissement selon votre profil et vos objectifs.";
+  };
+  
   return (
     <div className="flex flex-col p-4 md:p-6 gap-4 md:gap-6 md:pl-24 mb-20 md:mb-6">
       {/* En-tête avec Bienvenue et Avatar */}
@@ -251,7 +264,7 @@ export const Investments = () => {
         </TabsList>
         
         <TabsContent value="save" className="space-y-4 md:space-y-6 animate-fade-in">
-          {/* Bloc coaching épargne - Modification pour supprimer le bouton secondaire */}
+          {/* Bloc coaching épargne */}
           <Card className="bg-primary text-white shadow-md border-0 rounded-2xl">
             <CardContent className="p-5 md:p-6">
               <div className="flex flex-col">
@@ -336,7 +349,7 @@ export const Investments = () => {
         </TabsContent>
         
         <TabsContent value="invest" className="space-y-4 md:space-y-6 animate-fade-in">
-          {/* Bloc coaching investissement - Modification pour supprimer le bouton secondaire */}
+          {/* Bloc coaching investissement */}
           <Card className="bg-primary text-white shadow-md border-0 rounded-2xl">
             <CardContent className="p-5 md:p-6">
               <div className="flex flex-col">
@@ -429,9 +442,9 @@ export const Investments = () => {
       <Dialog open={showConsultation} onOpenChange={setShowConsultation}>
         <DialogContent className="sm:max-w-md rounded-xl">
           <DialogHeader>
-            <DialogTitle>Planifier une séance d'épargne</DialogTitle>
+            <DialogTitle>{getDialogTitle()}</DialogTitle>
             <DialogDescription>
-              Prenez rendez-vous avec l'un de nos conseillers financiers pour discuter de vos objectifs d'épargne.
+              {getDialogDescription()}
             </DialogDescription>
           </DialogHeader>
           <ConsultationForm onClose={() => setShowConsultation(false)} consultationType={consultationType} />
