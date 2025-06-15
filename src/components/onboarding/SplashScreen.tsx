@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -36,10 +37,10 @@ const SplashScreen = () => {
       delay: 0.3,
       duration: 0.5
     }}>
-        <div className="relative w-52 h-52 rounded-full flex items-center justify-center mb-8 -mt-8">
+        <div className="relative w-52 h-52 rounded-full flex items-center justify-center -mt-8">
           <img alt="MonAvenir+" src="/lovable-uploads/8e15a96a-8b34-436d-8a40-d685476e7163.png" className="w-full h-full object-contain" />
         </div>
-        <motion.h1 className="text-4xl font-bold text-white mb-2" initial={{
+        <motion.h1 className="text-4xl font-bold text-white mb-2 mt-2" initial={{
         opacity: 0,
         y: 20
       }} animate={{
@@ -97,3 +98,4 @@ const SplashScreen = () => {
     </motion.div>;
 };
 export default SplashScreen;
+
