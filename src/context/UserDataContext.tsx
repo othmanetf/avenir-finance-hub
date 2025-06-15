@@ -1,6 +1,21 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
+export type UserGoal = {
+  id: string;
+  type: string;
+  targetAmount?: number;
+  timeHorizon: string;
+  priority: 'high' | 'medium' | 'low';
+};
+
+export type UserPreferences = {
+  currency: 'MAD' | 'EUR' | 'USD';
+  theme: 'light' | 'dark' | 'system';
+  language: 'fr' | 'en' | 'ar';
+  notifications: boolean;
+};
+
 export type UserData = {
   fullName: string;
   monthlyIncome: number;
@@ -14,12 +29,25 @@ export type UserData = {
   lastDay: number;
   savingsGoal?: number;
   estimatedBalance: number;
+  goals: UserGoal[];
+  preferences: UserPreferences;
 };
 
 type UserDataContextType = {
   userData: UserData;
   updateUserData: (data: Partial<UserData>) => void;
+  addGoal: (goal: UserGoal) => void;
+  updateGoal: (goalId: string, updates: Partial<UserGoal>) => void;
+  removeGoal: (goalId: string) => void;
+  updatePreferences: (preferences: Partial<UserPreferences>) => void;
   isDataLoaded: boolean;
+};
+
+const defaultPreferences: UserPreferences = {
+  currency: 'MAD',
+  theme: 'system',
+  language: 'fr',
+  notifications: true,
 };
 
 const defaultUserData: UserData = {
@@ -34,11 +62,17 @@ const defaultUserData: UserData = {
   currentDay: 13,
   lastDay: 31,
   estimatedBalance: 0,
+  goals: [],
+  preferences: defaultPreferences,
 };
 
 const UserDataContext = createContext<UserDataContextType>({
   userData: defaultUserData,
   updateUserData: () => {},
+  addGoal: () => {},
+  updateGoal: () => {},
+  removeGoal: () => {},
+  updatePreferences: () => {},
   isDataLoaded: false,
 });
 
@@ -93,6 +127,27 @@ export const UserDataProvider = ({ children }: { children: React.ReactNode }) =>
     const progressPercentage = Math.round((spent / totalBudget) * 100);
     const estimatedBalance = monthlyIncome - estimatedExpenses;
 
+    // Migration des objectifs depuis les données d'onboarding
+    const goals: UserGoal[] = [];
+    if (onboardingData.financialProfile?.savingsGoals) {
+      onboardingData.financialProfile.savingsGoals.forEach((goalType: string, index: number) => {
+        goals.push({
+          id: `goal-${index}`,
+          type: goalType,
+          timeHorizon: '1 an', // valeur par défaut
+          priority: 'medium' as const,
+        });
+      });
+    }
+
+    // Migration des préférences
+    const preferences: UserPreferences = {
+      currency: 'MAD',
+      theme: 'system',
+      language: onboardingData.financialProfile?.preferredLanguage || 'fr',
+      notifications: true,
+    };
+
     return {
       fullName: onboardingData.fullName || 'Utilisateur',
       monthlyIncome,
@@ -105,6 +160,8 @@ export const UserDataProvider = ({ children }: { children: React.ReactNode }) =>
       currentDay,
       lastDay,
       estimatedBalance,
+      goals,
+      preferences,
     };
   };
 
@@ -114,10 +171,36 @@ export const UserDataProvider = ({ children }: { children: React.ReactNode }) =>
     localStorage.setItem('userData', JSON.stringify(updatedData));
   };
 
+  const addGoal = (goal: UserGoal) => {
+    const updatedGoals = [...userData.goals, goal];
+    updateUserData({ goals: updatedGoals });
+  };
+
+  const updateGoal = (goalId: string, updates: Partial<UserGoal>) => {
+    const updatedGoals = userData.goals.map(goal => 
+      goal.id === goalId ? { ...goal, ...updates } : goal
+    );
+    updateUserData({ goals: updatedGoals });
+  };
+
+  const removeGoal = (goalId: string) => {
+    const updatedGoals = userData.goals.filter(goal => goal.id !== goalId);
+    updateUserData({ goals: updatedGoals });
+  };
+
+  const updatePreferences = (newPreferences: Partial<UserPreferences>) => {
+    const updatedPreferences = { ...userData.preferences, ...newPreferences };
+    updateUserData({ preferences: updatedPreferences });
+  };
+
   return (
     <UserDataContext.Provider value={{
       userData,
       updateUserData,
+      addGoal,
+      updateGoal,
+      removeGoal,
+      updatePreferences,
       isDataLoaded
     }}>
       {children}

@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Switch } from "@/components/ui/switch";
 import { 
   Select, 
   SelectContent, 
@@ -23,7 +24,8 @@ import {
   AlertCircle,
   Globe,
   ArrowRight,
-  ArrowLeft
+  ArrowLeft,
+  Settings
 } from "lucide-react";
 
 interface FinancialProfilingProps {
@@ -88,10 +90,29 @@ const financialConcerns = [
   "Objectifs financiers flous"
 ];
 
+const primaryGoalOptions = [
+  "Épargner pour un voyage",
+  "Acheter un bien immobilier",
+  "Constituer un fonds d'urgence",
+  "Investir à long terme",
+  "Préparer sa retraite",
+  "Financer des études",
+  "Démarrer une entreprise"
+];
+
+const timeHorizons = [
+  "6 mois",
+  "1 an",
+  "2 ans",
+  "3 ans",
+  "5 ans",
+  "10 ans ou plus"
+];
+
 export const FinancialProfiling = ({ onComplete }: FinancialProfilingProps) => {
   const { updateFinancialProfile, financialProfile, setStep } = useOnboarding();
   const [subStep, setSubStep] = useState(1);
-  const totalSubSteps = 7;
+  const totalSubSteps = 8; // Ajout d'une étape pour les objectifs et préférences
 
   const handleNext = () => {
     if (subStep < totalSubSteps) {
@@ -144,6 +165,7 @@ export const FinancialProfiling = ({ onComplete }: FinancialProfilingProps) => {
       case 5: return <Target className="h-6 w-6 text-red-500" />;
       case 6: return <AlertCircle className="h-6 w-6 text-yellow-500" />;
       case 7: return <Globe className="h-6 w-6 text-indigo-500" />;
+      case 8: return <Settings className="h-6 w-6 text-pink-500" />;
       default: return <Wallet className="h-6 w-6" />;
     }
   };
@@ -591,6 +613,131 @@ export const FinancialProfiling = ({ onComplete }: FinancialProfilingProps) => {
                   <Label htmlFor="lang-en">English (Anglais)</Label>
                 </div>
               </RadioGroup>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="pt-4 flex space-x-4">
+              <Button onClick={handleBack} variant="outline" className="flex-1">
+                <ArrowLeft className="mr-2 h-4 w-4" /> Retour
+              </Button>
+              <Button onClick={handleNext} className="flex-1 bg-gradient-primary">
+                Terminer <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {subStep === 8 && (
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="space-y-6"
+          >
+            <div className="flex items-center space-x-4 mb-4">
+              {getStepIcon(8)}
+              <div>
+                <h1 className="text-2xl font-bold">Objectifs & Préférences</h1>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Personnalisez votre expérience MonAvenir+
+                </p>
+              </div>
+            </div>
+
+            <motion.div variants={itemVariants} className="space-y-4">
+              <Label>Objectif principal (vous pouvez en choisir plusieurs)</Label>
+              <div className="grid grid-cols-1 gap-3">
+                {primaryGoalOptions.map((goal) => (
+                  <div key={goal} className="flex items-center space-x-3">
+                    <Checkbox 
+                      id={`primary-goal-${goal}`} 
+                      checked={financialProfile.primaryGoals?.includes(goal)}
+                      onCheckedChange={(checked) => {
+                        const currentGoals = financialProfile.primaryGoals || [];
+                        if (checked) {
+                          updateFinancialProfile("primaryGoals", [...currentGoals, goal]);
+                        } else {
+                          updateFinancialProfile(
+                            "primaryGoals", 
+                            currentGoals.filter(g => g !== goal)
+                          );
+                        }
+                      }}
+                    />
+                    <Label htmlFor={`primary-goal-${goal}`} className="cursor-pointer">{goal}</Label>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="space-y-4">
+              <Label htmlFor="time-horizon">Horizon de temps pour vos objectifs</Label>
+              <Select 
+                defaultValue={financialProfile.goalTimeHorizon || "1 an"}
+                onValueChange={(value) => updateFinancialProfile("goalTimeHorizon", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Sélectionnez un horizon" />
+                </SelectTrigger>
+                <SelectContent>
+                  {timeHorizons.map((horizon) => (
+                    <SelectItem key={horizon} value={horizon}>{horizon}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="space-y-4">
+              <Label htmlFor="target-amount">Montant cible (optionnel)</Label>
+              <Input 
+                id="target-amount"
+                value={financialProfile.goalTargetAmount || ""}
+                onChange={(e) => updateFinancialProfile("goalTargetAmount", e.target.value)}
+                placeholder="Ex: 50,000 MAD"
+              />
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="space-y-4">
+              <Label htmlFor="currency">Devise préférée</Label>
+              <Select 
+                defaultValue={financialProfile.currency || "MAD"}
+                onValueChange={(value: 'MAD' | 'EUR' | 'USD') => updateFinancialProfile("currency", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Sélectionnez une devise" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="MAD">MAD (Dirham)</SelectItem>
+                  <SelectItem value="EUR">EUR (Euro)</SelectItem>
+                  <SelectItem value="USD">USD (Dollar)</SelectItem>
+                </SelectContent>
+              </Select>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="space-y-4">
+              <Label htmlFor="theme">Thème de l'application</Label>
+              <Select 
+                defaultValue={financialProfile.theme || "system"}
+                onValueChange={(value: 'light' | 'dark' | 'system') => updateFinancialProfile("theme", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Sélectionnez un thème" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="light">Clair</SelectItem>
+                  <SelectItem value="dark">Sombre</SelectItem>
+                  <SelectItem value="system">Automatique</SelectItem>
+                </SelectContent>
+              </Select>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="flex items-center justify-between space-x-4">
+              <Label htmlFor="notifications">Recevoir des notifications</Label>
+              <Switch 
+                id="notifications"
+                checked={financialProfile.enableNotifications}
+                onCheckedChange={(checked) => updateFinancialProfile("enableNotifications", checked)}
+              />
             </motion.div>
 
             <motion.div variants={itemVariants} className="pt-4 flex space-x-4">

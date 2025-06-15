@@ -16,6 +16,13 @@ export type FinancialProfile = {
   financialGoals: string[];
   financialConcerns: string[];
   preferredLanguage: 'fr' | 'ar' | 'en';
+  // Nouveaux champs pour les objectifs et préférences
+  primaryGoals: string[];
+  goalTimeHorizon: string;
+  goalTargetAmount?: string;
+  currency: 'MAD' | 'EUR' | 'USD';
+  theme: 'light' | 'dark' | 'system';
+  enableNotifications: boolean;
 };
 
 // Define the context type
@@ -57,6 +64,11 @@ const defaultFinancialProfile: FinancialProfile = {
   financialGoals: [],
   financialConcerns: [],
   preferredLanguage: 'fr',
+  primaryGoals: [],
+  goalTimeHorizon: '1 an',
+  currency: 'MAD',
+  theme: 'system',
+  enableNotifications: true,
 };
 
 // Create the context with default values
