@@ -1,10 +1,12 @@
+
 import { useState } from "react";
 import { 
   Dialog, 
   DialogContent, 
   DialogHeader, 
   DialogTitle, 
-  DialogFooter
+  DialogFooter,
+  DialogTrigger
 } from "@/components/ui/dialog";
 import { 
   Drawer, 
@@ -36,10 +38,10 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useUserData } from "@/context/UserDataContext";
 
 interface ProfilePageProps {
   isOpen: boolean;
@@ -48,32 +50,10 @@ interface ProfilePageProps {
 
 const ProfilePage = ({ isOpen, onClose }: ProfilePageProps) => {
   const isMobile = useIsMobile();
-  const { userData, updateUserData } = useUserData();
-  const [localPreferences, setLocalPreferences] = useState(userData.preferences);
-
-  const updatePreference = (key: keyof typeof userData.preferences, value: any) => {
-    const newPreferences = { ...localPreferences, [key]: value };
-    setLocalPreferences(newPreferences);
-    updateUserData({ preferences: newPreferences });
-  };
-
-  const getLanguageLabel = (lang: string) => {
-    switch (lang) {
-      case 'fr': return 'Français';
-      case 'ar': return 'العربية';
-      case 'en': return 'English';
-      default: return 'Français';
-    }
-  };
-
-  const getCurrencyLabel = (currency: string) => {
-    switch (currency) {
-      case 'MAD': return 'MAD (Dirham Marocain)';
-      case 'EUR': return 'EUR (Euro)';
-      case 'USD': return 'USD (Dollar)';
-      default: return 'MAD (Dirham Marocain)';
-    }
-  };
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [biometricEnabled, setBiometricEnabled] = useState(false);
+  const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
 
   const sections = [
     {
@@ -83,24 +63,24 @@ const ProfilePage = ({ isOpen, onClose }: ProfilePageProps) => {
           id: "language",
           label: "Langue",
           icon: Globe,
-          value: getLanguageLabel(localPreferences.language),
+          value: "Français",
           action: "Modifier",
           onClick: () => console.log("Changer la langue")
         },
         {
           id: "theme",
           label: "Thème",
-          icon: localPreferences.theme === "light" ? Sun : Moon,
-          value: localPreferences.theme === "light" ? "Clair" : "Sombre",
+          icon: theme === "light" ? Sun : Moon,
+          value: theme === "light" ? "Clair" : "Sombre",
           toggle: true,
-          checked: localPreferences.theme === "dark",
-          onChange: () => updatePreference('theme', localPreferences.theme === "light" ? "dark" : "light")
+          checked: theme === "dark",
+          onChange: () => setTheme(theme === "light" ? "dark" : "light")
         },
         {
           id: "currency",
           label: "Devise",
           icon: DollarSign,
-          value: getCurrencyLabel(localPreferences.currency),
+          value: "MAD (Dirham Marocain)",
           action: "Modifier",
           onClick: () => console.log("Changer la devise")
         },
@@ -108,10 +88,19 @@ const ProfilePage = ({ isOpen, onClose }: ProfilePageProps) => {
           id: "notifications",
           label: "Notifications intelligentes",
           icon: Bell,
-          value: localPreferences.notifications ? "Activées" : "Désactivées",
+          value: notificationsEnabled ? "Activées" : "Désactivées",
           toggle: true,
-          checked: localPreferences.notifications,
-          onChange: () => updatePreference('notifications', !localPreferences.notifications)
+          checked: notificationsEnabled,
+          onChange: () => setNotificationsEnabled(!notificationsEnabled)
+        },
+        {
+          id: "biometric",
+          label: "Authentification biométrique",
+          icon: Fingerprint,
+          value: biometricEnabled ? "Activée" : "Désactivée",
+          toggle: true,
+          checked: biometricEnabled,
+          onChange: () => setBiometricEnabled(!biometricEnabled)
         }
       ]
     },
@@ -129,10 +118,10 @@ const ProfilePage = ({ isOpen, onClose }: ProfilePageProps) => {
           id: "2fa",
           label: "Double authentification (2FA)",
           icon: Shield,
-          value: localPreferences.twoFactorEnabled ? "Activée" : "Désactivée",
+          value: twoFactorEnabled ? "Activée" : "Désactivée",
           toggle: true,
-          checked: localPreferences.twoFactorEnabled,
-          onChange: () => updatePreference('twoFactorEnabled', !localPreferences.twoFactorEnabled)
+          checked: twoFactorEnabled,
+          onChange: () => setTwoFactorEnabled(!twoFactorEnabled)
         },
         {
           id: "connections",
@@ -199,34 +188,21 @@ const ProfilePage = ({ isOpen, onClose }: ProfilePageProps) => {
     }
   ];
 
-  const firstName = userData.fullName.split(' ')[0] || 'Utilisateur';
-  const initials = userData.fullName.split(' ')
-    .map(name => name.charAt(0).toUpperCase())
-    .join('')
-    .slice(0, 2) || 'U';
-
   const profileContent = (
     <div className="space-y-6">
-      {/* User Card */}
+      {/* Carte utilisateur */}
       <div className="flex flex-col items-center p-4 bg-primary/5 rounded-2xl">
         <div className="relative mb-4">
           <Avatar className="h-24 w-24 border-2 border-primary/20">
-            {userData.profilePicture ? (
-              <AvatarImage src={userData.profilePicture} alt={firstName} />
-            ) : (
-              <AvatarImage src="/lovable-uploads/dbddec41-e0a6-473b-8088-5944e5f0ce16.png" alt={firstName} />
-            )}
-            <AvatarFallback className="text-2xl">{initials}</AvatarFallback>
+            <AvatarImage src="/lovable-uploads/dbddec41-e0a6-473b-8088-5944e5f0ce16.png" alt="Mohamed" />
+            <AvatarFallback className="text-2xl">M</AvatarFallback>
           </Avatar>
           <Button variant="outline" size="icon" className="absolute right-0 bottom-0 rounded-full bg-white h-8 w-8">
             <User className="h-4 w-4" />
           </Button>
         </div>
-        <h2 className="text-xl font-bold">{userData.fullName || 'Nom non défini'}</h2>
-        <p className="text-sm text-muted-foreground">{userData.email || 'Email non défini'}</p>
-        <div className="mt-2 text-xs text-muted-foreground">
-          Revenus: {userData.monthlyIncome.toLocaleString()} {userData.preferences.currency}/mois
-        </div>
+        <h2 className="text-xl font-bold">Mohamed Saidi</h2>
+        <p className="text-sm text-muted-foreground">mohamed.saidi@example.com</p>
       </div>
 
       {/* Sections */}
@@ -234,7 +210,7 @@ const ProfilePage = ({ isOpen, onClose }: ProfilePageProps) => {
         <div key={section.title} className="space-y-3">
           <h3 className="font-medium text-lg text-primary">{section.title}</h3>
           <div className="space-y-2 rounded-xl border overflow-hidden">
-            {section.items.map((item) => (
+            {section.items.map((item, index) => (
               <div key={item.id} className="flex items-center justify-between p-3.5 bg-white">
                 <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10">

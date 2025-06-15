@@ -11,7 +11,6 @@ import Onboarding from "./pages/Onboarding";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { useOnboarded } from "./hooks/use-onboarded";
 import { Loader2 } from "lucide-react";
-import { UserDataProvider } from "./context/UserDataContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -76,23 +75,21 @@ const ProtectedRoutes = () => {
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <UserDataProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Suspense fallback={<LoadingSpinner />}>
-              <Routes>
-                <Route path="/" element={<ProtectedRoutes />} />
-                <Route path="/splash" element={<SplashScreen />} />
-                <Route path="/onboarding" element={<Onboarding />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </TooltipProvider>
-      </UserDataProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              <Route path="/" element={<ProtectedRoutes />} />
+              <Route path="/splash" element={<SplashScreen />} />
+              <Route path="/onboarding" element={<Onboarding />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </TooltipProvider>
     </QueryClientProvider>
   );
 };
