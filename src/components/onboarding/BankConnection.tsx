@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useOnboarding } from "@/context/OnboardingContext";
@@ -101,7 +102,7 @@ const BankConnection = () => {
   };
 
   return (
-    <div className="container max-w-md mx-auto px-4 py-8 pt-8 overflow-hidden">
+    <div className="container max-w-md mx-auto px-4 py-8 pt-24 overflow-hidden">
       <div className="w-full max-w-md mx-auto">
         <motion.div
           variants={containerVariants}
