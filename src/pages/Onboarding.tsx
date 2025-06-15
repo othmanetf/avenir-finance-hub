@@ -81,7 +81,7 @@ const OnboardingFlow = () => {
     <LanguageStep key="lang" onComplete={() => setCurrentStep(2)} />,
     <AccountCreation key="account" onComplete={() => setCurrentStep(3)} />,
     <FinancialProfiling key="profile" onComplete={() => setCurrentStep(4)} />,
-    <BankConnection key="bank" />
+    <BankConnection key="bank" />,
   ];
 
   const finishOnboarding = () => {
@@ -167,7 +167,14 @@ const OnboardingFlow = () => {
             </>
           )}
 
-          <div className={`pt-${currentStep > 1 ? "28" : "0"} pb-4 overflow-hidden`}>
+          {/* Give consistent top padding when header is active */}
+          <div
+            className={
+              currentStep > 1
+                ? "pt-32 pb-4 overflow-hidden" // Matches header height (pt-32 ≈ 8rem, adjust if needed)
+                : "pt-0 pb-4 overflow-hidden"
+            }
+          >
             <AnimatePresence mode="wait">
               {isCompleting ? (
                 <motion.div
