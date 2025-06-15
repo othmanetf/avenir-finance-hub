@@ -82,9 +82,11 @@ const App = () => {
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<ProtectedRoutes />} />
+              <Route path="/education" element={<ProtectedRoutes />} />
+              <Route path="/analysis" element={<ProtectedRoutes />} />
+              <Route path="/investments" element={<ProtectedRoutes />} />
               <Route path="/splash" element={<SplashScreen />} />
               <Route path="/onboarding" element={<Onboarding />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

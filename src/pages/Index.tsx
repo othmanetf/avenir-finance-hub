@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import SplashScreen from "@/components/SplashScreen";
 import Navigation from "@/components/Navigation";
 import Dashboard from "@/components/Dashboard";
@@ -14,10 +14,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
-  const [currentRoute, setCurrentRoute] = useState("/");
   const { isProfileOpen, closeProfile } = useProfile();
   const { isOnboarded, isLoading } = useOnboarded();
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentRoute = location.pathname;
 
   useEffect(() => {
     // Check if user has completed onboarding
@@ -36,6 +37,10 @@ const Index = () => {
   const handleSplashComplete = () => {
     setShowSplash(false);
     localStorage.setItem("hasSeenSplash", "true");
+  };
+
+  const handleRouteChange = (route: string) => {
+    navigate(route);
   };
 
   // Show a loading state while checking onboarding status
@@ -109,7 +114,7 @@ const Index = () => {
         <SplashScreen onComplete={handleSplashComplete} />
       ) : (
         <>
-          <Navigation currentRoute={currentRoute} onRouteChange={setCurrentRoute} />
+          <Navigation currentRoute={currentRoute} onRouteChange={handleRouteChange} />
           <AnimatePresence mode="wait">
             <main className="pb-20 md:pb-6 px-4 md:px-6 mx-auto max-w-6xl">
               {renderCurrentView()}
