@@ -2,33 +2,16 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-
-const taglines = [
-  { lang: "Français", text: "Votre avenir financier, simplifié" },
-  { lang: "العربية", text: "مستقبلك المالي، ببساطة" },
-  { lang: "English", text: "Your financial future, simplified" },
-];
-
 const SplashScreen = () => {
   const navigate = useNavigate();
   const [showContinue, setShowContinue] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [taglineIndex, setTaglineIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTaglineIndex((prev) => (prev + 1) % taglines.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowContinue(true);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
-
   const handleContinue = () => {
     setIsLoading(true);
     const hasCompletedOnboarding = localStorage.getItem("hasCompletedOnboarding") === "true";
@@ -36,7 +19,6 @@ const SplashScreen = () => {
       navigate(hasCompletedOnboarding ? "/" : "/onboarding");
     }, 800);
   };
-
   return <motion.div className="h-screen w-full bg-gradient-to-br from-monavenir-blue to-monavenir-cyan flex flex-col items-center justify-center" initial={{
     opacity: 0
   }} animate={{
@@ -69,25 +51,17 @@ const SplashScreen = () => {
       }}>
           MonAvenir+
         </motion.h1>
-        <motion.p
-          className="text-white/90 text-lg min-h-7 mt-1"
-          key={taglineIndex}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          dir={taglineIndex === 1 ? "rtl" : "ltr"}
-          style={{
-            fontFamily: taglineIndex === 1 ? "Tahoma, Arial, sans-serif" : undefined,
-            letterSpacing: taglineIndex === 1 ? "0.5px" : undefined
-          }}
-        >
-          <span className="block">
-            {taglines[taglineIndex].lang !== "English" && (
-              <span className="font-semibold mr-2">{taglines[taglineIndex].lang}:</span>
-            )}
-            <span>{taglines[taglineIndex].text}</span>
-          </span>
+        <motion.p className="text-white/90 text-lg" initial={{
+        opacity: 0,
+        y: 20
+      }} animate={{
+        opacity: 1,
+        y: 0
+      }} transition={{
+        delay: 0.7,
+        duration: 0.5
+      }}>
+          Votre avenir financier, simplifié
         </motion.p>
       </motion.div>
 
