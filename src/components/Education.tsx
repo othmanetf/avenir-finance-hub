@@ -1,6 +1,6 @@
 
-import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { EducationCategories, educationCategories } from "@/components/education/EducationCategories";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { educationCategories } from "@/components/education/EducationCategories";
 import { EducationCard, EducationItemType } from "@/components/education/EducationCard";
 import { QuizSection } from "@/components/education/QuizSection";
 import { PodcastSection } from "@/components/education/PodcastSection";
@@ -134,7 +134,19 @@ export const Education = () => {
       </div>
 
       <Tabs defaultValue="all" className="mb-6 md:mb-8 animate-fade-in">
-        <EducationCategories />
+        <div className="overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+          <TabsList className="flex flex-wrap md:flex-nowrap overflow-x-auto pb-1 justify-start md:justify-center gap-1.5 bg-transparent h-auto">
+            {educationCategories.map((category) => (
+              <TabsTrigger 
+                key={category.id} 
+                value={category.id}
+                className="px-3 py-1.5 text-xs sm:text-sm rounded-full whitespace-nowrap flex-shrink-0 shadow-sm bg-white border border-gray-100"
+              >
+                {category.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
         
         {educationCategories.map((category) => (
           <TabsContent key={category.id} value={category.id} className="mt-4">
