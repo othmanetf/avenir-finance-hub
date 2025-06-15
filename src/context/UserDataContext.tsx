@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { FinancialProfile } from './OnboardingContext';
 
@@ -43,6 +42,7 @@ export type UserPreferences = {
   theme: 'light' | 'dark' | 'system';
   notifications: boolean;
   riskTolerance: 'conservative' | 'moderate' | 'aggressive';
+  twoFactorEnabled: boolean;
 };
 
 export type UserData = {
@@ -104,7 +104,8 @@ const defaultUserData: UserData = {
     language: 'fr',
     theme: 'light',
     notifications: true,
-    riskTolerance: 'moderate'
+    riskTolerance: 'moderate',
+    twoFactorEnabled: false
   },
   financialConcerns: [],
   onboardingCompleted: false
