@@ -210,7 +210,8 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
         language: financialProfile.preferredLanguage,
         theme: 'light',
         notifications: true,
-        riskTolerance: 'moderate'
+        riskTolerance: 'moderate',
+        twoFactorEnabled: false
       },
       onboardingCompleted: true
     });
