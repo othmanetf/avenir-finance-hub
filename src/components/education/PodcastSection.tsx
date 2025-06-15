@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { EyeIcon, ExternalLink, Headphones, Clock, Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export type PodcastType = {
   id: number;
@@ -108,21 +107,22 @@ export const PodcastSection = () => {
       
       {/* Filtrage par catégorie */}
       <div className="mb-4 overflow-x-auto pb-2 -mx-1 px-1">
-        <TabsList className="flex flex-nowrap overflow-x-auto justify-start gap-1.5 bg-transparent h-auto">
+        <div className="flex flex-nowrap overflow-x-auto justify-start gap-1.5 h-auto">
           {podcastCategories.map((category) => (
-            <TabsTrigger
+            <button
               key={category.id}
-              value={category.id}
               onClick={() => setActiveCategory(category.id)}
               className={cn(
-                "px-3 py-1.5 text-xs rounded-full whitespace-nowrap flex-shrink-0 shadow-sm bg-white border border-gray-100",
-                activeCategory === category.id ? "bg-primary text-white border-primary" : ""
+                "px-3 py-1.5 text-xs rounded-full whitespace-nowrap flex-shrink-0 shadow-sm border transition-colors",
+                activeCategory === category.id 
+                  ? "bg-primary text-white border-primary" 
+                  : "bg-white border-gray-100 hover:bg-gray-50"
               )}
             >
               {category.label}
-            </TabsTrigger>
+            </button>
           ))}
-        </TabsList>
+        </div>
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
