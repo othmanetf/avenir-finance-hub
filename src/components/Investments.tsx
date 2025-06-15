@@ -5,8 +5,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Calendar, MessageCircle, Target, BookOpen, Users, Coins } from "lucide-react";
 import { motion } from "framer-motion";
-import ConsultationForm from "./investment/ConsultationForm";
-import InvestmentGuides from "./investment/InvestmentGuides";
+import { ConsultationForm } from "./investment/ConsultationForm";
+import { InvestmentGuides } from "./investment/InvestmentGuides";
 import { UserGoals } from "./dashboard/UserGoals";
 import { useUserData } from "@/context/UserDataContext";
 
@@ -296,7 +296,7 @@ const Investments = () => {
               <DialogHeader>
                 <DialogTitle>Planifier une séance d'investissement</DialogTitle>
               </DialogHeader>
-              <ConsultationForm />
+              <ConsultationForm onClose={() => {}} />
             </DialogContent>
           </Dialog>
 
@@ -335,7 +335,7 @@ const Investments = () => {
         </div>
       )}
 
-      {activeTab === "guides" && <InvestmentGuides />}
+      {activeTab === "guides" && <InvestmentGuides onClose={() => {}} />}
     </div>
   );
 };
