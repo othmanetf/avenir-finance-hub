@@ -9,10 +9,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Mail, Lock, User, Phone, Check, ArrowRight } from "lucide-react";
+import { Mail, Lock, User, Phone, Check, ArrowRight, Eye, EyeOff, X } from "lucide-react";
 import { toast } from "sonner";
 import AvatarSelector from "./AvatarSelector";
-import { Eye, EyeOff, Check, X, User, Mail, Lock, ArrowRight } from "lucide-react";
 import { zodFrMessages } from "@/lib/validation-fr";
 
 interface AccountCreationProps {
