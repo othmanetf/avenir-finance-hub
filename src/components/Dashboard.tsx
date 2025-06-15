@@ -30,7 +30,7 @@ export const Dashboard = () => {
 
   // Sample data - in a real app, this would be dynamic
   const budgetData = {
-    totalBudget: 7500,
+    totalBudget: 8500,
     spent: 4825,
     income: 8500,
     expenses: 4825,
