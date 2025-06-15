@@ -67,7 +67,7 @@ export const BudgetOverview = ({ budgetData, currentDay, lastDay }: BudgetOvervi
             transition={{ delay: 0.3, duration: 0.4 }}
           >
             <p className="text-sm text-foreground">
-              Vous pouvez dépenser <span className="font-semibold text-[#1F6FEB]">175 DH</span> par jour pour les <span className="font-semibold text-[#1F6FEB]">18</span> prochains jours
+              Vous pouvez dépenser <span className="font-semibold text-[#1F6FEB]">255 DH</span> par jour pour les <span className="font-semibold text-[#1F6FEB]">11</span> prochains jours
             </p>
           </motion.div>
         </div>
