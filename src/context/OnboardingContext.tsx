@@ -110,9 +110,8 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
 
   // Function to save all onboarding data and complete the process
   const completeOnboarding = () => {
-    // In a real app, this would send the data to an API
-    // For now, we'll just store it in localStorage
-    const userData = {
+    // Sauvegarder les données d'onboarding dans le nouveau format
+    const onboardingData = {
       fullName,
       email,
       phoneNumber,
@@ -122,8 +121,11 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
       bankConnected
     };
     
-    localStorage.setItem('userData', JSON.stringify(userData));
+    // Sauvegarder les données brutes d'onboarding
+    localStorage.setItem('onboardingData', JSON.stringify(onboardingData));
     localStorage.setItem('hasCompletedOnboarding', 'true');
+    
+    // Le UserDataContext se chargera de migrer ces données au format utilisable
   };
 
   return (

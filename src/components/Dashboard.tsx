@@ -10,11 +10,13 @@ import {
   Utensils
 } from "lucide-react";
 import { useProfile } from "@/hooks/use-profile";
+import { useUserData } from "@/context/UserDataContext";
 import { motion } from "framer-motion";
 import TransactionModal from "@/components/TransactionModal";
 
 // Import our new components
 import { BudgetOverview } from "@/components/dashboard/BudgetOverview";
+import { EstimatedBalance } from "@/components/dashboard/EstimatedBalance";
 import { MonthlyEvolutionChart } from "@/components/dashboard/MonthlyEvolutionChart";
 import { ExpenseDistribution } from "@/components/dashboard/ExpenseDistribution";
 import { CategoryList } from "@/components/dashboard/CategoryList";
@@ -27,81 +29,89 @@ export const Dashboard = () => {
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"all" | "expenses" | "income">("all");
   const { openProfile } = useProfile();
+  const { userData, isDataLoaded } = useUserData();
 
-  // Sample data - in a real app, this would be dynamic
+  // Si les données ne sont pas encore chargées, afficher un état de chargement
+  if (!isDataLoaded) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Chargement de vos données...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Préparer les données de budget depuis le contexte utilisateur
   const budgetData = {
-    totalBudget: 7500,
-    spent: 4825,
-    income: 8500,
-    expenses: 4825,
-    remainingDays: 3,
-    dailyBudget: 892,
-    progressPercentage: 64
+    totalBudget: userData.totalBudget,
+    spent: userData.spent,
+    income: userData.monthlyIncome,
+    expenses: userData.monthlyExpenses,
+    remainingDays: userData.remainingDays,
+    dailyBudget: userData.dailyBudget,
+    progressPercentage: userData.progressPercentage
   };
-
-  // Current date for display
-  const currentDate = new Date();
-  const currentDay = currentDate.getDate();
-  const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
   
   const categories = [
     { 
       id: "food", 
       name: "Alimentation", 
       icon: Coffee, 
-      amount: 1250,
-      budget: 1600, 
+      amount: Math.round(userData.monthlyExpenses * 0.25),
+      budget: Math.round(userData.monthlyExpenses * 0.30), 
       color: "bg-orange-100 text-orange-500",
       pieColor: "#f97316",
-      progress: 78,
+      progress: 83,
       transactions: [
-        { name: "Supermarché", date: "Aujourd'hui, 10:42", amount: 320 },
-        { name: "Restaurant", date: "Hier, 20:30", amount: 450 },
-        { name: "Café", date: "18 juin, 15:15", amount: 120 },
-        { name: "Épicerie", date: "16 juin, 11:20", amount: 360 }
+        { name: "Supermarché", date: "Aujourd'hui, 10:42", amount: Math.round(userData.monthlyExpenses * 0.08) },
+        { name: "Restaurant", date: "Hier, 20:30", amount: Math.round(userData.monthlyExpenses * 0.09) },
+        { name: "Café", date: "10 mai, 15:15", amount: Math.round(userData.monthlyExpenses * 0.03) },
+        { name: "Épicerie", date: "8 mai, 11:20", amount: Math.round(userData.monthlyExpenses * 0.05) }
       ]
     },
     { 
       id: "shopping", 
       name: "Shopping", 
       icon: ShoppingBag, 
-      amount: 875,
-      budget: 1000, 
+      amount: Math.round(userData.monthlyExpenses * 0.15),
+      budget: Math.round(userData.monthlyExpenses * 0.18), 
       color: "bg-blue-100 text-blue-500",
       pieColor: "#1F6FEB",
-      progress: 87,
+      progress: 83,
       transactions: [
-        { name: "Magasin de vêtements", date: "15 juin, 14:30", amount: 475 },
-        { name: "Électronique", date: "10 juin, 17:45", amount: 400 }
+        { name: "Magasin de vêtements", date: "12 mai, 14:30", amount: Math.round(userData.monthlyExpenses * 0.10) },
+        { name: "Électronique", date: "5 mai, 17:45", amount: Math.round(userData.monthlyExpenses * 0.05) }
       ]
     },
     { 
       id: "housing", 
       name: "Logement", 
       icon: HomeIcon, 
-      amount: 1800,
-      budget: 1800, 
+      amount: Math.round(userData.monthlyExpenses * 0.35),
+      budget: Math.round(userData.monthlyExpenses * 0.35), 
       color: "bg-violet-100 text-violet-500",
       pieColor: "#8E44AD",
       progress: 100,
       transactions: [
-        { name: "Loyer", date: "5 juin, 09:00", amount: 1800 }
+        { name: "Loyer", date: "1 mai, 09:00", amount: Math.round(userData.monthlyExpenses * 0.35) }
       ]
     },
     { 
       id: "transport", 
       name: "Transport", 
       icon: Car, 
-      amount: 900,
-      budget: 1100, 
+      amount: Math.round(userData.monthlyExpenses * 0.25),
+      budget: Math.round(userData.monthlyExpenses * 0.27), 
       color: "bg-green-100 text-green-500",
       pieColor: "#10b981",
-      progress: 82,
+      progress: 93,
       transactions: [
-        { name: "Carburant", date: "12 juin, 11:15", amount: 350 },
-        { name: "Taxi", date: "8 juin, 18:40", amount: 120 },
-        { name: "Transport public", date: "3 juin, 08:20", amount: 160 },
-        { name: "Entretien voiture", date: "1 juin, 15:10", amount: 270 }
+        { name: "Carburant", date: "10 mai, 11:15", amount: Math.round(userData.monthlyExpenses * 0.12) },
+        { name: "Taxi", date: "6 mai, 18:40", amount: Math.round(userData.monthlyExpenses * 0.04) },
+        { name: "Transport public", date: "3 mai, 08:20", amount: Math.round(userData.monthlyExpenses * 0.05) },
+        { name: "Entretien voiture", date: "1 mai, 15:10", amount: Math.round(userData.monthlyExpenses * 0.04) }
       ]
     }
   ];
@@ -111,26 +121,13 @@ export const Dashboard = () => {
       id: "salary", 
       name: "Salaire", 
       icon: Building, 
-      amount: 8000,
-      budget: 8000, 
+      amount: userData.monthlyIncome,
+      budget: userData.monthlyIncome, 
       color: "bg-emerald-100 text-emerald-500",
       pieColor: "#10b981",
       progress: 100,
       transactions: [
-        { name: "Emploi principal", date: "5 juin, 10:00", amount: 8000 }
-      ]
-    },
-    { 
-      id: "gifts", 
-      name: "Cadeaux", 
-      icon: Gift, 
-      amount: 500,
-      budget: 0, 
-      color: "bg-pink-100 text-pink-500",
-      pieColor: "#ec4899",
-      progress: 100,
-      transactions: [
-        { name: "Cadeau d'anniversaire", date: "8 juin, 09:20", amount: 500 }
+        { name: "Emploi principal", date: "1 mai, 10:00", amount: userData.monthlyIncome }
       ]
     }
   ];
@@ -165,14 +162,23 @@ export const Dashboard = () => {
       variants={containerVariants}
     >
       {/* Header with Welcome and Avatar */}
-      <DashboardHeader openProfile={openProfile} />
+      <DashboardHeader openProfile={openProfile} userName={userData.fullName} />
+
+      {/* Estimated Balance Overview */}
+      <motion.div variants={itemVariants} className="mb-5">
+        <EstimatedBalance 
+          estimatedBalance={userData.estimatedBalance}
+          monthlyIncome={userData.monthlyIncome}
+          monthlyExpenses={userData.monthlyExpenses}
+        />
+      </motion.div>
 
       {/* Monthly Expenses Overview */}
       <motion.div variants={itemVariants} className="mb-5">
         <BudgetOverview 
           budgetData={budgetData} 
-          currentDay={currentDay}
-          lastDay={lastDay}
+          currentDay={userData.currentDay}
+          lastDay={userData.lastDay}
         />
       </motion.div>
 

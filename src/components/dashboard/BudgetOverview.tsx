@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { motion } from "framer-motion";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 type BudgetOverviewProps = {
   budgetData: {
@@ -40,8 +39,8 @@ export const BudgetOverview = ({ budgetData, currentDay, lastDay }: BudgetOvervi
         <div className="relative pt-2 pb-2">
           {/* Progress Bar with Clean Design */}
           <div className="flex justify-between text-xs text-muted-foreground mb-2">
-            <span>1 Juin</span>
-            <span>30 Juin</span>
+            <span>1 Mai</span>
+            <span>31 Mai</span>
           </div>
           
           <div className="relative mb-4">
