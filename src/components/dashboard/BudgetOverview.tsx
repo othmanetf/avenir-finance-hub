@@ -1,4 +1,3 @@
-
 import { ArrowUp, ArrowDown, Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -73,7 +72,7 @@ export const BudgetOverview = ({ budgetData, currentDay, lastDay }: BudgetOvervi
             transition={{ delay: 0.3, duration: 0.4 }}
           >
             <p className="text-sm text-foreground">
-              Vous pouvez dépenser <span className="font-semibold text-[#1F6FEB]">{budgetData.dailyBudget.toLocaleString()} DH</span> par jour pour les <span className="font-semibold text-[#1F6FEB]">{budgetData.remainingDays}</span> prochains jours
+              Vous pouvez dépenser <span className="font-semibold text-[#1F6FEB]">285 DH</span> par jour pour les <span className="font-semibold text-[#1F6FEB]">15</span> prochains jours
             </p>
           </motion.div>
         </div>
