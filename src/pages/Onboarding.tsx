@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { OnboardingProvider, useOnboarding } from "@/context/OnboardingContext";
@@ -81,7 +80,7 @@ const OnboardingFlow = () => {
   const stepContent = [
     <LanguageStep key="lang" onComplete={() => setCurrentStep(2)} />,
     <AccountCreation key="account" onComplete={() => setCurrentStep(3)} />,
-    <FinancialProfiling key="profile" onComplete={() => setCurrentStep(4)} skipLanguageStep />,
+    <FinancialProfiling key="profile" onComplete={() => setCurrentStep(4)} />,
     <BankConnection key="bank" />
   ];
 
