@@ -16,13 +16,6 @@ export type FinancialProfile = {
   financialGoals: string[];
   financialConcerns: string[];
   preferredLanguage: 'fr' | 'ar' | 'en';
-  // Nouveaux champs pour les objectifs et préférences
-  primaryGoals: string[];
-  goalTimeHorizon: string;
-  goalTargetAmount?: string;
-  currency: 'MAD' | 'EUR' | 'USD';
-  theme: 'light' | 'dark' | 'system';
-  enableNotifications: boolean;
 };
 
 // Define the context type
@@ -64,11 +57,6 @@ const defaultFinancialProfile: FinancialProfile = {
   financialGoals: [],
   financialConcerns: [],
   preferredLanguage: 'fr',
-  primaryGoals: [],
-  goalTimeHorizon: '1 an',
-  currency: 'MAD',
-  theme: 'system',
-  enableNotifications: true,
 };
 
 // Create the context with default values
@@ -122,8 +110,9 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
 
   // Function to save all onboarding data and complete the process
   const completeOnboarding = () => {
-    // Sauvegarder les données d'onboarding dans le nouveau format
-    const onboardingData = {
+    // In a real app, this would send the data to an API
+    // For now, we'll just store it in localStorage
+    const userData = {
       fullName,
       email,
       phoneNumber,
@@ -133,11 +122,8 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
       bankConnected
     };
     
-    // Sauvegarder les données brutes d'onboarding
-    localStorage.setItem('onboardingData', JSON.stringify(onboardingData));
+    localStorage.setItem('userData', JSON.stringify(userData));
     localStorage.setItem('hasCompletedOnboarding', 'true');
-    
-    // Le UserDataContext se chargera de migrer ces données au format utilisable
   };
 
   return (

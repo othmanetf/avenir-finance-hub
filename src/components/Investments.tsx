@@ -1,341 +1,460 @@
+
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { 
+  PiggyBank, 
+  TrendingUp, 
+  ChevronRight, 
+  Building, 
+  LineChart,
+  BarChart,
+  Tag,
+  Info,
+  ExternalLink,
+  Plus,
+  DollarSign,
+  Calculator,
+  Calendar,
+  Phone,
+  FileText,
+  BookOpen,
+  BookText,
+  BadgePercent
+} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Calendar, MessageCircle, Target, BookOpen, Users, Coins } from "lucide-react";
-import { motion } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter
+} from "@/components/ui/dialog";
+import { useProfile } from "@/hooks/use-profile";
+import { toast } from "sonner";
 import { ConsultationForm } from "./investment/ConsultationForm";
 import { InvestmentGuides } from "./investment/InvestmentGuides";
-import { UserGoals } from "./dashboard/UserGoals";
-import { useUserData } from "@/context/UserDataContext";
+import { Icon } from "@/components/ui/icon-provider";
+import { AddTransactionButton } from "./dashboard/AddTransactionButton";
 
-const Investments = () => {
-  const [activeTab, setActiveTab] = useState("opportunities");
-  const { userData } = useUserData();
-
-  // Savings accounts data
-  const savingsAccounts = [
+export const Investments = () => {
+  const [activeTab, setActiveTab] = useState<"save" | "invest">("save");
+  const { openProfile } = useProfile();
+  const [showConsultation, setShowConsultation] = useState(false);
+  const [showGuides, setShowGuides] = useState(false);
+  const [consultationType, setConsultationType] = useState<"epargne" | "investissement">("epargne");
+  
+  // Données réelles de banques et produits d'épargne marocains
+  const savingOptions = [
     {
       id: 1,
-      name: "Compte Épargne Sécurisé",
-      bank: "Banque Populaire",
-      interestRate: "2.5%",
-      minDeposit: "500 DH",
-      liquidity: "Élevée",
-      risk: "Très faible",
-      recommended: true,
-    },
-    {
-      id: 2,
-      name: "Plan Épargne Logement",
-      bank: "CIH Bank",
-      interestRate: "3.0%",
-      minDeposit: "1,000 DH",
-      liquidity: "Moyenne",
-      risk: "Faible",
-      recommended: false,
-    },
-    {
-      id: 3,
-      name: "Compte Épargne Jeunes",
       bank: "Attijariwafa Bank",
-      interestRate: "2.75%",
-      minDeposit: "200 DH",
-      liquidity: "Élevée",
-      risk: "Très faible",
-      recommended: false,
-    },
-  ];
-
-  // Investment opportunities data
-  const investmentOpportunities = [
-    {
-      id: 1,
-      name: "Fonds Diversifié Équilibré",
-      provider: "BMCI Asset Management",
-      expectedReturn: "5-7%",
-      minInvestment: "5,000 DH",
-      risk: "Modéré",
-      term: "3-5 ans",
-      category: "Fonds commun",
-      trending: true,
+      logo: "/lovable-uploads/ab549ad1-6498-4f4c-9b7e-632c48c3f72b.png",
+      name: "Compte sur Carnet",
+      interest: 2.25,
+      minDeposit: 500,
+      term: "Sans durée fixe",
+      features: ["Pas de frais de tenue de compte", "Retraits à tout moment", "Versements libres"]
     },
     {
       id: 2,
-      name: "ETF Actions Marocaines",
-      provider: "Upline Securities",
-      expectedReturn: "7-10%",
-      minInvestment: "10,000 DH",
-      risk: "Élevé",
-      term: "5+ ans",
-      category: "ETF",
-      trending: true,
+      bank: "BMCE Bank of Africa",
+      logo: "🏦",
+      name: "Plan Épargne Logement",
+      interest: 3.5,
+      minDeposit: 500,
+      term: "3 à 5 ans",
+      features: ["Constituer une épargne pour acquérir un logement", "Possibilité de crédit immobilier préférentiel"]
     },
     {
       id: 3,
-      name: "Obligations d'État",
-      provider: "Trésor Marocain",
-      expectedReturn: "3.5-4%",
-      minInvestment: "10,000 DH",
-      risk: "Faible",
-      term: "2-10 ans",
-      category: "Obligations",
-      trending: false,
+      bank: "Banque Populaire",
+      logo: "🏦",
+      name: "Compte d'Épargne",
+      interest: 2.4,
+      minDeposit: 200,
+      term: "Sans durée fixe",
+      features: ["Intérêts calculés quotidiennement", "Versés semestriellement", "Retraits flexibles"]
     },
+    {
+      id: 4,
+      bank: "CIH Bank",
+      logo: "🏦",
+      name: "e-Épargne",
+      interest: 2.8,
+      minDeposit: 100,
+      term: "Sans durée fixe",
+      features: ["Gestion 100% digitale", "Alimentations automatiques programmées", "Intérêts calculés quotidiennement"]
+    },
+    {
+      id: 5,
+      bank: "Crédit Agricole",
+      logo: "🏦",
+      name: "Plan Épargne Éducation",
+      interest: 3.2,
+      minDeposit: 300,
+      term: "5 à 10 ans",
+      features: ["Financer les études de vos enfants", "Garantie en cas de décès", "Versements flexibles"]
+    }
+  ];
+  
+  // Données réelles d'investissements marocains
+  const investmentOptions = [
+    {
+      id: 1,
+      type: "ETF",
+      name: "AMMC MASI Tracker",
+      ticker: "MASI",
+      price: 13252,
+      change: 2.1,
+      description: "Réplique l'indice MASI de la Bourse de Casablanca",
+      level: "Débutant",
+      levelColor: "bg-green-100 text-green-600"
+    },
+    {
+      id: 2,
+      type: "ETF",
+      name: "Casablanca Dividendes",
+      ticker: "DIVS",
+      price: 4380,
+      change: 1.8,
+      description: "ETF concentré sur les sociétés marocaines versant des dividendes élevés",
+      level: "Débutant",
+      levelColor: "bg-green-100 text-green-600"
+    },
+    {
+      id: 3,
+      type: "ETF",
+      name: "Immobilier Coté Marocain",
+      ticker: "REIT",
+      price: 885,
+      change: -0.7,
+      description: "Exposition aux sociétés immobilières cotées au Maroc",
+      level: "Intermédiaire",
+      levelColor: "bg-amber-100 text-amber-600"
+    },
+    {
+      id: 4,
+      type: "Obligation",
+      name: "Bons du Trésor 5 ans",
+      ticker: "BDT5Y",
+      price: 10000,
+      change: 0.5,
+      description: "Bons du Trésor marocain avec un taux fixe sur 5 ans",
+      level: "Débutant",
+      levelColor: "bg-green-100 text-green-600"
+    },
+    {
+      id: 5,
+      type: "Obligation",
+      name: "Sukuk Souverain",
+      ticker: "SKMAR",
+      price: 5000,
+      change: 0.9,
+      description: "Certificats d'investissement conformes à la finance islamique",
+      level: "Débutant",
+      levelColor: "bg-green-100 text-green-600"
+    },
+    {
+      id: 6,
+      type: "ETF",
+      name: "Afrique MSCI",
+      ticker: "AFMSCI",
+      price: 2780,
+      change: 3.2,
+      description: "Exposition aux marchés africains en croissance",
+      level: "Intermédiaire",
+      levelColor: "bg-amber-100 text-amber-600"
+    },
+    {
+      id: 7,
+      type: "ETF",
+      name: "Maroc Énergie Renouvelable",
+      ticker: "ENRMAR",
+      price: 1950,
+      change: 5.3,
+      description: "Exposition aux entreprises marocaines du secteur des énergies renouvelables",
+      level: "Intermédiaire",
+      levelColor: "bg-amber-100 text-amber-600"
+    }
   ];
 
-  return (
-    <div className="space-y-6">
-      {/* User Goals Section */}
-      <UserGoals />
+  const handleBookConsultation = (type: "epargne" | "investissement") => {
+    setConsultationType(type);
+    setShowConsultation(true);
+  };
 
-      {/* Navigation Tabs */}
-      <div className="flex space-x-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
-        <button
-          onClick={() => setActiveTab("opportunities")}
-          className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-            activeTab === "opportunities"
-              ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm"
-              : "text-gray-600 dark:text-gray-300"
-          }`}
+  const handleExploreGuides = () => {
+    setShowGuides(true);
+  };
+
+  const handleAddTransaction = () => {
+    toast.info("Créez un nouvel objectif d'épargne ou d'investissement", {
+      description: "Cette fonctionnalité sera bientôt disponible",
+      action: {
+        label: "Rappel",
+        onClick: () => toast.success("Nous vous préviendrons dès que cette fonctionnalité sera disponible")
+      }
+    })
+  };
+  
+  const getDialogTitle = () => {
+    return consultationType === "epargne" 
+      ? "Planifier une séance d'épargne" 
+      : "Planifier une séance d'investissement";
+  };
+  
+  const getDialogDescription = () => {
+    return consultationType === "epargne"
+      ? "Prenez rendez-vous avec l'un de nos conseillers financiers pour discuter de vos objectifs d'épargne."
+      : "Prenez rendez-vous avec l'un de nos conseillers financiers pour découvrir les meilleures stratégies d'investissement selon votre profil et vos objectifs.";
+  };
+  
+  return (
+    <div className="flex flex-col p-4 md:p-6 gap-4 md:gap-6 md:pl-24 mb-20 md:mb-6">
+      {/* En-tête avec Bienvenue et Avatar */}
+      <div className="flex justify-between items-center">
+        <div className="flex flex-col">
+          <p className="text-sm text-muted-foreground">Épargne & Investissements</p>
+          <h2 className="text-xl md:text-2xl font-bold text-foreground">Développez votre patrimoine</h2>
+        </div>
+        
+        <Avatar 
+          className="h-16 w-16 sm:h-18 sm:w-18 border-2 border-white shadow-md cursor-pointer hover:opacity-90 transition-opacity" 
+          onClick={openProfile}
         >
-          <Coins className="h-4 w-4" />
-          <span>Opportunités</span>
-        </button>
-        <button
-          onClick={() => setActiveTab("savings")}
-          className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-            activeTab === "savings"
-              ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm"
-              : "text-gray-600 dark:text-gray-300"
-          }`}
-        >
-          <Target className="h-4 w-4" />
-          <span>Épargne</span>
-        </button>
-        <button
-          onClick={() => setActiveTab("coaching")}
-          className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-            activeTab === "coaching"
-              ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm"
-              : "text-gray-600 dark:text-gray-300"
-          }`}
-        >
-          <Users className="h-4 w-4" />
-          <span>Coaching</span>
-        </button>
-        <button
-          onClick={() => setActiveTab("guides")}
-          className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-            activeTab === "guides"
-              ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm"
-              : "text-gray-600 dark:text-gray-300"
-          }`}
-        >
-          <BookOpen className="h-4 w-4" />
-          <span>Guides</span>
-        </button>
+          <AvatarImage src="/lovable-uploads/dbddec41-e0a6-473b-8088-5944e5f0ce16.png" alt="Mohamed" />
+          <AvatarFallback>M</AvatarFallback>
+        </Avatar>
       </div>
 
-      {/* Content based on active tab */}
-      {activeTab === "opportunities" && (
-        <div className="space-y-4">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-2">Opportunités d'Investissement</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Découvrez des options d'investissement adaptées à votre profil
-            </p>
-          </div>
-
-          {investmentOpportunities.map((opportunity, index) => (
-            <motion.div
-              key={opportunity.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <Card className="bg-white shadow-sm border-0 rounded-2xl overflow-hidden">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground">{opportunity.name}</h3>
-                      <p className="text-sm text-muted-foreground">{opportunity.provider}</p>
-                    </div>
-                    {opportunity.trending && (
-                      <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
-                        <TrendingUp className="h-3 w-3 mr-1" /> Tendance
-                      </Badge>
-                    )}
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div>
-                      <p className="text-xs text-muted-foreground">Rendement estimé</p>
-                      <p className="font-medium text-green-600">{opportunity.expectedReturn}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Investissement min.</p>
-                      <p className="font-medium">{opportunity.minInvestment}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Niveau de risque</p>
-                      <p className="font-medium">{opportunity.risk}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Durée recommandée</p>
-                      <p className="font-medium">{opportunity.term}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between">
-                    <Badge variant="outline">{opportunity.category}</Badge>
-                    <Button size="sm" variant="outline">
-                      En savoir plus
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      )}
-
-      {activeTab === "savings" && (
-        <div className="space-y-4">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-2">Comptes d'Épargne</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Sécurisez votre avenir avec nos options d'épargne
-            </p>
-          </div>
-
-          {savingsAccounts.map((account, index) => (
-            <motion.div
-              key={account.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <Card className={`bg-white shadow-sm border-0 rounded-2xl overflow-hidden ${
-                account.recommended ? "ring-2 ring-blue-500 ring-opacity-50" : ""
-              }`}>
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground">{account.name}</h3>
-                      <p className="text-sm text-muted-foreground">{account.bank}</p>
-                    </div>
-                    {account.recommended && (
-                      <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
-                        Recommandé
-                      </Badge>
-                    )}
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div>
-                      <p className="text-xs text-muted-foreground">Taux d'intérêt</p>
-                      <p className="font-medium text-green-600">{account.interestRate}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Dépôt minimum</p>
-                      <p className="font-medium">{account.minDeposit}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Liquidité</p>
-                      <p className="font-medium">{account.liquidity}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Niveau de risque</p>
-                      <p className="font-medium">{account.risk}</p>
-                    </div>
-                  </div>
-
-                  <Button size="sm" className="w-full">
-                    Ouvrir un compte
+      {/* Onglets principaux */}
+      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "save" | "invest")} className="w-full">
+        <TabsList className="grid grid-cols-2 mb-4 md:mb-6 w-full max-w-md mx-auto bg-muted/80 p-1 rounded-full">
+          <TabsTrigger 
+            value="save" 
+            className="flex items-center gap-2 py-3 px-4 rounded-full transition-all data-[state=active]:shadow-sm"
+          >
+            <PiggyBank className="h-4 w-4" />
+            <span>Épargner</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="invest" 
+            className="flex items-center gap-2 py-3 px-4 rounded-full transition-all data-[state=active]:shadow-sm"
+          >
+            <TrendingUp className="h-4 w-4" />
+            <span>Investir</span>
+          </TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="save" className="space-y-4 md:space-y-6 animate-fade-in">
+          {/* Bloc coaching épargne */}
+          <Card className="bg-primary text-white shadow-md border-0 rounded-2xl">
+            <CardContent className="p-5 md:p-6">
+              <div className="flex flex-col">
+                <h3 className="text-lg font-semibold mb-2">Besoin d'aide pour épargner ?</h3>
+                <p className="text-sm text-white/90 mb-4">Recevez un accompagnement personnalisé pour choisir et optimiser votre compte d'épargne.</p>
+                
+                <div className="flex justify-center mt-1">
+                  <Button 
+                    className="w-full md:w-3/4 bg-white text-primary hover:bg-white/90 hover:text-primary font-medium py-5"
+                    onClick={() => handleBookConsultation("epargne")}
+                  >
+                    Planifier un coaching épargne
                   </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-      {activeTab === "coaching" && (
-        <div className="space-y-4">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-2">Coaching Personnalisé</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Bénéficiez des conseils de nos experts pour atteindre vos objectifs financiers
-            </p>
-          </div>
-
-          <Dialog>
-            <DialogTrigger asChild>
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 border-0">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full">
-                      <MessageCircle className="h-6 w-6 text-white" />
+          <Card className="bg-white shadow-md border-0 rounded-3xl overflow-hidden">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg md:text-xl">Comptes d'épargne</CardTitle>
+              <CardDescription>Comparez les options d'épargne des banques marocaines</CardDescription>
+            </CardHeader>
+            
+            <CardContent>
+              <div className="space-y-4">
+                {savingOptions.map((option) => (
+                  <Card key={option.id} className="shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
+                    <div className="flex p-4 border-b items-center">
+                      <div className="flex-shrink-0 h-10 w-10 md:h-12 md:w-12 rounded-lg bg-gray-100 flex items-center justify-center text-lg">
+                        <PiggyBank className="h-6 w-6 text-primary" />
+                      </div>
+                      <div className="flex-1 ml-3 md:ml-4">
+                        <p className="text-xs text-muted-foreground">{option.bank}</p>
+                        <h4 className="font-medium">{option.name}</h4>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-base md:text-lg font-bold text-primary">{option.interest}%</span>
+                        <div className="flex items-center gap-1 justify-end">
+                          <Info className="h-3 w-3 text-muted-foreground" />
+                          <p className="text-xs text-muted-foreground">Intérêt annuel</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold mb-1">Consultation Investissement</h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm">
-                        Planifiez une séance avec nos conseillers financiers
-                      </p>
-                    </div>
-                    <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
-                      Gratuit
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            </DialogTrigger>
-            <DialogContent className="max-w-md mx-auto">
-              <DialogHeader>
-                <DialogTitle>Planifier une séance d'investissement</DialogTitle>
-              </DialogHeader>
-              <ConsultationForm onClose={() => {}} />
-            </DialogContent>
-          </Dialog>
-
-          {/* Personalized recommendations based on user goals */}
-          {userData.goals.length > 0 && (
-            <Card className="bg-white shadow-sm border-0 rounded-2xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Target className="h-5 w-5 text-primary" />
-                  Recommandations Personnalisées
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {userData.goals.slice(0, 2).map((goal, index) => (
-                    <div key={goal.id} className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-sm">{goal.type}</span>
-                        <Badge variant="outline" className="text-xs">
-                          {goal.timeHorizon}
+                    
+                    <CardContent className="p-4 pt-3 space-y-3">
+                      <div className="flex flex-wrap gap-2 text-xs">
+                        <Badge variant="outline" className="bg-gray-50">
+                          Min: {option.minDeposit} DH
+                        </Badge>
+                        <Badge variant="outline" className="bg-gray-50">
+                          Durée: {option.term}
                         </Badge>
                       </div>
-                      <p className="text-xs text-gray-600 dark:text-gray-300">
-                        {goal.type.includes("voyage") && "Nous recommandons un compte épargne avec liquidité élevée"}
-                        {goal.type.includes("immobilier") && "Considérez un plan d'épargne logement ou des investissements à moyen terme"}
-                        {goal.type.includes("urgence") && "Un compte épargne sécurisé avec accès immédiat est idéal"}
-                        {goal.type.includes("retraite") && "Explorez nos options d'investissement à long terme"}
-                        {!goal.type.includes("voyage") && !goal.type.includes("immobilier") && !goal.type.includes("urgence") && !goal.type.includes("retraite") && "Nos conseillers peuvent vous aider à définir la meilleure stratégie"}
-                      </p>
-                    </div>
-                  ))}
+                      
+                      <ul className="space-y-1">
+                        {option.features.map((feature, idx) => (
+                          <li key={idx} className="text-xs flex items-start gap-1.5">
+                            <span className="text-green-500 mt-0.5">✓</span>
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                    
+                    <CardFooter className="p-3 pt-0 flex justify-end">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="text-xs"
+                        onClick={() => toast.info(`Découvrez plus sur ${option.name} de ${option.bank}`)}
+                      >
+                        Voir détails
+                        <ChevronRight className="ml-1 h-3 w-3" />
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="invest" className="space-y-4 md:space-y-6 animate-fade-in">
+          {/* Bloc coaching investissement */}
+          <Card className="bg-primary text-white shadow-md border-0 rounded-2xl">
+            <CardContent className="p-5 md:p-6">
+              <div className="flex flex-col">
+                <h3 className="text-lg font-semibold mb-2">Envie de débuter dans l'investissement ?</h3>
+                <p className="text-sm text-white/90 mb-4">Un conseiller vous aide à comprendre les options et stratégies adaptées à votre profil.</p>
+                
+                <div className="flex justify-center mt-1">
+                  <Button 
+                    className="w-full md:w-3/4 bg-white text-primary hover:bg-white/90 hover:text-primary font-medium py-5"
+                    onClick={() => handleBookConsultation("investissement")}
+                  >
+                    Planifier un coaching investissement
+                  </Button>
                 </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      )}
+              </div>
+            </CardContent>
+          </Card>
 
-      {activeTab === "guides" && <InvestmentGuides onClose={() => {}} />}
+          <Card className="bg-white shadow-md border-0 rounded-3xl overflow-hidden">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg md:text-xl">Opportunités d'investissement</CardTitle>
+              <CardDescription>Explorez les options d'investissement sur le marché marocain</CardDescription>
+            </CardHeader>
+            
+            <CardContent>
+              <div className="space-y-4">
+                {investmentOptions.map((option) => (
+                  <Card key={option.id} className="shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center">
+                        <div className="flex items-center mb-3 sm:mb-0">
+                          <div className="flex-shrink-0 h-10 w-10 md:h-12 md:w-12 rounded-lg bg-gray-100 flex items-center justify-center text-lg">
+                            {option.type === "ETF" ? (
+                              <LineChart className="h-6 w-6 text-primary" />
+                            ) : option.type === "Action" ? (
+                              <BarChart className="h-6 w-6 text-primary" />
+                            ) : (
+                              <BadgePercent className="h-6 w-6 text-primary" />
+                            )}
+                          </div>
+                          
+                          <div className="flex-1 ml-3 md:ml-4">
+                            <div className="flex flex-wrap gap-2 mb-1">
+                              <Badge variant="outline" className="text-xs">
+                                {option.type}
+                              </Badge>
+                              <Badge variant="outline" className={`text-xs ${option.levelColor}`}>
+                                {option.level}
+                              </Badge>
+                            </div>
+                            <h4 className="font-medium line-clamp-1">{option.name}</h4>
+                            <p className="text-xs text-muted-foreground">{option.ticker}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="text-right sm:ml-auto">
+                          <span className="font-bold">{option.price.toLocaleString()} DH</span>
+                          <p className={`text-xs ${option.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                            {option.change >= 0 ? '+' : ''}{option.change}%
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <p className="text-xs text-muted-foreground mt-2 line-clamp-2">{option.description}</p>
+                      
+                      <div className="mt-3 pt-3 border-t flex justify-between items-center flex-wrap gap-2">
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                          <Tag className="h-3.5 w-3.5 text-primary" />
+                          <span>Niveau: {option.level}</span>
+                        </div>
+                        
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="text-xs"
+                          onClick={() => toast.info(`Plus d'informations sur ${option.name} (${option.ticker})`)}
+                        >
+                          En savoir plus
+                          <ExternalLink className="ml-1 h-3 w-3" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+      
+      {/* Composants de dialogue pour les fonctionnalités */}
+      <Dialog open={showConsultation} onOpenChange={setShowConsultation}>
+        <DialogContent className="sm:max-w-md rounded-xl">
+          <DialogHeader>
+            <DialogTitle>{getDialogTitle()}</DialogTitle>
+            <DialogDescription>
+              {getDialogDescription()}
+            </DialogDescription>
+          </DialogHeader>
+          <ConsultationForm onClose={() => setShowConsultation(false)} consultationType={consultationType} />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showGuides} onOpenChange={setShowGuides}>
+        <DialogContent className="max-w-4xl rounded-xl">
+          <DialogHeader>
+            <DialogTitle>Guides d'investissement</DialogTitle>
+            <DialogDescription>
+              Ressources pour comprendre et maîtriser l'investissement au Maroc
+            </DialogDescription>
+          </DialogHeader>
+          <InvestmentGuides onClose={() => setShowGuides(false)} />
+        </DialogContent>
+      </Dialog>
+      
+      {/* Bouton d'action */}
+      <AddTransactionButton onClick={handleAddTransaction} />
     </div>
   );
 };

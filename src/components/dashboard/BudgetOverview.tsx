@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { motion } from "framer-motion";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type BudgetOverviewProps = {
   budgetData: {
@@ -47,7 +48,7 @@ export const BudgetOverview = ({ budgetData, currentDay, lastDay }: BudgetOvervi
             <Progress value={budgetData.progressPercentage} className="h-2.5 rounded-full bg-[#1F6FEB]/10" />
             <motion.div 
               className="absolute top-0 h-5 w-1 bg-[#1F6FEB] rounded-full transform -translate-y-1 shadow-sm"
-              style={{ left: `${(currentDay/lastDay) * 100}%` }}
+              style={{ left: `${(13/31) * 100}%` }}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 20 }}
               transition={{ delay: 0.5, duration: 0.3 }}
@@ -66,7 +67,7 @@ export const BudgetOverview = ({ budgetData, currentDay, lastDay }: BudgetOvervi
             transition={{ delay: 0.3, duration: 0.4 }}
           >
             <p className="text-sm text-foreground">
-              Vous pouvez dépenser <span className="font-semibold text-[#1F6FEB]">{budgetData.dailyBudget.toLocaleString()} DH</span> par jour pour les <span className="font-semibold text-[#1F6FEB]">{budgetData.remainingDays}</span> prochains jours
+              Vous pouvez dépenser <span className="font-semibold text-[#1F6FEB]">175 DH</span> par jour pour les <span className="font-semibold text-[#1F6FEB]">18</span> prochains jours
             </p>
           </motion.div>
         </div>
@@ -83,7 +84,7 @@ export const BudgetOverview = ({ budgetData, currentDay, lastDay }: BudgetOvervi
               </div>
               <span className="text-xs text-[#1F6FEB]/80 font-medium">Revenus</span>
             </div>
-            <span className="ml-10 font-semibold text-sm">{budgetData.income.toLocaleString()} DH</span>
+            <span className="ml-10 font-semibold text-sm">8,500 DH</span>
           </motion.div>
           
           <motion.div 
@@ -96,7 +97,7 @@ export const BudgetOverview = ({ budgetData, currentDay, lastDay }: BudgetOvervi
               </div>
               <span className="text-xs text-rose-600/80 font-medium">Dépenses</span>
             </div>
-            <span className="ml-10 font-semibold text-sm">{budgetData.expenses.toLocaleString()} DH</span>
+            <span className="ml-10 font-semibold text-sm">4,825 DH</span>
           </motion.div>
         </div>
       </CardContent>
